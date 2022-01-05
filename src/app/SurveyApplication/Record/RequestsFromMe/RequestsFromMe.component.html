@@ -1,0 +1,216 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Requests for me</li>
+  </ol>
+</nav>
+
+<div class="pcoded-wrapper common-table-content">
+  <div class="col-sm-12 p-0">
+    <div class="card">
+      <div class="card-header bg-blue">
+        <div class="common-font">Recording Requests</div>
+      </div>
+      <div class="card-body relative">
+        <!--we are using common component selector for recording type tiles-->
+        <div>
+          <app-recording-catalog-types
+                                       (recordingTypeName)="receiveChildData($event)"
+                                       [hiring_count]="hiring_count"
+                                       [survey_count]="survey_count"
+                                       [reference_count]="reference_count"
+                                       [offline_count]="offline_count"
+                                       [marketresearch_count]="marketresearch_count"
+                                       [compliance_count]="compliance_count"
+                                       [employeesurvey_count]="employeesurvey_count"
+                                       [security_count]="security_count"
+                                       [vendormanagement_count]="vendormanagement_count">
+
+          </app-recording-catalog-types>
+        </div>
+
+        <!--Accordion section started-->
+        <div class="col-md-12 catalog_cont my-3" #catalog_cont>
+          <div class="dt-responsive selectlist font-14">
+            <div class="dataTables_wrapper dt-bootstrap4" id="add-row-table_wrapper">
+              <div class="col-sm-12 p-0" *ngIf="RecordingRequestList?.length > 0">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                  <thead class="custom-header">
+                    <tr role="row">
+                      <th></th>
+                      <th></th>
+                      <th>Requestor Name</th>
+                      <th>Project Name</th>
+                      <th>Request Date</th>
+                      <!-- <th>Start Date</th>
+                      <th>End Date</th> -->
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="row-list-detail {{request.ID}}" *ngFor="let request of RecordingRequestList">
+                      <td>
+                        <div class="center-align">
+                          <div class="checkbox-info d-inline bold-font">
+                            <!-- <button class="play-interview margin-zero btn btn-icon btn-rounde btn-outline-blue" title="Click here to start recording" type="button" id="{{request.ID}}">
+                              <i class="feather icon-play-circle" id="{{request.ID}}"></i>
+                            </button> -->
+                            <button type="button" class="play-interview btn btn-circle cursor-pointer btn-sm" (click)="startRecording($event, request.ID, request)" title="Click here to start recording" id="{{request.ID}}">
+                              <i class="fa fa-play-circle blue-text font-28" id="{{request.ID}}"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="vertical-middle" id="infoIcon">
+                        <div class="i-block card-dots-button catalog-info cursor-pointer" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(request, request.ID, $event)">
+                          <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                        </div>
+                      </td>
+
+                      <td class="">
+                        <span class="user-info " id="{{request.AuthorID}}" attr.username="name_{{request.AuthorID}}" (click)="getUserInfo($event, request.AuthorID, request.AuthorName)" title="Send message to {{request.AuthorName}}"><a href="JavaScript:Void(0);"><strong>{{request.AuthorName | titlecase}}</strong></a></span>
+                      </td>
+
+                      <td class="catalog-info" title="{{request.ProjectName || request.MeetingName}}">
+                        <div class="req_title textOverflow">{{request.ProjectName || request.MeetingName}}</div>
+                      </td>
+                      <td><span>{{request.InsertDate | date:'MM/dd/yyyy' }}</span></td><!-- hh:mm aa-->
+                      <!-- <td><span>{{request.StartDate | date:'MM/dd/yyyy' }}</span></td>
+                      <td><span>{{request.EndDate | date:'MM/dd/yyyy' }}</span></td> -->
+                      <td>
+                        <div class="center-align">
+                          <div class="checkbox-info d-inline font-weight-bold">
+                            {{request.FinalStatus}}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="">
+                        <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(request.ID)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="" *ngIf="RecordingRequestList?.length == 0">
+                <h6 class="data-msg">No recording request available.</h6>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--company details model-->
+<div class="modal fade modal-slide right" id="catalogdetailsmodel" tabindex="-1" role="dialog" aria-labelledby="catalogdetailsmodelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div>
+      <app-user-catalog-modal [data]="catalog_record" [questionList]="questionList" [userData]="user_record" (sendReplayData)="getReplayData($event)"></app-user-catalog-modal>
+    </div>
+  </div>
+</div>
+
+<!--recording player popup-->
+<div class="modal fade" id="recordingPlayerModel" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div>
+    <app-replay-player-modal [video_url]="video_url"></app-replay-player-modal>
+  </div>
+</div>
+
+
+<!--Send Message model-->
+<div class="modal fade sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+  <div class="modal-dialog formsg" role="document">
+    <div class="modal-content modal-container">
+      <div class="modal-header not">
+        <div class="left-header">
+          <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group">
+          <label class="font-weight-bold">Send message</label>
+          <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+        </div>
+
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+        <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Send Message model-->
+<div class="modal messagenotification" id="messagenotification" tabindex="-1" role="dialog" aria-labelledby="messagenotificationLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-container alert">
+      <div class="modal-header edit-header in">
+        <div class="left-header">
+          <h6 class="common-font-blue">Alert</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group mr-2">
+          <p class="mr- my no-margin form-group control-width">You are logged in user. <br /><br />Sending a message to itself is not allowed.</p>
+        </div>
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirmation modal to remove the messages-->
+<div class="modal fade" id="recordingDeleteModel" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding">
+        <p>Are you sure to delete this recording request?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" (click)="removeRecordingRequest()" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--recording player popup-->
+<!--<div class="modal fade" id="recordingPlayerModel" (click)="stopVideoPlayer(recording_player)" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header not">
+        <div class="" id="exampleModalLabel">Recording Video</div>
+        <button type="button" class="close" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding text-center">
+
+        <video src="{{video_url}}" controls autoplay #recording_player class="recording_player" width="300"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>-->

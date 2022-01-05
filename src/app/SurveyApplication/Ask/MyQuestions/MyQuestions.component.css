@@ -1,0 +1,84 @@
+/* .Not-Completed {
+  color: black;
+}
+
+.Not-Attended {
+  color: black;
+}
+
+.Not-Scheduled {
+  color: black;
+} */
+
+/* .table thead th {
+  text-transform: none;
+  vertical-align: middle !important;
+} */
+
+.tab-content {
+  padding: 10px;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+.star {
+  visibility: hidden;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+  .star:before {
+    content: "\2606";
+    position: absolute;
+    visibility: visible;
+    color: #007bff;
+  }
+
+  .star:checked:before {
+    content: "\2605";
+    position: absolute;
+  }
+
+.checkbox {
+  top: 5px !important;
+  text-indent: 0 !important;
+}
+
+/* .table thead th:not(.head_all) {
+  padding-left: 10px;
+} */
+
+.btn-rounded {
+  border-radius: 20px !important;
+}
+
+.table-striped thead .checkbox {
+  left: -8px;
+}
+
+.pcoded-main-container[_ngcontent-c0] {
+  padding-top: 70px !important;
+}
+
+.menu-tab a.active {
+  background-color: #eee;
+  margin-left: -1px;
+  cursor: default;
+}
+
+.menu-tab-ul > li a.active, .menu-tab-ul > li a.active:focus, .menu-tab-ul > li a.active:hover {
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+.review-link {
+  cursor: pointer;
+  color: #059ee3 !important;
+}
+
+.card-body .wordBreak {
+  white-space: pre-line;
+  width: 100% !important;
+}

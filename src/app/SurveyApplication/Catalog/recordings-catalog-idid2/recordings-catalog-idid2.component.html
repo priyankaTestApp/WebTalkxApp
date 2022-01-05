@@ -1,0 +1,763 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Offline Meetings Recordings</li>
+  </ol>
+</nav>
+
+<div class="pcoded-wrapper common-table-content">
+  <div class="col-sm-12 p-0">
+    <div class="card">
+      <div class="card-header bg-blue">
+        <div class="common-font">Offline Meetings Recording catalogs</div>
+      </div>
+      <div class="card-body">
+                
+        <div class="col-md-12 catalog_cont my-3" #catalog_cont>
+          <!--participant type start field 5-->
+          <div class=" input-group">
+            <div class="col-md-12 p-0">
+              <div class="form-group">
+                <div class="custom-checkbox text-blue font-weight-bold">
+                  Select participants type
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 p-0">
+              <div class="form-group">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="ParticipantType1" [(ngModel)]="model.ParticipantType" #ParticipantType="ngModel"
+                        name="ParticipantType" value="Single Participant">
+                  <label class="custom-control-label" for="ParticipantType1">Single Participant</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="form-group">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" [(ngModel)]="model.ParticipantType" #ParticipantType="ngModel"
+                        id="ParticipantType2" name="ParticipantType" value="Multiple Participant">
+                  <label class="custom-control-label" for="ParticipantType2">Multiple Participants via collectors</label>
+                </div>
+              </div>
+            </div>                  
+          </div>
+          <!--participant type end field-->
+
+          <!-- <div class="row custom-header font-weight-bold">
+            <div class="col-md-8">Title</div>
+            <div class="col-md-2">Description</div>
+            <div class="col-md-1">No of responses</div>
+            <div class="col-md-1">Start date</div>
+            <div class="col-md-1">End date</div>
+          </div> -->
+          <div class="dt-responsive selectlist font-14">
+            <div class="dataTables_wrapper dt-bootstrap4" id="add-row-table_wrapper">
+              <!--Single participant type-->
+              <div *ngIf="(model.ParticipantType == 'Single Participant')">
+                <div class="col-sm-12 p-0" *ngIf="singleParticipantList?.length > 0">
+                  <table class="table" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="custom-header">
+                      <tr role="row">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Requested To</th>
+                        <th>Meeting Name</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="row-list-detail {{participant1.ID}}" *ngFor="let participant1 of singleParticipantList">
+                        <td>
+                          <div class="center-align">
+                            <div class="checkbox-info d-inline bold-font">
+                              <button type="button" class="play-interview btn btn-circle cursor-pointer btn-sm" (click)="replayRecording($event, participant1.ID, participant1)" title="Click here to replay the recording" id="{{participant1.ID}}">
+                                <i class="fa fa-play-circle blue-text font-25" id="{{participant1.ID}}" ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="vertical-middle" id="infoIcon">
+                          <div class="i-block card-dots-button catalog-info cursor-pointer" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(participant1, participant1.ID, $event, participant1.EmailID)">
+                            <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                          </div>
+                        </td>
+                        <td class="vertical-middle" id="shareIcon">
+                          <div class="i-block card-dots-button catalog-share cursor-pointer" id="share" title="Click here to share catalog." (click)="getReviewerList(participant1, participant1.ID, $event)">
+                            <i class="fas fa-fw fa-share-alt btn_blue font-25 blue-text" id="shareIcon"></i>
+                          </div>
+                        </td>
+                        <td class="team-content">
+                          <button type="button" id="ReviewBtn" class="btn a no-margin " (click)="openReviewBox(participant1.ID, $event)">
+                            <i class="fa fa-star fa_custom font-24 blue-text"></i><br />
+                            <span *ngIf="participant1.ValuationScore" class="feather-colo common-font-blue font-size-14 {{participant1.isSelected ? 'white-text' : null}}">Team Score - {{participant1.ValuationScore}}</span>
+                          </button>
+                        </td>
+  
+                        <td class="">
+                          <span class="user-info " id="{{participant1.UserID}}" attr.username="name_{{participant1.UserID}}" (click)="getUserInfo($event, participant1.UserID, participant1.FirstName+' '+participant1.LastName)" title="Send message to {{participant1.FirstName}} {{participant1.LastName}}"><a href="JavaScript:Void(0);"><strong>{{participant1.FirstName | titlecase}} {{participant1.LastName | titlecase}}</strong></a></span>
+                        </td>
+  
+                        <td class="catalog-info" title="{{participant1.MeetingName}}">
+                          <div class="req_title textOverflow">{{participant1.MeetingName}}</div>
+                        </td>
+  
+                        <td><span>{{participant1.InsertDate | date:'MM/dd/yyyy' }}</span></td><!-- hh:mm aa-->
+                        <td>
+                          <div class="center-align">
+                            <div class="checkbox-info d-inline font-weight-bold">
+                              {{participant1.FinalStatus}}
+                            </div>
+                          </div>
+                        </td>
+  
+                        <td class="">
+                          <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(participant1.ID)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="" *ngIf="(singleParticipantList?.length == 0)">
+                  <h6 class="data-msg">No recording catalogs available.</h6>
+                </div>
+              </div>
+              <!--Multiple participant Type-->
+              
+              <div class="ro template-accordion-section" *ngIf="(model.ParticipantType == 'Multiple Participant')">
+                <div class="col-md-12 template_question_cont my-1 p-0" *ngIf="multipleParticipantList?.length > 0">
+                  <div class="row custom-header font-weight-bold">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2 text-center font-weight-bold">Project Name</div>
+                    <div class="col-md-2 text-center font-weight-bold">Request Date</div>
+                    <div class="col-md-2 text-center font-weight-bold">Start Date</div>
+                    <div class="col-md-2 text-center font-weight-bold">End Date</div>
+                    <div class="col-md-1 text-center font-weight-bold">Status</div>
+                    <div class="col-md-1"></div>
+                  </div>
+                </div>
+                
+                <div class="col-sm-12 p-0" *ngIf="multipleParticipantList?.length > 0">
+                  <!-- Collapsable Card Example -->
+                  <div class="card shadow my-2 p-0" *ngFor = "let participant2 of multipleParticipantList; let i = index">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample{{i+1}}" (click)="GetParticipant(participant2.ID)" class="d-block card-header py-2 d-flex border-0 collapsed align-items-baseline" data-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="collapseCardExample" >
+                        <span class="duplicate_icon col-md-2 text-center d-flex ml-1">
+                          <div class="i-block card-dots-button catalog-info cursor-pointer ml-3" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(participant2, participant2.ID, $event, '')">
+                            <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                          </div>
+                          <div class="i-block card-dots-button catalog-share cursor-pointer ml-3" id="share" title="Click here to share catalog." (click)="getReviewerList(participant2, participant2.ID, $event)">
+                              <i class="fas fa-fw fa-share-alt btn_blue font-25 blue-text" id="shareIcon"></i>
+                          </div>
+                        </span>
+                        <span class="duplicate_icon col-md-2 text-center font-weight-bold" title="{{participant2.ProjectName}}">
+                          {{participant2.ProjectName}}
+                        </span>
+                        <span class="duplicate_icon col-md-2 text-center font-weight-bold">
+                          {{participant2.InsertDate | date:'MM/dd/yyyy' }}
+                        </span>
+                        <span class="delete_icon col-md-2 text-right font-weight-bold">
+                          {{participant2.StartDate | date:'MM/dd/yyyy' }}
+                        </span>
+                        <span class="delete_icon col-md-2 text-right font-weight-bold">
+                          {{participant2.EndDate | date:'MM/dd/yyyy' }}
+                        </span>
+                        <span class="edit_icon col-md-1 text-right font-weight-bold">
+                          {{participant2.FinalStatus}}
+                        </span>
+                        <span class="edit_icon col-md-1 text-right">
+                            <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(ParticipantType2.ID, $event)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                        </span>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse border-top" id="collapseCardExample{{i+1}}" >
+                      <div class="card-body">
+                        <table class="table" *ngIf="(participantList?.length > 0)" id="dataTable" width="100%" cellspacing="0">
+                          <thead class="custom-header">
+                            <tr role="row">
+                              <th></th>
+                              <th></th>
+                              <th></th>
+                              <th>Requested To</th>
+                              <th>Email</th>
+                              <th>LinkedIn</th>
+                              <th>PhoneNumber</th>
+                              <!-- <th></th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="child" *ngFor="let user of participantList; let j = index">
+                              <td>
+                                <div class="center-align">
+                                  <div class="checkbox-info d-inline bold-font">
+                                    <button type="button" class="play-interview btn btn-circle cursor-pointer btn-sm" (click)="replayRecording($event, user.RefRecordingID, user)" title="Click here to replay the recording" id="{{user.RefRecordingID}}">
+                                      <i class="fa fa-play-circle blue-text font-25" id="{{user.RefRecordingID}}" ></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="vertical-middle" id="infoIcon">
+                                <div class="i-block card-dots-button catalog-info cursor-pointer" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(participant2, user.RefRecordingID, $event, user)">
+                                  <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                                </div>
+                              </td>
+                              <td class="team-content">
+                                <button type="button" id="ReviewBtn" class="btn a no-margin " (click)="openReviewBox(user.RefRecordingID, $event)">
+                                  <i class="fa fa-star fa_custom font-24 blue-text"></i><br />
+                                  <span *ngIf="user.ValuationScore" class="feather-colo common-font-blue font-size-14 {{user.isSelected ? 'white-text' : null}}">Team Score - {{user.ValuationScore}}</span>
+                                </button>
+                              </td>
+                              <td><span class="user-info " id="{{user.ParticipantID}}" attr.username="name_{{user.ParticipantID}}" (click)="getUserInfo($event, user.ParticipantID, user.FirstName+' '+user.LastName)" title="Send message to {{user.FirstName}} {{user.LastName}}"><a href="JavaScript:Void(0);"><strong>{{user.FirstName | titlecase}} {{user.LastName | titlecase}}</strong></a></span>
+                                <!-- {{user.FirstName}} {{user.LastName}} --></td>
+                              <td>{{user.EmailID}}</td>
+                              <td>{{user.LinkedIn}}</td>
+                              <td>{{user.PhoneNumber}}</td>
+                              <!-- <td class="">
+                                <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(user.ParticipantID)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                              </td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>                              
+                  <!-- <table class="table table-condensed table-striped " id="dataTable" width="100%" cellspacing="0">
+                    <thead class="custom-header">
+                      <tr role="row">
+                        <th></th>
+                        <th>Project Name</th>
+                        <th>Request Date</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="clickable row-list-detail {{participant2.ID}}" (click)="GetParticipant(participant2.ID)" *ngFor="let participant2 of multipleParticipantList; let i = index" data-toggle="collapse" data-target="#group-of-rows-{{i+1}}" aria-expanded="false" aria-controls="group-of-rows-{{i+1}}">
+                          <td class="vertical-middle" id="infoIcon">
+                            <div class="i-block card-dots-button catalog-info cursor-pointer" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(participant2, participant2.ID, $event)">
+                              <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                            </div>
+                          </td>
+      
+                          <td class="catalog-info" title="{{participant2.ProjectName}}">
+                            <div class="req_title textOverflow">{{participant2.ProjectName}}</div>
+                          </td>
+                          <td><span>{{participant2.InsertDate | date:'MM/dd/yyyy' }}</span></td>
+                          <td><span>{{participant2.HiringStartDate | date:'MM/dd/yyyy' }}</span></td>
+                          <td><span>{{participant2.HiringEndDate | date:'MM/dd/yyyy' }}</span></td>
+                          <td>
+                            <div class="center-align">
+                              <div class="checkbox-info d-inline font-weight-bold">
+                                {{participant2.FinalStatus}}
+                              </div>
+                            </div>
+                          </td>
+    
+                          <td class="">
+                            <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(participant2.ID)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                          </td>
+                        </tr>
+                    </tbody>
+                    <tbody id="group-of-rows-{{i+1}}" class="collapse" *ngFor="let participant2 of multipleParticipantList; let i = index">
+                        <tr class="table-warning" *ngFor="let user of participantList; let j = index">
+                          <td>{{user.FirstName}}</td>
+                          <td>{{user.LastName}}</td>
+                          <td>{{user.EmailID}}</td>
+                          <td>{{user.LinkedIn}}</td>
+                          <td>{{user.PhoneNumber}}</td>
+                        </tr>
+                    </tbody>
+                  </table> -->
+                </div>
+                <div class="" *ngIf="(multipleParticipantList?.length == 0)">
+                  <h6 class="data-msg">No recording catalogs available.</h6>
+                </div>
+              </div>
+              <!-- <div class="" *ngIf="(multipleParticipantList?.length == 0 || singleParticipantList?.length == 0)">
+                <h6 class="data-msg">No recording request available.</h6>
+              </div> -->
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--company details model-->
+<div class="modal fade modal-slide right" id="catalogdetailsmodel" tabindex="-1" role="dialog" aria-labelledby="catalogdetailsmodelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-container resize-model">
+
+      <div class="modal-header edit-header in">
+        <!--<div class="page-header-text ml-3" id="exampleModalLabel">selected User Modal</div>-->
+        <div class="left-header">
+          <h5 class="common-font-blue">Request details</h5>
+        </div>
+
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+
+        <!--catalog Details data start-->
+        <div class="catalog-details my-">
+          <!--Tab menu-->
+          <!-- <ul class="nav nav-tabs menu-tab-ul">
+            <li class="menu-tab"><a class="active common-font" data-toggle="tab" href="#detailstab">Details</a></li>
+          </ul> -->
+          <!--Tab menu content-->
+          <!--<div class="tab-content">-->
+          <div id="detailstab" class="tab-pane active">
+
+            <div class="company-data">
+              <!-- {{catalog_record | json}}-- -->
+              <!-- {{catalog_record.AuthorEmailID}}-- -->
+              <div class="text-center">
+                <button type="button" *ngIf="JobDescription" class="btn border btn-primary font-14" id="jobdescription" #jobdescription (click)="openDescriptionFile($event.target, JobDescription)">Job Description</button>
+                <button type="button" *ngIf="Documents" class="btn border btn-primary font-14" id="Documents" #documents (click)="openDescriptionFile($event.target, Documents)">Documents</button>
+                <button type="button" *ngIf="customwelcomepage" class="btn border btn-primary font-14" id="customwelcomepage" #CustomWelcomepage (click)="openDescriptionFile($event.target, customwelcomepage)">Custom Welcome Page</button>
+                <button type="button" *ngIf="uploadlogo" class="btn border btn-primary font-14" id="uploadlogo" #UploadLogo (click)="openDescriptionFile($event.target, uploadlogo)">Upload Logo</button>
+              </div>
+                           
+              <div class="my-2" *ngIf="authername">
+                <label class="font-weight-bold">Asked by</label>
+                <div class=" font-14 a user-info " id="{{autherID}}" attr.username="name_{{autherID}}" (click)="getUserInfo($event, autherID, authername)" title="Send message to {{authername}}"><a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{authername}}</strong></a></div>
+                <div class="clearfix">
+                  <a href="{{autherlinkedin}}" target="_blank" *ngIf="autherlinkedin">
+                    <img *ngIf="autherlinkedin" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                  </a>
+                </div>
+              </div>
+
+              <div class="my-2" *ngIf="autheremail">
+                <label class="font-weight-bold">Asked by user email</label>
+                <div class="">
+                  <a href="mailto:{{autheremail}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{autheremail}}</a>
+                </div>
+              </div>
+
+              <div class="my-2" *ngIf="(GiverName && GiverName !='undefined')">
+                <label class="font-weight-bold">Requested to</label>
+                <div class=" font-14 a user-info " id="{{GiverID}}" attr.username="name_{{GiverID}}" (click)="getUserInfo($event, GiverID, GiverName)" title="Send message to {{GiverName}}"><a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{GiverName}}</strong></a></div>
+                <div class="clearfix">
+                  <a href="{{GiverLinkedIn}}" target="_blank" *ngIf="GiverLinkedIn">
+                    <img *ngIf="GiverLinkedIn" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                  </a>
+                </div>
+              </div>
+
+              <div class="my-2" *ngIf="GiverEmailID">
+                <label class="font-weight-bold">Requested to user email</label>
+                <div class="">
+                  <a href="mailto:{{GiverEmailID}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{GiverEmailID}}</a>
+                </div>
+              </div>
+                            
+              <div class="my-2" *ngIf="phonenumber">
+                <label class="font-weight-bold">Phone Number</label>
+                <div class="">
+                  <a href="tel:{{phonenumber}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{phonenumber}}</a>
+                </div>
+              </div>
+              <div class="my-2" *ngIf="projectName || meetingname">
+                <label class="font-weight-bold">{{projectName ? 'Project Name' : (meetingname ? 'Meeting Name' : null)}}</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{projectName || meetingname}}</div>
+              </div>
+              <div class="my-2" *ngIf="webtalkxtype">
+                <label class="font-weight-bold">Webtalkx Type</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{webtalkxtype}}</div>
+              </div>
+              <div class="my-2" *ngIf="participanttype">
+                <label class="font-weight-bold">Participant Type</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{participanttype}}</div>
+              </div>
+                            
+              <div class="my-2" *ngIf="manager">
+                <label class="font-weight-bold">Manager</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{manager}}</div>
+              </div>
+              <div class="my-2" *ngIf="organization">
+                <label class="font-weight-bold">Organization</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{organization}}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="reviewteamemail">
+                <label class="font-weight-bold">Reviewer Team</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{reviewteamemail}}</div>
+              </div>
+                            
+              <div class="my-2" *ngIf="welcomemessage">
+                <label class="font-weight-bold">Welcome Message</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{welcomemessage}}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="description">
+                <label class="font-weight-bold">Description</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{description}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="requestdate">
+                <label class="font-weight-bold">Request Date</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{requestdate | date:'MM/dd/yyyy' }}</div>
+              </div>
+
+              <div class="my-2" *ngIf="(startdate && webtalkxtype != 'Single Recording')">
+                <label class="font-weight-bold">Start Date</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{startdate | date:'MM/dd/yyyy' }}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="(enddate && webtalkxtype != 'Single Recording')">
+                <label class="font-weight-bold">End Date</label>
+                 <div class="-no-border break control-width form-group" type="text" readonly>{{enddate | date:'MM/dd/yyyy' }}</div>
+              </div>
+
+              <div class="my-2" *ngIf="RecordingStatus">
+                <label class="font-weight-bold">Status</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{RecordingStatus}}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="surveyanonymous">
+                <label class="font-weight-bold">Survey Anonymous</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{surveyanonymous ? 'True': 'False'}}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="rpaenable">
+                <label class="font-weight-bold">RPA Enable</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{rpaenable ? 'True' : 'False'}}</div>
+              </div>
+              
+              <div class="my-2" *ngIf="skipenable">
+                <label class="font-weight-bold">Skip Enable</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{skipenable ? 'True' : 'False'}}</div>
+              </div>
+                            
+              <div class="card-header bg-blue p-2" *ngIf="introvideo">
+                <h6 class="common-font m-0">Introduction Message</h6>
+              </div>
+
+              <div class="question-list text-justify a my-1" *ngIf="introvideo" id="101">
+                <div class="record_icons p-2">
+                  <div class="record_btn_cont mr-2 cursor-pointer" (click)="replayInterviewNow($event, 101, 'request')">
+                    <button type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_101" title="Click to watch" id="" attr.qcount="101">
+                      <i class="fa fa-play-circle blue-text font-28" id="" attr.qcount="101"></i>
+                    </button>
+                    <span class="">Click to watch</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="question_list_cont clearfix col-md-12 p-0" *ngIf="questionList?.length > 0">
+                <div class="p-2 bg-blue">
+                  <h6 class="question-list font-weight-bold m-0">Saved Questions</h6>
+                </div>
+                <div class="question-list text-justify a mb-1" #qlistall *ngFor="let questions of questionList; let i = index" id="{{questions.RecordingQuestionID}}">
+                  <div class="question-text text-justify qnumber{{i+1}} {{questions.RecordQuestion ? 'cursor-pointer' : null}}" (click)="replayInterviewNow($event, i+1, 'request')">
+                    <span class="">Q{{i+1}}. </span>
+                    <button *ngIf="questions.RecordQuestion" type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_{{i+1}}" title="Click to watch" id="{{i+1}}" attr.qcount="{{i+1}}">
+                      <i class="fa fa-play-circle blue-text font-28" id="{{i+1}}" attr.qcount="{{i+1}}"></i>
+                    </button>
+                    <span class="">{{questions.RecordQuestion ? 'Click to watch' : questions.QuestionText}}</span>
+                  </div>
+                </div>
+              </div> <!-- end container -->
+
+            </div>
+          </div><!--first menu-->
+          <!--</div>--><!--Comments section closed-->
+          <!--sharing history section start-->
+        </div><!--tab closed-->
+
+      </div>
+
+    </div><!--modal body closed-->
+  </div>
+</div>
+
+<!--Send Message model-->
+<div class="modal fade sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+  <div class="modal-dialog formsg" role="document">
+    <div class="modal-content modal-container">
+      <div class="modal-header not">
+        <div class="left-header">
+          <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group">
+          <label class="font-weight-bold">Send message</label>
+          <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+        </div>
+        
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+        <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirmation modal to remove the messages-->
+<div class="modal fade" id="recordingDeleteModel" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding">
+        <p>Are you sure to delete this recording request?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" (click)="removeRecordingRequest()" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--recording player popup-->
+<div class="modal fade" id="recordingPlayerModel" (click)="stopVideoPlayer(recording_player)" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header not">
+        <div class="" id="exampleModalLabel">Recording Video</div>
+        <button type="button" class="close" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding text-center">
+        
+        <video src="{{video_url}}" controls autoplay #recording_player class="recording_player" width="300"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--reviewmodel model-->
+<div class="modal fade modal-slide right" id="reviewmodel" tabindex="-1" role="dialog" aria-labelledby="reviewmodelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+   
+    <div class="modal-content modal-container resize-model">
+      <div class="modal-header edit-header">
+
+        <div class="left-header">
+          <h6 class="common-font-blue">{{com_name}}</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div id="frame" *ngIf="!isreviewdata">
+          <p class="common-font">No review available.</p>
+        </div>
+        <div id="frame">
+          <div class="content">
+            <div class="messages">
+              <ul class="p-0" *ngIf="usersreview?.length > 0">
+
+                <li class="replies mb-3" *ngFor="let review of usersreview">
+                  <div class="padding-5 relative">
+                    <section class="user-img-name">
+                      <img class="user-img" src="{{review.ProfilePictureURL ? domain + 'image/' + review.ProfilePictureURL : '../../../assets/img/user.png'}}" alt="{{review.UserName}}" />
+                      <div data-control-name="comment_actor" id="user_profile-details" class="user_profile-details">
+
+                        <div class="">
+                          <span class=" ">
+                            <span class="hoverable-link-text font-size-14 font-weight-bold common-font-blue a userprofile-name name_{{review.UserID}}" id="{{review.UserID}}" (click)="getUserInfo($event, review.UserID, review.UserName)" title="Send message to {{review.UserName}}" attr.username="name_{{review.UserID}}"><a href="JavaScript:Void(0);"><strong>{{review.UserName}}</strong></a></span>
+                            <span class="rating-text float-right">
+                              <!-- <app-static-rating-star [rating]='review.ValuationScore' [itemId]='review.UserID'></app-static-rating-star> -->
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span> &#9733;
+                                </span>
+                              </ng-template>
+
+                              <ngb-rating [max]="5" [(rate)]="rating" [starTemplate]="t" [readonly]="true" ></ngb-rating>
+                            </span>
+                          </span>
+                          <div class="common-font-light-blue title_{{review.UserID}}" attr.usertitle="title_{{review.UserID}}">{{review.Title}}</div>
+                        </div>
+                      </div>
+                    </section>
+                    <div class="text-comments mt-3 ml-5 text-justify common-font-small">{{review.ValuationComment}}</div>
+                    <span class="show_more a -hidden" (click)="showMore($event)">...see more</span>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--modal body closed-->
+  </div>
+</div>
+
+
+  <!--Modal to share the recording to the reviewer-->
+  <div class="modal catalogShareModel" id="catalogShareModel" tabindex="-1" role="dialog" aria-labelledby="catalogShareModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header not">
+          <div class="" id="exampleModalLabel">Send recording</div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body all-around-padding common-table-content">
+  
+          <div class="send-recordingfield">
+            <!--Select Reviewer field start-->
+            <div class="form-group row">
+              <div class="col-md-11">
+                <label class="font-weight-bold required-form-field">To</label>
+                <ng-autocomplete class="autocomplete-cont test auto_model" required
+                                #ReviewerID="ngModel"
+                                name="ReviewerID"
+                                [(ngModel)]="model.ReviewerID"
+                                [data]="reviewerlist"
+                                [searchKeyword]="keyword"
+                                placeHolder="Share with"
+                                (selected)='selectEvent($event)'
+                                (inputChanged)='onChangeSearch($event)'
+                                (inputFocused)='onFocused($event)'
+                                [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate"
+                                (inputCleared)="clearEventStatic()">
+                </ng-autocomplete>
+    
+                <ng-template #itemTemplate let-item>
+                    <span [innerHTML]="item.FirstName +' '+item.LastName +' ('+item.EmailID +')'"></span>
+                </ng-template>
+    
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+
+                <div *ngIf="(ReviewerID.touched || ReviewerID.dirty) && ReviewerID.errors" class="invalid-error industry_list">
+                    <div *ngIf="ReviewerID.errors?.required">Share with is required.</div>
+                </div>
+              </div>
+              <div class="col-md-1 form-group">
+                <!--Add reviewer button-->
+                <label class="font-weight-bold"></label>
+                <button type="button" (click)="createNewReviewer(NewReviewerForm)" data-dismiss="modal" class="btn-sm btn btn-primary mt-2 m-0" title="Click here to add the new reviewer." data-toggle="modal" data-target="#reviewerModal"><span aria-hidden="true">+</span></button>
+              </div>
+            </div>
+            <!--Select Reviewer field end-->
+            <!--Text field start-->
+            <div class="form-group">
+              <label class="font-weight-bold">Title</label>
+              <input type="text" id="title-text" class="form-control form-control-user" name="ReviewTitle" #ReviewTitle="ngModel" [(ngModel)]="model.ReviewTitle" placeholder="Please type a Title.">
+            </div>
+            <!--Text field end-->
+            <!--Message field start-->
+            <div class="form-group">
+               <label class="font-weight-bold">Message</label>
+               <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 -full-width mb-2 mt-2" name="ReviewMessage" placeholder="Please type a message." #ReviewMessage="ngModel" [(ngModel)]="model.ReviewMessage" id="message-text" rows="3"></textarea>
+            </div>
+            <!--Message field end-->
+  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!--<div *ngIf="ReplayCount == 0" class="errorVid float-right">
+            You cannot share the reference recording as you don't have the replay counts.
+          </div>-->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" (click)="sendRecordingInvitationToReviewer(model)" [disabled]="(ReviewerID.invalid)" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal to share the recording to the reviewer end-->
+  
+  <!--Modal to create the new reviewr-->
+  <div class="modal" id="reviewerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header not">
+          <div class="" id="exampleModalLabel">Register a contact for sharing</div>
+          <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#catalogShareModel" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body all-around-padding">
+          <form name="form" class="" #NewReviewerForm="ngForm" novalidate>
+            <div class="input-group">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="font-weight-bold required-form-field">Email</label>
+                  <input type="email" class="form-control form-control-user" name="Email" [(ngModel)]="model.Email" id="Email" (keyup)="onEmailEnter(model.Email)"
+                        #Email="ngModel" spellcheck="false" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-_]{2,}[.]{1}[a-zA-Z]{2,}" autocomplete="off" required />
+
+                  <div *ngIf="Email.invalid &&  Email.touched" class="invalid-error">
+                    <div *ngIf="Email.errors.required" class="invalid-erro">
+                      Email is required.
+                    </div>
+                  </div>
+                  <div *ngIf="Email.errors && Email.errors.pattern" class="invalid-error">
+                    Email is invalid.
+                  </div>
+                  <span class="invalid-error">{{erroruser}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold required-form-field">First name</label>
+                  <input type="text" class="form-control form-control-user" name="FirstName" #FirstName="ngModel"
+                        [(ngModel)]="model.FirstName" id="FirstName" pattern='^[a-zA-Z]*$' required maxlength="25" autocomplete="off" />
+
+                  <div *ngIf="FirstName.invalid &&  FirstName.touched" class="invalid-error">
+                    <div *ngIf="FirstName.errors.required" class="erro">First name is required. </div>
+                  </div>
+                  <div *ngIf="FirstName.errors && FirstName.errors.pattern" class="invalid-error">
+                    White spaces, special characters and digits are not allowed.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold required-form-field">Last name</label>
+                  <input type="text" class="form-control form-control-user" name="LastName" pattern='^[a-zA-Z]*$' #LastName="ngModel"
+                        [(ngModel)]="model.LastName" id="LastName" required maxlength="25" autocomplete="off" />
+
+                  <div *ngIf="LastName.invalid &&  LastName.touched" class="invalid-error">
+                    <div *ngIf="LastName.errors.required" class="erro">Last name is required. </div>
+                  </div>
+                  <div *ngIf="LastName.errors && LastName.errors.pattern" class="invalid-error">
+                    White spaces, special characters and digits are not allowed.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#catalogShareModel" class="btn btn-secondary">Cancel</button>
+          <!-- data-dismiss="modal" data-toggle="modal" data-target="#catalogShareModel"-->
+          <button type="button" (click)="createReviewer(model)" *ngIf="!isActiveUser" [disabled]="(Email.invalid || FirstName.invalid || LastName.invalid)" class="btn btn-primary">Create</button>
+          <button type="button" (click)="createReviewer(model)" *ngIf="isActiveUser" [disabled]="(Email.invalid || FirstName.invalid || LastName.invalid)" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal to create the new reviewr end-->

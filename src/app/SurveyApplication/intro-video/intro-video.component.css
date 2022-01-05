@@ -1,0 +1,14 @@
+.space-around{
+    display: flex;
+    justify-content: space-around;
+}
+.center{
+    text-align: center;
+}
+.heading{
+    background: #059ee3;
+    color: white;
+    padding: 5px 0;
+    border-radius: 5px;
+    text-align: center;
+}

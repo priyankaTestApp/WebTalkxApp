@@ -1,0 +1,59 @@
+.infopack-icon {
+  width: 44px;
+  height: 40px;
+}
+
+/* .dashboard-page .card.info-content-container {
+  height: 185px;
+} */
+
+.dashboard-page .quick-links .nav-item {
+  height: 46px;
+}
+
+.common-font-blue {
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  font-size: 23px;
+  letter-spacing: 0.7px;
+  color: #059ee3;
+}
+
+.modal-content {
+  width: 750px;
+}
+
+.dashboard-page .block-1 {
+  float: left;
+  padding: 13px 20px;
+  border-right: 1px solid #cccccc;
+  /* width: 25%; */
+  height: 142px;
+}
+
+.watermark {
+  position: absolute;
+  top: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.feather-color {
+  color: #004076;
+  font-size: 40px;
+}
+/* .icon-video:before {
+  content: "\e8ec";
+} */
+
+.info-content-container .info-count {
+  margin-left: -2px !important;
+}

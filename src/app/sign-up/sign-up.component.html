@@ -1,0 +1,137 @@
+<div class="bg-gradient-primary height-100vh d-flex align-items-center">
+    <div class="container">
+      <div class="card o-hidden border-0 shadow-lg my-">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+            <div class="col-lg-7">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Create an Account !</h1>
+                </div>
+                <form class="user" #signupForm="ngForm" (ngSubmit)="signupForm.form.valid && onSignUpSubmit(signupForm)">
+                  <div class="form-group">
+                    <input type="email" maxlength="65" class="form-control form-control-user"
+                          id="EmailId" #EmailId="ngModel" [(ngModel)]="signupmodel.EmailId" name="EmailId" autocomplete="off" (keyup)="onEmailEnter(signupmodel.EmailId)"
+                           required [ngClass]="{'is-invalid':EmailId.invalid && (signupForm.submitted || EmailId.touched)}"
+                           placeholder="Email Address" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-_]{2,}[.]{1}[a-zA-Z]{2,}">
+                    
+                    <div *ngIf="EmailId.invalid && (signupForm.submitted || EmailId.touched)" class="ml-2 invalid-feedback">
+                      <div *ngIf="EmailId.errors && EmailId.errors.required">Email is required.</div>
+                    </div>
+                    <div *ngIf="EmailId.errors && EmailId.errors.pattern" class="invalid-feedback ml-2">Email is invalid.</div>
+                    <div class="invalid-error ml-2" *ngIf="isActiveUser">This email has been already registered.</div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input type="text" class="form-control form-control-user" #FirstName="ngModel" [(ngModel)]="signupmodel.FirstName" maxlength="25"
+                           id="FirstName" placeholder="First Name" [ngClass]="{'is-invalid':FirstName.invalid && (signupForm.submitted || FirstName.touched)}" name="FirstName" pattern='^[a-zA-Z]*$' required autocomplete="off">
+                      
+                      <div *ngIf="FirstName.invalid && (signupForm.submitted || FirstName.touched)" class="ml-2 invalid-feedback">
+                        <div *ngIf="FirstName.errors.required">First name is required.</div>
+                      </div>
+                      <div *ngIf="FirstName.errors && FirstName.errors.pattern" class="invalid-feedback ml-2">White spaces, special characters and numbers are not allowed.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control form-control-user" #LastName="ngModel" [(ngModel)]="signupmodel.LastName" maxlength="25"
+                            id="LastName" placeholder="Last Name" [ngClass]="{'is-invalid':LastName.invalid && (signupForm.submitted || LastName.touched)}" name="LastName" pattern='^[a-zA-Z]*$' required autocomplete="off">
+  
+                      <div *ngIf="LastName.invalid && (signupForm.submitted || LastName.touched)" class="ml-2 invalid-feedback">
+                        <div *ngIf="LastName.errors.required">Last name is required.</div>
+                      </div>
+                      <div *ngIf="LastName.errors && LastName.errors.pattern" class="invalid-feedback ml-2">White spaces, special characters and numbers are not allowed.</div>
+  
+                    </div>
+                  </div>
+  
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input style="width:100%;" type="password" autocomplete="off" [(ngModel)]="signupmodel.Password" name="Password" class="form-control form-control-user"
+                            id="Password"  placeholder="Password" [ngClass]="{'is-invalid':Password.invalid && (signupForm.submitted || Password.touched)}" maxlength="50" required #Password="ngModel" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+  
+                      <div *ngIf="Password.invalid && (signupForm.submitted || Password.touched)" class="ml-2 invalid-feedback">
+                        <div *ngIf="Password.errors.required">Password is required.</div>
+                      </div>
+                      <div *ngIf="Password.errors && Password.errors.pattern" class="invalid-feedback ml-2">A minimum 8 characters password must contains a combination of uppercase, lowercase letter, number, and special character are required.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="password" [(ngModel)]="signupmodel.confirmpassword" name="confirmpassword" class="form-control form-control-user"
+                          id="confirmpassword" placeholder="Confirm Password" [ngClass]="{'is-invalid':confirmpassword.invalid && (signupForm.submitted || confirmpassword.touched)}" maxlength="50" required #confirmpassword="ngModel" pattern="{{ Password.value }}" />
+  
+                      <div *ngIf=" confirmpassword.invalid && (signupForm.submitted || confirmpassword.touched)" class="ml-2 invalid-feedback">
+                        <div *ngIf="confirmpassword.errors.required">Confirm password is required. </div>
+                      </div>
+                      <div *ngIf="confirmpassword.errors && confirmpassword.errors.pattern" class="invalid-feedback ml-2">Password & confirm password do not match.</div>
+                    </div>
+                  </div>
+                  <div class="form-group ml-2">
+                    <div class="custom-control custom-checkbox">
+                      <!-- <input type="checkbox" class="custom-control-input" id="termAndCondition" name="termAndCondition" #termAndCondition [(ngModel)]="signupmodel.termAndCondition"> -->
+                      <input type="checkbox" required class="custom-control-input" [ngClass]="{'is-invalid':termAndCondition.invalid && (signupForm.submitted || termAndCondition.touched)}"
+                        id="termAndCondition" [(ngModel)]="model.termAndCondition" #termAndCondition="ngModel" name="termAndCondition">
+                      <label class="custom-control-label font-14 control-label-height" for="termAndCondition" name="termAndCondition">
+                        I agree to <a href="#" data-target="#exampleModalCenter" data-toggle="modal" class="link">
+                          terms & conditions of use
+                        </a>
+                      </label>
+                    </div>
+                  </div>
+                  <!--<a href="login.html" class="btn btn-primary btn-user btn-block">
+                    Register Account
+                  </a>-->
+                  <button type="submit" class="btn btn-primary  btn-user btn-block">Sign up</button>
+                  <hr>
+                  <p class="mb-0 text-muted ml-1 font-13">
+                    By submitting this form, you confirm that you agree to the storing and processing of your personal data by Webtalkx as described in our terms of service and privacy policy.
+                  </p>
+                  <!--<a href="index.html" class="btn btn-google btn-user btn-block">
+                    <i class="fab fa-google fa-fw"></i> Register with Google
+                  </a>
+                  <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                  </a>-->
+                </form>
+                <hr>
+                <div class="text-center">
+                  <a class="small" [routerLink]="['/ForgotPassword']">Forgot Password?</a>
+                </div>
+                <div class="text-center">
+                  <a class="small" [routerLink]="['/Login']">Already have an account? Login!</a>
+                </div>
+              </div>
+              <p class="mb-3 text-muted font-13 text-center">
+                © {{year}} Webtalkx, Inc.
+              </p>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+    </div>
+</div>
+
+<!-- Modal for terms and conditions -->
+<div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title text-whit common-font-blue" id="exampleModalLongTitle">Terms & Conditions of Use</div>
+        <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="">
+
+        <app-terms-and-conditions></app-terms-and-conditions>
+
+
+      </div>
+      <div class="modal-footer p-2">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>-->
+      </div>
+    </div>
+  </div>
+</div>

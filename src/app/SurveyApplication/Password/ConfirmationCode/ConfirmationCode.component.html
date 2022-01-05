@@ -1,0 +1,54 @@
+
+<div class="bg-gradient-primary height-100vh">
+  <div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-2">Confirmation code</h1>
+                    <p class="mb-4" style="font-size:14px">
+                      We just sent a confirmation code to your email address!
+                    </p>
+                  </div>
+                  <form class="user" name="form" #fconfirm="ngForm" (ngSubmit)="onSubmit(fconfirm);" novalidate id="ForgtPasWrd">
+                    <div class="form-group ">
+                     
+                      <input type="text" class="form-control form-control-user" placeholder="Enter code here." maxlength="4" required name="Code" #Code="ngModel" [(ngModel)]="model.Code" autocomplete="off" pattern="[0-9]+" [ngClass]="{'is-invalid':Code.invalid && (fconfirm.submitted || Code.touched)}" />
+                      <div *ngIf="Code.invalid && (Code.touched || Code.submitted)" class="invalid-feedback">
+                        <div *ngIf="Code.errors && Code.errors.required">Confirmation code is required.</div>
+                        <div *ngIf="Code.errors && Code.errors.pattern">Alphabets are not allowed.</div>
+                      </div>
+                      <div class="invalid-error ">{{confirmuser}}</div>
+                    </div>  
+                                        
+                    <div class="btn_control">
+                      <button type="submit" class="btn btn-primary btn-user btn-block" [disabled]="(Code.invalid)" placement="top">Next</button>
+                    </div>
+                  </form>
+
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" [routerLink]="['/Signup']">Create an Account!</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" [routerLink]="['/Login']">Already have an account? Login!</a>
+                  </div>
+                </div>
+                <p class="mb-3 text-muted text-center font-13" >
+                  © {{year}} Webtalkx, Inc.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

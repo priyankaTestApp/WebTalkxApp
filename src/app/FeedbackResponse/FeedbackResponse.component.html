@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="thanks mt-5">
+        <!--<h1><b>Share your Feedback with us</b></h1>-->
+        <h3 class="common-font-blue"><b>Share your feedback</b></h3>
+      </div>
+      <div class="card shadow-lg border-0 rounded-lg mt-3">
+        <div class="card-body">
+          <form #updateProfileForm="ngForm" (ngSubmit)="updateProfileForm.form.valid && FeedBackSubmit(updateProfileForm)">
+            <div class="feedback-message">
+              <div class="required-form-fiel font-size-14"><b>Please share your feedback and suggestions with us:</b></div>
+            </div>
+            <textarea type="text" id="suggest" #suggest="ngModel" name="suggest" class="my-2 mx-1 textbox-border form-group control-width" rows="4" [(ngModel)]="updateUserModel.suggest" placeholder="Please enter suggestion"></textarea>
+        
+
+            <!--<div class="feedback-message mt-3">
+              <div class="required-form-fiel font-size-14"><b>How was your overall experience:</b></div>
+            </div>
+            <textarea type="text" id="overallex" name="overallex" #overallex="ngModel" class="my-2 mx-1 textbox-border form-group control-width" rows="4" [(ngModel)]="updateUserModel.overallex" placeholder="Please enter message"></textarea>-->
+            
+            <div class="ratttiun mt-3">
+              <div class="required-form-fiel font-size-14"><b>Please rate your overall webtalkx experience:</b></div>
+              <div class="rating">
+                <label>
+                  <input type="radio" [(ngModel)]="updateUserModel.rating" name="rating" value="1" [checked]="rating===1" />
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" [(ngModel)]="updateUserModel.rating" name="rating" value="2" [checked]="rating===2" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" [(ngModel)]="updateUserModel.rating" name="rating" value="3" [checked]="rating===3" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" [(ngModel)]="updateUserModel.rating" name="rating" value="4" [checked]="rating===4" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" [(ngModel)]="updateUserModel.rating" name="rating" value="5" [checked]="rating===5" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="feedbackbtn mt-5">
+              <button  type="submit" [disabled]="!updateUserModel.rating" class="btn btn-primary mr-1 float-right">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+
+<script>
+  $(':radio').change(function () {
+    console.log('New star rating: ' + this.value);
+  });
+</script>

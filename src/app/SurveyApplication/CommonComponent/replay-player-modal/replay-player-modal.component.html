@@ -1,0 +1,20 @@
+
+  <!--recording player popup-->
+  <div (click)="stopVideoPlayer(recording_player)">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header not">
+          <div class="" id="exampleModalLabel">Recording Video</div>
+          <button type="button" class="close" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body all-around-padding text-center">
+
+          <video src="{{video_url}}" controls autoplay #recording_player class="recording_player" width="300"></video>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

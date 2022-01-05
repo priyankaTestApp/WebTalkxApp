@@ -1,0 +1,334 @@
+
+.card-full-container {
+  box-shadow: 1px 1px 18px -10px;
+  border-radius: 8px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#review_video {
+  object-fit: cover;
+}
+/*.vendor_brand_logo.comp_logo {
+  width: 200px;
+  right: 0px;
+  top: -20px;
+}*/
+/*.pcoded-content .pcoded-inner-content .auth-content {
+  width: 100%;
+}*/
+.text-center {
+  text-align: center;
+}
+
+.recorded-video-container {
+  margin: 0 auto;
+}
+
+#videoswitchBtn {
+  color: #059EE3;
+}
+
+.input-group-cont {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+.form-textbox-border {
+  border-bottom: 0px !important;
+}
+
+.text-with-video .row-collapse {
+  display: flex;
+}
+
+.card-content-header a:hover {
+  text-decoration: none;
+}
+
+.tab-content {
+  padding: 10px 10px;
+  height: 360px;
+  overflow: auto;
+  /*max-height: 360px;*/
+  /*height: calc(100% - 60px);*/
+}
+
+.menu-tab a.active {
+  background-color: #eee;
+  /*border-color: #eee #eee #ddd;*/
+  color: #059EE3;
+  margin-left: -1px;
+  /*font-weight: bold;
+  width: 100.5%;*/
+}
+
+.search-question {
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  border: solid 1px #cccccc;
+  background-color: #fafafa;
+  padding: 5px;
+  font-size: 15px;
+}
+
+.question-text {
+  width: 100%;
+  float: left;
+  background-color: #e5e5e5;
+  height: auto;
+  /*padding: 20px !important;
+  font-size: 20px;*/
+  padding: 10px !important;
+  font-size: 15px;
+  line-height: 1.82;
+  margin-bottom: 3px;
+  letter-spacing: 0 !important;
+  margin-top: 5px;
+}
+
+.transcript-container .transcript {
+  border: 1px solid #ddd;
+  border-style: dashed;
+  /*height: 80px;*/
+  padding: 10px;
+  max-height: 300px;
+  overflow: auto;
+  min-height: 80px;
+}
+
+/*CommentBox Style*/
+/*.pb-cmnt-container {
+  margin-top: 0px;
+}*/
+.custom-staticstar {
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.indent-13 {
+  text-indent: 13px;
+}
+
+.disabled_over {
+  position: absolute;
+  z-index: 1050;
+  width: 635px;
+  background: #ccc;
+  opacity: 0.3;
+}
+
+  .disabled_over.standard {
+    height: 240px;
+  }
+
+  .disabled_over.custom {
+    height: 515px;
+  }
+
+#defaultValuationTab .starcnt {
+  margin-top: -14px;
+}
+
+#defaultValuationTab .rating-err {
+  right: 62px;
+}
+
+.pb-cmnt-textarea {
+  resize: none;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #D3D3D3;
+}
+
+#valuationBtn {
+  color: #059EE3;
+}
+
+.form-row {
+  margin-top: -5px;
+}
+
+.pb-cmnt-textarea-custom {
+  margin-top: -5px;
+  margin-bottom: 0px;
+  height: 100px;
+  width: 146%;
+  resize: none;
+}
+
+.errorVid {
+  top: 50%;
+  left: 10%;
+  color: red;
+  font-size: 20px;
+}
+
+
+/*customRatingStar's*/
+
+/*.rate {
+
+  height: 53px;
+  position: sticky;
+  padding: 0 260px;
+  margin-top: -20px;
+}
+
+  .rate:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+  }
+
+  .rate:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+  }
+
+    .rate:not(:checked) > label:before {
+      content: '★ ';
+    }
+
+  .rate > input:checked ~ label {
+    color: #ffc700;
+  }
+
+  .rate:not(:checked) > label:hover,
+  .rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+  }
+
+  .rate > input:checked + label:hover,
+  .rate > input:checked + label:hover ~ label,
+  .rate > input:checked ~ label:hover,
+  .rate > input:checked ~ label:hover ~ label,
+  .rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+  }*/
+
+
+
+/* The switch - the box around the slider */
+.recorded-video-container .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+  /* Hide default HTML checkbox */
+  .recorded-video-container .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+/* The slider */
+.recorded-video-container .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+  .recorded-video-container .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+.recorded-video-container input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.recorded-video-container input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.recorded-video-container input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.recorded-video-container .slider.round {
+  border-radius: 34px;
+}
+
+  .recorded-video-container .slider.round:before {
+    border-radius: 50%;
+  }
+ 
+.card .card-header[data-toggle="collapse"] {
+  padding: 0.75rem 1.75rem 0.75rem 1.25rem;
+}
+
+.card .card-header[data-toggle="collapse"]::after {
+  padding-right: 1.0rem;
+}
+
+
+/*form star rating*/
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 3rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: red;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: red;
+}
+
+ngb-rating {
+  color: #FFC107;
+  font-size: 57px;
+}
+
+/*form star rating end*/
+
+.filled{
+  color: red;
+}
+
+.defaultHeart{
+  position: relative;
+  display: inline-block;
+  color:gray;
+  font-size: 50px;
+}
+
+.paintedHeart{
+  position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: red;
+}

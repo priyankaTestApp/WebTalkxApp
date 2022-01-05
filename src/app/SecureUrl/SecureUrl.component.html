@@ -1,0 +1,325 @@
+<!--<p>
+  i2-bsecure-url works!
+</p>-->
+<!--Recording container-->
+<div class="shadow-none mb-5 bg-light rounded -padding-top-zero pcoded-content">
+  <div class="auth-content ">
+
+    <div class="recording-details">
+      <div class="col-md-12 no-padding">
+        <div class="col-md-12 no-padding ml-1 row relative">
+          <div class="col-md-12 no-padding Reference-request-na no-padding page-header-text common-font-blue mb-2">
+            {{recording_title}}
+          </div>
+          <div class="Requested-b col-md-12 no-padding mb-4 page-header-inlin common-font font-size-14">
+            <table class="w-100">
+              <tbody>
+                <tr class="d-inline">
+                  <td>Asked By:</td>
+                  <td class="a" id="{{vendorID}}" (click)="getUserInfo($event, vendorID, vendorname)" title="Send message to {{vendorname}}">
+                    <strong>&nbsp;<a href="JavaScript:Void(0);">{{vendorname}}</a></strong>
+                    <span class="ml-3" *ngIf="venLinkedIn">
+                      <a href="{{venLinkedIn}}" target="_blank">
+                        <img class="icon-picture" src="../../../assets/images/Retegrity-images/linkedin-blue.png" />
+                      </a>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr class="d-inline p-4">
+                  <td>Recorded By:</td>
+                  <td class="a" id="{{refGiverid}}" (click)="getUserInfo($event, refGiverid, givername)" title="Send message to {{givername}}">
+                    <strong>&nbsp;<a href="JavaScript:Void(0);">{{givername}}</a></strong>
+                    <span class="ml-3" *ngIf="givLinkedIn">
+                      <a href="{{givLinkedIn}}" target="_blank">
+                        <img class="icon-picture" src="../../../assets/images/Retegrity-images/linkedin-blue.png" />
+                      </a>
+                    </span>
+                  </td>
+                  <!--<td>
+                    <button class="btn btn-primary ml-5" title="Please click on this button to have a tour of R360." (click)="tour()"><i class="fa fa-info-circle mr-2"></i>Start Tour</button>
+                  </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-full-container">
+      <div class="card-body text-left row">
+        <div class="col-md-7 float-md-none text-center recorded-video-container">
+          <div class="col-md-12 mb-3 video-tag">
+            <div class="embed-responsive embed-responsive-16by9 position-relative">
+              <!-- <video id="review_video" #review_video (ended)="onVideoEnd(review_video)" (playing)="onStartPlay(review_video)" width="300" height="200" controls type='video/mp4' controlsList="nodownload" playsinline disablePictureInPicture [src]="API_url+'uploads/'+RefRecordingID+'/1.mp4'"></video>
+               -->
+              <video id="review_video" #review_video (ended)="onVideoEnd(review_video)" (playing)="onStartPlay(review_video)" width="300" height="200" controls type='video/mp4' controlsList="nodownload" playsinline disablePictureInPicture
+              src="{{domain_url+'UserVideo/'+RefRecordingID+'/record_'+RefRecordingID+'_'+user_id+'_1.mp4'}}"></video>
+           
+           
+            </div>
+            <!--<div class="col-md-12 mt-3 text-left p-0 textOverflo">
+      <h4 class="textOverflow">{{recording_title}}</h4>
+    </div>-->
+          </div>
+          <div class="col-md-12 mt-3 text-cente p-0">
+            <!--<button type="button" id="play-button" #playbtn class="btn btn-primary m-l-15 font-size-14" (click)="videoPlay($event, review_video, playbtn)" title="Play">Play</button>-->
+            <button type="button" id="playall-button" #playallbtn class="btn btn-primary m-l-15 font-size-14 float-left" (click)="videoPlayAll($event, review_video, playallbtn)" title="Play All with Question">Play with Question</button>
+            <!-- Rounded switch -->
+            <label class="switch float-right mr-3" title="Autoplay">
+              <input type="checkbox" (change)="onAutoplay($event)">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <!--video section end-->
+        <!--question section start-->
+        <div class="col-md-5 float-md-none text-center admin-question-wizard admin-custom-wizard">
+          <!--Tab menu-->
+          <ul class="nav nav-tabs menu-tab-ul">
+            <li class="menu-tab" joyrideStep="firstStep" title="Questionnaire" text="Please click on each question to replay answer." id="questionnairetabID" (click)="enableTab(questionnairetab, tabcontent)"><a #questionnairetab class="active common-font font-weight-bold font-size-14" data-toggle="tab" href="#questionnairetab">Questionnaire</a></li>
+            <li class="menu-tab" id="mynotestabID" (click)="enableTab(mynotestab, tabcontent)"><a #mynotestab class="common-font font-weight-bold font-size-14" data-toggle="tab" href="#mynotestab">My Notes</a></li>
+            <li class="menu-tab" (click)="enableTab(searchtab, tabcontent)"><a #searchtab class="common-font font-weight-bold font-size-14" data-toggle="tab" href="#searchtab">Search</a></li>
+          </ul>
+          <!--Tab menu content-->
+          <div class="tab-content p-2" #tabcontent>
+
+            <!--Second menu-->
+            <div id="questionnairetab" class="tab-pane  in active">
+              <div class="colPading admin-question-wizard" *ngIf="questionList?.length > 0">
+                <div *ngFor="let questions of questionList;  let i = index" id="Q{{i+1}}">
+                  <div class="question-text question_div text-justify a question_{{i+1}}" [attr.queid]="questions.RecordingQuestionID"  *ngIf="(questions.RecordingStatus == 'Skipped' || questions.RecordingStatus == 'Not recorded') ? false : true" #qlistall (click)="selectQuestionAndScript(questions.RecordingQuestionID, questions.RefRecordingID, qlistall, i+1, 'question')">
+                    {{questions.QuestionText}}
+                  </div>
+                  <div class="reader-cont float-left" *ngIf="(questions.RecordingStatus == 'Skipped' || questions.RecordingStatus == 'Not recorded') ? false : true">
+                    <button class="btn btn-sm btn-primary my-2 readbtn mr-2" #readbtn joyrideStep="secondStep" [attr.status]="questions.RecordingStatus" title="Read Button" text="Click on read button to hear spoken question and to replay answer." (click)="onQuestionReading(qlistall, i+1, questions.QuestionText, readbtn, questions.RecordingStatus,questions.RecordingQuestionID)">
+                      Read
+                    </button>
+                    <button *ngIf="questions.RecordQuestion" class="btn btn-sm btn-primary my-2 playbtn" #playbtn (click)="replayInterviewNow($event, i+1)">
+                      View Question
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--Second menu-->
+            <div id="mynotestab" class="tab-pane fade">
+              <div class="colPading notes-section">
+                <div id="notes_button">
+                  <button type="button" id="addnotesBtn" class="btn a btn-primary" (click)="enableFocus()" data-toggle="modal" data-target="#addnotesModal">
+                    <i class="fa fa-plus-circle"></i>
+                    <span class="common-font white-text">&nbsp;&nbsp;Add Notes</span>
+                  </button>
+                </div>
+
+                <!--checking notes object length-->
+                <div *ngIf="noteslist?.length > 0" id="control_notes" class="overflow-auto clearfix">
+                  <div *ngFor="let notes of noteslist; let i = index" id="notes_{{i+1}}">
+                    <div class="question-text text-justify a notes" #nlistall>
+                      <div class="time_title col-md-12 row no-padding no-margin">
+                        <span id="markTitle" class="col-md-12 no-padding mb-3">{{notes.NoteText}}</span>
+                      </div>
+                      <div class="time_title col-md-12 clearfix row no-padding no-margin">
+                        <span id="markText" class="col-md-6 no-padding font-italic font-size-12">Created on {{notes.InsertDate | date:'MM/dd/yyyy' }}</span>
+                        <span id="markDelete" class="col-md-6 text-right relative no-padding">
+                          <button type="button" id="editbookmarkBtn" class="btn a btn-primary btn-sm" (click)="NotesEdit(notes)" data-toggle="modal" data-target="#addnotesModal"><i class="far fa-edit"></i></button>
+                          <button type="button" id="removebookmarkBtn" class="btn a btn-danger btn-sm" (click)="deleteConfirm(notes)" data-toggle="modal" data-target="#myModalbookmark"><i class="far fa-trash-alt"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span *ngIf="noteslist?.length == 0" class="float-left ml-1 common-font font-size-14">Notes not available.</span>
+              </div>
+
+            </div>
+
+            <!-- searchTab -->
+            <div id="searchtab" class="tab-pane fade">
+              <div class="colPading admin-question-search">
+                <div class="-full-width ">
+                  <input type="search" class="search-question mb-2" placeholder="search" #searchval (click)="clearSearch()" (keyup)="keywordSearch($event, 'search')" aria-controls="DataTables_Table_0">
+                </div>
+              </div>
+              <div class="colPading admin-question-wizard searchscroll overflow-auto">
+                <span class="float-left ml-1 no-data common-font font-size-14">No content available.</span>
+                <div class="colPading admin-question-wizard" *ngIf="search_questionList">
+                  <div class="question-text question_search text-justify a search_qu -hidden" #qlist (click)="selectQuestionAndScript(questions.RecordingQuestionID, questions.RefRecordingID, qlist, i+1, q_status, questions.RecordingStatus, 'search')" *ngFor="let questions of search_questionList;  let i = index" id="{{questions.RecordingQuestionID}}">
+                    {{questions.QuestionText}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!--first menu-->
+          </div>
+        </div>
+
+        <!--question section end-->
+        <!--<div class="col-md-12 mt- transcript-container" id="TranscriptContainer">
+          <label class="float-left common-font common-secondry-color font-size-20">Transcript : </label>
+          <button type="button" id="script_refresh" class="btn a float-right no-padding no-margin" (click)="getAllQuestionsScript(q_req_id)"><i class="fa font-size-22">&#xf021;</i></button>
+          <p class="transcript -full-width float-left text-left common-font common-secondry-color">No script available.</p>
+        </div>-->
+
+        <div class="col-md-12 mt- transcript-container" id="TranscriptContainer">
+          <label class="float-left common-font common-secondry-color font-size-20">Transcript : </label>
+          <!--<button type="button" id="script_refresh" class="btn a float-right no-padding no-margin" (click)="getAllQuestionsScript(q_req_id)"><i class="fa font-size-22">&#xf021;</i></button>-->
+          <p class="transcript -full-width float-left text-left common-font common-secondry-color">No script available.</p>
+        </div>
+
+        <!-- <div class="modal fade" id="CommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Comment</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <div class="form-group mr-2">
+                  <label for="message-text" class="mr-4 my-2 form-lable-text  form-group control-width">Comment</label>
+                  <textarea maxlength="500" rows="5" class="txtArea col-md-12 my-1 mt-2 ml-1 common-font font-size-14 padding-5" required name="CommentText" id="comment_message_text"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" (click)="AddComment()" disabled class="btn btn-primary mr-4" data-dismiss="modal">Send</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+<!--recording player popup-->
+<div class="modal fade" id="recordingPlayerModel" (click)="stopVideoPlayer(recording_player)" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header not">
+        <div class="" id="exampleModalLabel">Recording Video</div>
+        <button type="button" class="close" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding text-center">
+        
+        <video src="{{video_url}}" controls autoplay #recording_player class="recording_player" width="300"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+        <!--Send Message model-->
+        <div class="modal fade modal-slide right sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-container">
+              <div class="modal-header edit-header">
+                <div class="left-header">
+                  <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+                </div>
+                <div class="right-header">
+                  <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+              </div>
+              <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+                <!--<div class="form-group mr-2">
+                  <label class="mr- my no-margin form-group control-width">Send message</label>
+                  <textarea maxlength="500" class="usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" id="usertextmsg" rows="3"></textarea>
+                </div>-->
+                <p class="text-center">Please signup to WebTalkx platform for sending a message.</p>
+                <p class="text-center mt-5 -full-width">
+                  <a href='/#/Login' target='_blank'><button type="button" class="btn btn-primary login_btn">Login</button></a>
+                </p>
+              </div><!--modal body closed-->
+              <!--Added below code to disabled the submit button until user not selecting tentering the text (click)="sendMessage(sender_id, receiver_id)"-->
+              <!--<div class="modal-footer">
+                <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+                <button type="button" data-dismiss="modal" disabled class="btn btn-primary float-right send-text" title="Send">Send</button>
+              </div>-->
+            </div>
+          </div>
+        </div>
+
+        <!--Send Message model-->
+        <div class="modal fade modal-slide right messagenotification" id="messagenotification" tabindex="-1" role="dialog" aria-labelledby="messagenotificationLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-container alert">
+              <div class="modal-header edit-header in">
+                <div class="left-header">
+                  <h6 class="common-font-blue">Message Notification</h6>
+                </div>
+                <div class="right-header">
+                  <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+              </div>
+              <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+                <div class="form-group mr-2">
+                  <p class="mr- my no-margin form-group control-width">You can not send message to Interviewer.</p>
+                </div>
+              </div><!--modal body closed-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal" id="addnotesModal" tabindex="-1" (click)="notesEditCancel($event)" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Notes</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <div class="form-group mr-2">
+                  <!--<textarea id="notes_review" maxlength="500" rows="5" (keyup)="checkTextLength(false)" class="txtArea col-md-12  my-1 mt-2 ml-1 common-font font-size-14 padding-5" required name="NoteText"></textarea>
+                  <div id="notes_character_check" class="error ml-1"></div>-->
+                  <p class="text-center">Please signup to WebTalkx platform for adding notes.</p>
+                  <p class="text-center mt-5 -full-width">
+                    <a href='/#/Login' target='_blank'><button type="button" class="btn btn-primary login_btn">Login</button></a>
+                  </p>
+                  <!--<p class="text-center mt-5 -full-width">
+                    <button type="button" class="btn btn-primary login_btn" [routerLink]="['/Login']">Login</button>
+                  </p>-->
+                </div>
+              </div>
+              <!--Added below code to disabled the submit button until user not entering the text-->
+              <!--<button type="button" (click)="AddMyNotes(model.NoteText)"  class="btn btn-primary mr-4" data-dismiss="modal">{{notesbtn}}</button>-->
+              <!--<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel_notes" data-dismiss="modal" (click)="notesEditCancel($event)">Close</button>
+              </div>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="modal" id="myModalbookmark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <p>Are you sure to delete this note?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <!--Added below code to disabled the submit button until user not entering the text (click)="NotesRemove()"-->
+                <button type="button" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

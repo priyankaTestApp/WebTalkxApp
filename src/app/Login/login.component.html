@@ -1,0 +1,92 @@
+<div>
+  <div class="bg-gradient-primary height-100vh d-flex align-items-center">
+    <div class="container">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+               
+                <div class="col-lg-6">
+                
+                  <div class="p-5">
+                    <div *ngIf="errors" class="col-lg-12 alert alert-danger">
+                    <strong>An Error Occured </strong> {{errors}}
+                    </div>
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    </div>
+                    <form class="user" #userLoginForm="ngForm" (ngSubmit)="onSubmit(userLoginForm)">
+                     
+                      <div class="form-group">
+                      
+                        <!--<input type="email" class="form-control form-control-user"
+                        id="exampleInputEmail" aria-describedby="emailHelp"
+                        placeholder="Enter Email Address...">-->
+                        <input type="email" class="form-control form-control-user" name="Email"
+                               pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-_]{2,}[.]{1}[a-zA-Z]{2,}"
+                               [(ngModel)]="model.Email" #Email="ngModel" required placeholder="Enter Email Address" [ngClass]="{'is-invalid':Email.invalid && (userLoginForm.submitted || Email.touched)}" />
+
+                        <div *ngIf="Email.invalid && (userLoginForm.submitted || Email.touched)" class="invalid-feedback ml-2">
+                          <div *ngIf="Email.errors && Email.errors.required">Email is required.</div>
+                        </div>
+
+                        <div *ngIf="Email.errors && Email.errors.pattern" class="invalid-feedback">
+                          Email is invalid.
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <input type="password" class="form-control form-control-user"
+                               [(ngModel)]="model.Password" #Password="ngModel" name="Password" placeholder="Enter Password" [ngClass]="{'is-invalid':Password.invalid && (userLoginForm.submitted || Password.touched)}" required />
+
+                        <div class="invalid-feedback ml-2" *ngIf="Password.invalid && (userLoginForm.submitted || Password.touched)">
+                          <div>Password is required.</div>
+                        </div>
+                      </div>
+                      <div class="form-group ml-2">
+                        <div class="custom-control custom-checkbox small">
+                          <input class="custom-control-input" required id="ChkRememberPwd" name="ChkRememberPwd" type="checkbox">
+                          <label class="custom-control-label  control-label-height" for="ChkRememberPwd" name="ChkRememberPwd">Remember me</label>
+                        </div>
+                      </div>
+                      <!--<a href="index.html" class="btn btn-primary btn-user btn-block">
+                          Login
+                      </a>-->
+                      <div *ngIf="credentialError" class="invalid-feedback mb-2 ml-2 d-block">
+                        Invalid credential.
+                      </div>
+                      <button type="submit" class="btn btn-primary btn-user btn-block">
+                        Sign in
+                      </button>
+
+                      <!-- <hr>
+                      <a href="index.html" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> Login with Google
+                      </a>
+                      <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                      </a> -->
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                      <a class="small" [routerLink]="['/ForgotPassword']">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                      <a class="small" [routerLink]="['/Signup']">Create an Account!</a>
+                    </div>
+                  </div>
+                  <p class="mb-3 text-muted font-13 text-center">
+                    © {{year}} Webtalkx, Inc.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

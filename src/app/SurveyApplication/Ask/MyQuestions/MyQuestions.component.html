@@ -1,0 +1,743 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">My Questions</li>
+  </ol>
+</nav>
+
+<div class="pcoded-wrapper common-table-content">
+  <div class="col-sm-12 p-0">
+    <div class="card">
+      <div class="card-header bg-blue">
+        <div class="common-font">My Questions</div>
+      </div>
+      <div class="card-body">
+        <div class="dt-responsive table-responsive selectlist">
+            <div class="dataTables_wrapper dt-bootstrap4" id="add-row-table_wrapper">
+              <!--Menu tab-->
+              <ul class="nav nav-tabs menu-tab-ul">
+
+                <li class="menu-tab" (click)="enableTab(FavQuestions, tabcontent)"><a #FavQuestions class="active common-font font-weight-bold font-14" id="FavQuestions_menutab" data-toggle="tab" href="#FavQuestions">Favorite Questions</a></li>
+                <li class="menu-tab" (click)="enableTab(SampleQuestions, tabcontent)"><a #SampleQuestions class="common-font font-weight-bold font-14" id="SampleQuestions_menutab" data-toggle="tab" href="#SampleQuestions">Sample Questions</a></li>
+                <li class="menu-tab" (click)="enableTab(TempQuestions, tabcontent)"><a #TempQuestions class="common-font font-weight-bold font-14" id="TempQuestions_menutab" data-toggle="tab" href="#TempQuestions">Template Questionnaires</a></li>
+                <li class="menu-tab" (click)="enableTab(AllQuestions, tabcontent)"><a #AllQuestions class="common-font font-weight-bold font-14" id="AllQuestions_menutab" data-toggle="tab" href="#AllQuestions">Recently Used Questions</a></li>
+
+                <!--<li class="menu-tab" data-toggle="modal" id="samplequestions" title="Click to see sample questions" data-target="#suggestionsModal"><a #SamQuestions class="active common-font font-weight-bold font-size-14" data-toggle="tab">Sample Questions</a></li>-->
+              </ul>
+              <!-- first menu -->
+              <div class="tab-content selectlist" #tabcontent>
+
+                <div id="FavQuestions" class="tab-pane fad in active">
+                  <div class="" *ngIf="favouriteQuestion?.length == 0 || !favouriteQuestion">
+                    <h6 class="data-msg">No favorite questions available.</h6>
+                  </div>
+                  <div class="col-sm-12 no-padding" *ngIf="favouriteQuestion?.length > 0">
+                    
+                    <table *ngIf="favouriteQuestion?.length > 0" class="table font-14" id="dataTable" width="100%" cellspacing="0">
+                      <thead class="custom-header">
+                        <tr role="row">
+                          <th></th>
+                          <th>Question Text</th>
+                          <th>Last time used (Date)</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="row-list-detail {{favourite.RecordingQuestionID}}" *ngFor="let favourite of favouriteQuestion; let i = index">
+                          <!-- <td class="font-weight-bold" width="5%">{{i+1}}.</td>-->
+                          <td class="font-weight-bold" width="5%"><input class="star mb-" title="Click to remove favorite question." id="Favorite" name="MyFavorite" #MyFavorite="ngModel" (change)="SelectMyFavoriteQuestion(favourite.RecordingQuestionID)" [(ngModel)]="favourite.MyFavorite" type="checkbox"></td>
+                          <td class="a" width="65%">
+                            <div class="wordBreak">{{favourite.QuestionText}}</div>
+                          </td>
+                          <td class="" width="20%"><span>{{favourite.CreatedDate}}</span></td>
+                          <td class="text-center" width="10%">
+                            <i class="fas fa-trash-alt cursor-pointer text-red" (click)="deleteConfirm(favourite)" data-toggle="modal" data-target="#Deletemodal"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div id="AllQuestions" class="tab-pane fade">
+                  <div class="" *ngIf="RecordingRequestList?.length == 0">
+                    <h6 class="data-msg ">No questions available.</h6>
+                  </div>
+                  <div class="col-sm-12 p-0" *ngIf="RecordingRequestList?.length > 0">
+                    
+                    <table *ngIf="RecordingRequestList?.length > 0" class="table font-14" id="dataTable" width="100%" cellspacing="0">
+                      <thead class="custom-header">
+                        <tr role="row">
+                          <th></th>
+                          <th>Question Text</th>
+                          <th>Last time used (Date)</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="row-list-detail {{request.RecordingQuestionID}}" *ngFor="let request of RecordingRequestList; let i = index">
+
+                          <!--<td class="font-weight-bold" width="5%">{{i+1}}.</td>-->
+                          <td class="font-weight-bold" width="5%"><input class="star mb-5" title="Click to select favorite question." (change)="SelectMyFavoriteQuestion(request.RecordingQuestionID)" id="MyFavorite" name="MyFavorite" #MyFavorite="ngModel" [(ngModel)]="request.MyFavorite" type="checkbox"></td>
+                          <td class="" width="65%">
+                            <div class="wordBreak">{{request.QuestionText}}</div>
+                          </td>
+                          <td class="" width="20%"><span>{{request.CreatedDate}}</span></td>
+                          <td class="text-center" width="10%">
+                            <i class="fas fa-trash-alt cursor-pointer text-red" (click)="deleteConfirm(request)" data-toggle="modal" data-target="#Deletemodal"></i>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div id="TempQuestions" class="tab-pane fade">
+                  <div class="">
+                    <h6 class="data-msg ">No templates available.</h6>
+                  </div>
+                </div>
+
+                <div id="SampleQuestions" class="tab-pane fade">
+                  <div class="video-text-container">
+                    <span class="text-justify">Feel free to browse through some sample questions. Simply copy and paste to your new request.</span><br><br>
+
+                    <div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
+
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo1">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1"
+                              aria-expanded="false" aria-controls="collapseTwo1" (click)="openCloseAccordianMenu(rotateicon1)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">General - Personal/Character</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon1></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+                                <li class="info_text">Please introduce yourself and what is your relationship and history with the candidate?</li>
+
+                                <li class="info_text">
+                                  How do you know the candidate?
+                                </li>
+
+                                <li class="info_text">
+                                  Please describe the candidate's character, values and social behavior.
+                                </li>
+                                <li class="info_text">
+                                  What was one of the most memorable accomplishments since you have known the candidate?
+                                </li>
+                                <li class="info_text">
+                                  Have you witnessed the candidate in any stressful situation - how did he/she react? Please provide an example.
+                                </li>
+                                <li class="info_text">
+                                  Would you trust the candidate with large sums of money, children, or fragile individuals?
+                                </li>
+                                <li class="info_text">
+                                  If you think about the candidate, is there anything that stands out? Can you share any accomplishment or situational experience that is most remarkable?
+                                </li>
+                                <li class="info_text">
+                                  How would you describe the candidate’s reliability and dependability?
+                                </li>
+                                <li class="info_text">
+                                  What is your overall opinion of the subject?
+                                </li>
+                                <li class="info_text">
+                                  What are the subject’s strengths and what are areas you feel the subject can improve?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo21">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
+                              aria-expanded="false" aria-controls="collapseTwo21" (click)="openCloseAccordianMenu(rotateicon2)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Employment - General</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon2></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo21" class="collapse" role="tabpanel" aria-labelledby="headingTwo21" data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+
+                            <div class="colPading shared-bookmark-section">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+                                <li class="info_text">Please introduce yourself and what is your professional relationship to the candidate and how did it begin?</li>
+
+                                <li class="info_text">
+                                  How long did you work with the candidate and what positions did you both hold while your worked with the candidate?
+                                </li>
+
+                                <li class="info_text">
+                                  What were the candidate’s responsibilities while working at your company and how did these responsibilities change over time?
+                                </li>
+                                <li class="info_text">
+                                  If you had the opportunity, would you re-hire this job candidate? Why?
+                                </li>
+                                <li class="info_text">
+                                  What are the candidate’s biggest strengths and weaknesses?
+                                </li>
+                                <li class="info_text">
+                                  What are the candidate’s professional strengths and how were they an asset for the team and your company?
+                                </li>
+                                <li class="info_text">
+                                  Please tell me what it’s like to work with the job candidate.
+                                </li>
+                                <li class="info_text">
+                                  What advice would you give to successfully manage the job candidate?
+                                </li>
+                                <li class="info_text">
+                                  Is there anything else you like to share about the candidate that hasn't been asked?
+                                </li>
+                                <li class="info_text">
+                                  What are the most challenging aspects of the role that the candidate held and the work that the candidate did at your company?
+                                </li>
+                                <li class="info_text">
+                                  How would you describe the candidate’s reliability and dependability?
+                                </li>
+                                <li class="info_text">
+                                  What was one of the candidate’s most memorable accomplishments while working with you?
+                                </li>
+                                <li class="info_text">
+                                  What type of work environment do you think the candidate would be most likely to thrive in, and why?
+                                </li>
+                                <li class="info_text">
+                                  Would you recommend this candidate?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo3">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo3"
+                              aria-expanded="false" aria-controls="collapseTwo3" (click)="openCloseAccordianMenu(rotateicon3)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Employment - Caregiver</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon3></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo3" class="collapse" role="tabpanel" aria-labelledby="headingTwo3"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+                                <li class="info_text">Please introduce yourself and what is your relationship with the candidate</li>
+
+                                <li class="info_text">How long did the candidate work for you?</li>
+
+                                <li class="info_text">
+                                  What were the candidates job duties and responsibilities?
+                                </li>
+
+                                <li class="info_text">
+                                  How old was the person the candidate cared for?
+                                </li>
+                                <li class="info_text">
+                                  Were you satisfied with the candidates job performance? Why or why not?
+                                </li>
+                                <li class="info_text">
+                                  Did you feel like you were always informed of what was going on while the candidates was caring for patients?
+                                </li>
+                                <li class="info_text">
+                                  Were they always reachable while they were working for you?
+                                </li>
+                                <li class="info_text">
+                                  Were they punctual, and did that continue to be the case the entire time they worked for you?
+                                </li>
+                                <li class="info_text">
+                                  Does this person work well independently?
+                                </li>
+                                <li class="info_text">
+                                  Did this person show initiative?
+                                </li>
+                                <li class="info_text">
+                                  What were some areas in which they could improve?
+                                </li>
+                                <li class="info_text">
+                                  What was the reason this person gave you for wanting to do this kind of work?
+                                </li>
+                                <li class="info_text">
+                                  What was your child’s or relative’s (whomever was cared for) feedback about this person?
+                                </li>
+                                <li class="info_text">
+                                  Tell me one of the great things they used to do with your kids or loved one?
+                                </li>
+                                <li class="info_text">
+                                  Did you get the feeling that this person was enthusiastic and happy about doing this job?
+                                </li>
+                                <li class="info_text">
+                                  What did this person do to keep the person or people in their care active? (Talk to them, read stories, play music, go for walks, etc. This will help you get an idea of what the day-to-day activities might look like.)
+                                </li>
+                                <li class="info_text">
+                                  What was your favorite thing about working with this person?
+                                </li>
+                                <li class="info_text">
+                                  Is there anything we should know as a future potential employer of this person, either personality-wise or compensation-wise or behaviorally?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo4">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo4"
+                              aria-expanded="false" aria-controls="collapseTwo4" (click)="openCloseAccordianMenu(rotateicon4)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Real Estate - Realtor</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon4></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo4" class="collapse" role="tabpanel" aria-labelledby="headingTwo4"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+                                <li class="info_text">Please introduce yourself and provide some background on your relationship with the realtor?</li>
+
+                                <li class="info_text">What was the purpose of hiring a realtor, and did you make your selection?</li>
+
+                                <li class="info_text">
+                                  How well did the realtor market your home? Please provide any examples that stood out.
+                                </li>
+
+                                <li class="info_text">
+                                  Did the realtor work alone or was a team involved. Please describe your experience in either situation.
+                                </li>
+                                <li class="info_text">
+                                  How well were you kept informed about progress? How satisfied were you with the realtor's communication?
+                                </li>
+                                <li class="info_text">
+                                  Please describe your experience working with the realtor during the stages of listing, showing and closing?
+                                </li>
+                                <li class="info_text">
+                                  On a scale of 1 – 10, with 10 being the highest, how satisfied are you with the realtor?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo5">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo5"
+                              aria-expanded="false" aria-controls="collapseTwo5" (click)="openCloseAccordianMenu(rotateicon5)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Real Estate - Tenant</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon5></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo5" class="collapse" role="tabpanel" aria-labelledby="headingTwo5"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+
+                                <li class="info_text">Please introduce yourself and provide some background on the tenant and the property, incl length of lease agreement and type of property</li>
+
+                                <li class="info_text">
+                                  How much was the monthly rent and was rent paid on time and in full?
+                                </li>
+
+                                <li class="info_text">
+                                  Did the tenant take care of the property? Anything that stood out?
+                                </li>
+                                <li class="info_text">
+                                  How did the tenant communicate with you?
+                                </li>
+                                <li class="info_text">
+                                  On a scale of 1 – 10, with 10 being the highest, how satisfied are you with the tenant?
+                                </li>
+                                <li class="info_text">
+                                  Would you rent to this tenant again?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo6">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo6"
+                              aria-expanded="false" aria-controls="collapseTwo6" (click)="openCloseAccordianMenu(rotateicon6)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Financial Planning & Advisory</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon6></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo6" class="collapse" role="tabpanel" aria-labelledby="headingTwo6"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+                                <li class="info_text">Please introduce yourself and provide some background on your relationship with the financial advisory, how did you get connected? How long have you been a client?</li>
+
+                                <li class="info_text">
+                                  Has the advisor been very clear about explaining how he or she gets paid?
+                                </li>
+
+                                <li class="info_text">
+                                  Does your advisor have discretionary authority, which allows him or her to invest, transfer or otherwise act on your money without prior consent? Or does the advisor seek your approval and understanding before initiating each and every transaction?
+                                </li>
+                                <li class="info_text">
+                                  How would you rate the level of communication? Do you feel you are adequately educated so you can make informed decisions?
+                                </li>
+                                <li class="info_text">
+                                  Is there anything you would change or wish you could improve in your advisory relationship
+                                </li>
+                                <li class="info_text">
+                                  How would you rate the level of communication? Do you feel you are adequately educated so you can make informed decisions?
+                                </li>
+                                <li class="info_text">
+                                  How satisfied have you been with the performance of the advisor?
+                                </li>
+                                <li class="info_text">
+                                  What additional advice do you have in working with the advisor?
+                                </li>
+                                <li class="info_text">
+                                  On a scale of 1 – 10, with 10 being the highest, how satisfied are you with the advisor?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo7">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo7"
+                              aria-expanded="false" aria-controls="collapseTwo7" (click)="openCloseAccordianMenu(rotateicon7)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Contractor</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon7></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo7" class="collapse" role="tabpanel" aria-labelledby="headingTwo7"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+                                <li class="info_text">Please introduce yourself and provide some background on your relationship with contractor?</li>
+
+                                <li class="info_text">What kind of work did the contractor do for you?</li>
+
+                                <li class="info_text">
+                                  How did you select the contractor and did you check credentials?
+                                </li>
+
+                                <li class="info_text">
+                                  Did you have a clear idea of what the contractor was going to do?
+                                </li>
+                                <li class="info_text">
+                                  Please describe your experience working with the contractor? How well did the contractor respond to questions or change requests and were you satisfied with the results?
+                                </li>
+                                <li class="info_text">
+                                  How satisfied have you been with regards to staying in budget and meeting the timeline?
+                                </li>
+                                <li class="info_text">
+                                  What additional advice do you have in working with contractor?
+                                </li>
+                                <li class="info_text">
+                                  On a scale of 1 – 10, with 10 being the highest, how satisfied are you with the contractor?
+                                </li>
+                                <li class="info_text">
+                                  Would you hire the contractor again?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo8">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo8"
+                              aria-expanded="false" aria-controls="collapseTwo8" (click)="openCloseAccordianMenu(rotateicon8)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Professional Services</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon8></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo8" class="collapse" role="tabpanel" aria-labelledby="headingTwo8"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+                                <li class="info_text">Please introduce yourself and What is your company’s past and current relationship with service provider?</li>
+
+                                <li class="info_text">
+                                  When and why did you decide to contract with service provider? What was your organization hoping to achieve?
+                                </li>
+
+                                <li class="info_text">
+                                  Please describe the service provider engagement with regards to project scope, team composition onshore and offshore, and roles & responsibilities.
+                                </li>
+                                <li class="info_text">
+                                  How long did it take the service provider to complete the engagement?
+                                </li>
+                                <li class="info_text">
+                                  What were your resource requirements for the service provider engagement in terms of people assigned and related time commitment? What tasks were you responsible for completing during the engagement?
+                                </li>
+                                <li class="info_text">
+                                  Did service provider follow a methodology and/or leverage specific accelerators, templates and best practices in support of the project?
+                                </li>
+                                <li class="info_text">
+                                  What was the process to manage scope, time and budget during the project?
+                                </li>
+                                <li class="info_text">
+                                  How did service provider maintain clear communications and effective project management during the engagement lifecycle - and what could have been done better?
+                                </li>
+                                <li class="info_text">
+                                  Please describe your experience during go live and the subsequent support process? How well did service provider respond to help or issue requests and were you satisfied with the results?
+                                </li>
+                                <li class="info_text">
+                                  How satisfied have you been with service provider with regards to meeting milestones, issuing change orders and changing key personal?
+                                </li>
+                                <li class="info_text">
+                                  How well does the solution perform from a technical and functional perspective vs. your expectations?
+                                </li>
+                                <li class="info_text">
+                                  What significant benefits have you realized since the engagement completion? What has the return on investment (ROI) been so far?
+                                </li>
+                                <li class="info_text">
+                                  How flexible has service provider been in terms of handling challenges and conflict situations on the project? Please provide an example.
+                                </li>
+                                <li class="info_text">
+                                  Did service provider properly scope the engagement and understand your objectives, needs and preferences?
+                                </li>
+                                <li class="info_text">
+                                  Are the actual service cost inline with what you planned for in the beginning of the engagement?
+                                </li>
+                                <li class="info_text">
+                                  How satisfied are you with the speed of the engagement and did the total time spent meet your initial expectations?
+                                </li>
+                                <li class="info_text">
+                                  Was the team delivering your project the same as proposed during contracting, and did the team meet your expectations in terms of skill, experience and flexibility?
+                                </li>
+                                <li class="info_text">
+                                  What additional advice do you have in working with service provider?
+                                </li>
+                                <li class="info_text">
+                                  If there was one thing you could have changed about service provider in the performance of the engagement, what would it be?
+                                </li>
+                                <li class="info_text">
+                                  One a scale of 1 – 10, with 10 being the highest, how satisfied are you with service provider as your vendor?
+                                </li>
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                      <!-- Accordion card -->
+                      <div class="card mb-2 according-card-section">
+
+                        <!-- Card header -->
+                        <div class="card-header padding-ten" role="tab" id="headingTwo7">
+                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo9"
+                              aria-expanded="false" aria-controls="collapseTwo9" (click)="openCloseAccordianMenu(rotateicon9)">
+                            <div class="mb-0">
+                              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">Software Vendor</div> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon9></i>
+                            </div>
+                          </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapseTwo9" class="collapse" role="tabpanel" aria-labelledby="headingTwo9"
+                              data-parent="#accordionEx1">
+                          <div class="card-body padding-ten">
+                            <!--check bookmark object length is existing or not-->
+                            <div class="colPading bookmark-section clearfix">
+                              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-size-14" style="height:auto;">
+
+                                <li class="info_text">Please introduce yourself and when and why did you decide to look for software provided by the vendor? What was your organization hoping to achieve?</li>
+
+                                <li class="info_text">
+                                  What other vendor products did you consider and how did you conduct the software selection process?
+                                </li>
+
+                                <li class="info_text">
+                                  Why did you decide to go with the software vendor and which modules of the vendor's software plaform  incl. software version did you choose to buy?
+                                </li>
+                                <li class="info_text">
+                                  How long has your organization been using the software, with how many users and in which geographies?
+                                </li>
+                                <li class="info_text">
+                                  Please describe the software implementation project with regards to implementation scope, team composition and roles & responsibilities. How long did it take to implement the system?
+                                </li>
+                                <li class="info_text">
+                                  What were your resource requirements for the implementation (e.g. time, people, etc)? What tasks were you responsible for completing during the implementation?
+                                </li>
+                                <li class="info_text">
+                                  How well did the vendor's implementation team understand your industry and your specific business needs?
+                                </li>
+                                <li class="info_text">
+                                  How accurately did the vendor's implementation team translate your requirements into the solution design? How was that achieved?
+                                </li>
+                                <li class="info_text">
+                                  How did the vendor maintain clear communications and effective project management during the implementation lifecycle? What could the vendor have done better?
+                                </li>
+                                <li class="info_text">
+                                  Have you done any custom development or modifications, to enhance the standard functionality of the software? If yes, why and how?
+                                </li>
+                                <li class="info_text">
+                                  How well did the vendor build and test the system? Did you experience any surprises or what could the vendor have done better?
+                                </li>
+                                <li class="info_text">
+                                  How did the software provider team prepare your user communty from a change management and training perspective? What feedback have you gotten from your users?
+                                </li>
+                                <li class="info_text">
+                                  Please describe your experience during go live and the subsequent support process? How well did the vendor respond to help or issue requests and were you satisfied with the results?
+                                </li>
+                                <li class="info_text">
+                                  How satisfied have you been with the software provider with regards to: staying in budget, issuing change orders, meeting milestone and changing key personal?
+                                </li>
+                                <li class="info_text">
+                                  How well does the system perform vs. your expectations - from a technical and functional perspective? Are there any workarounds to use that you did not know about beforehand?
+                                </li>
+                                <li class="info_text">
+                                  How much time, resources and expertise does it take your organisation to manage the software system?
+                                </li>
+                                <li class="info_text">
+                                  What significant benefits have you realized since implementing the system? What has the return on investment (ROI) been so far?
+                                </li>
+                                <li class="info_text">
+                                  What would you do differently with regards to software selection, implementation or support?
+                                </li>
+                                <li class="info_text">
+                                  What additional advice do you have in working with the software provider?
+                                </li>
+                                <li class="info_text">
+                                  If there was one thing you could have changed about the vendor in the performance of the engagement, what would it be?
+                                </li>
+                                <li class="info_text">
+                                  On a scale of 1 – 10, with 10 being the highest, how satisfied are you with the software provider as your vendor?
+                                </li>
+
+
+
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Accordion card -->
+                    </div>
+                    <!-- Accordion wrapper -->
+
+                  </div>
+                </div>
+
+              </div>
+                    
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="Deletemodal" tabindex="-1" role="dialog" aria-labelledby="DeletemodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding">
+        <p>Are you sure to delete this question?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <!--Added below code to disabled the submit button until user not entering the text-->
+        <button type="button" (click)="QuestionRemove()" class="btn btn-danger mr-4" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

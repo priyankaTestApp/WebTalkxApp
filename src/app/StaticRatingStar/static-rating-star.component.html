@@ -1,0 +1,76 @@
+<!--margin-left: 270px;-->
+<div class="rating" style="margin-right: -7px;margin-top: -21px;">
+
+  <!-- <input type="radio" [name]="inputName" value="5" [checked]="rating===5" />
+  <label title="WOW Excellent!">5 stars</label>
+
+  <input type="radio" [name]="inputName" value="4" [checked]="rating===4" />
+  <label title="Excellent">4 stars</label>
+
+  <input type="radio" [name]="inputName" value="3" [checked]="rating===3" />
+  <label title="Good">3 stars</label>
+
+  <input type="radio" [name]="inputName" value="2" [checked]="rating===2" />
+  <label title="Fair">2 stars</label>
+
+  <input type="radio" [name]="inputName" value="1" [checked]="rating===1" />
+  <label title="Poor">1 star</label> -->
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&#9733;</span> &#9733;
+    </span>
+  </ng-template>
+  
+  <!-- <ngb-rating [max]="5" [(rate)]="rating" [starTemplate]="t" [readonly]="false"></ngb-rating> -->
+
+</div>
+
+
+<!--
+  <div class="rating" style="margin-right: -7px;margin-top: -21px;">
+
+  <input type="radio" [name]="inputName" value="5" [checked]="rating===5" />
+  <label title="WOW Excellent!" (click)='onClick(5)'>5 stars</label>
+
+  <input type="radio" [name]="inputName" value="4" [checked]="rating===4" />
+  <label title="Excellent" (click)='onClick(4)'>4 stars</label>
+
+  <input type="radio" [name]="inputName" value="3" [checked]="rating===3" />
+  <label title="Good" (click)='onClick(3)'>3 stars</label>
+
+  <input type="radio" [name]="inputName" value="2" [checked]="rating===2" />
+  <label title="Fair" (click)='onClick(2)'>2 stars</label>
+
+  <input type="radio" [name]="inputName" value="1" [checked]="rating===1" />
+  <label title="Poor" (click)='onClick(1)'>1 star</label>
+
+</div>
+-->
+
+
+
+<!--PARENT COMPONENT-->
+<div class="container  p-3">
+ <div class="card">
+   <div class="card-body">
+     <div class="input-group">
+       <div class="form-group col-md-5">
+         <label class="font-weight-bold">Send message</label>
+         <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+         <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+       </div>
+
+       <div class="form-group col-md-6">
+         <div class="my-5 ml-3">
+           <span class="font-weight-bold" style="color:blue">{{message}}</span>
+         </div>
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!--<div>
+  <app-test2 [childMessage]="parentMessage"  (messageEvent)="receiveMessage($event)"></app-test2>
+</div>-->

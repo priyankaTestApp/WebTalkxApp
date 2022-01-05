@@ -1,0 +1,604 @@
+.form-textbox-border {
+  border-bottom: 1px solid #808080;
+  height: 27px;
+}
+
+.txtAreaBorder {
+  height: auto;
+  border: 1px solid #808080;
+}
+
+.tab-content {
+  padding: 10px;
+  background: #fff;
+  /*-webkit-box-shadow: 0 0 0 1px #e2e5e8;*/
+  box-shadow: 0 0 0 1px #e2e5e8;
+}
+
+.video-text-container .accordion.md-accordion .according-card-section {
+  min-height: 0;
+  max-width: 100vh;
+  min-width: 100%;
+}
+/* 
+.ListSetting {
+display:flex;
+} */
+
+.star {
+  visibility: hidden;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+  .star:before {
+    content: "\2606";
+    position: absolute;
+    visibility: visible;
+    color: #007bff;
+  }
+
+  .star:checked:before {
+    content: "\2605";
+    position: absolute;
+  }
+
+.joyride-backdrop backdrop-top {
+background-color:white;
+}
+
+#suggestionsModal .modal-content, #MyQuestionsModal .modal-content {
+  user-select: unset;
+}
+
+.row-list-detail .wordBreak {
+  white-space: pre-line;
+  width: 100% !important;
+  cursor: auto;
+}
+
+.info_text {
+  margin-bottom: 7px;
+}
+
+.table-responsive {
+  overflow-x: hidden;
+}
+
+.sortable-list-item .textarea-width {
+  width: calc(100% - 5px);
+}
+
+.sortable-list-item .sorting_icon {
+  line-height: 56px;
+}
+
+.extra_container .remove_fields {
+  margin-bottom: -4px;
+  border-radius: 4px;
+}
+
+
+.headerText {
+  font-size: 26px;
+  font-weight: 600;
+  padding-left: 10px;
+}
+
+.textbox-border {
+  border: 1px solid #cccccc !important;
+}
+
+.form-lable-text {
+  color: #000000 !important;
+}
+
+/* .custom-control-label {
+  word-break: keep-all !important;
+} */
+
+.label-question {
+  position: absolute;
+  font-size: 14px !important;
+}
+
+.bookmark-content #questionnairetab .table-striped tbody tr:nth-of-type(odd), .bookmark-content #myquestionnairetab .table-striped tbody tr:nth-of-type(odd), .final_selected_question .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+
+.final_selected_question .table-striped.selected_qu_table {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.bookmark-content #questionnairetab .table-bordered td, .table-bordered th, .bookmark-content #myquestionnairetab .table-bordered td, .table-bordered th, .final_selected_question .table-bordered td {
+  border: none;
+  border-top: none;
+}
+
+.add_extra_question {
+  width: 90%;
+  margin: 0px 15px !important;
+}
+
+.element.extra_container {
+  display: flex;
+  align-items: center;
+}
+
+.txtArea {
+  border: 1px solid grey !important;
+  min-height: 100px;
+  max-height: 350px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.lblText {
+  font-size: large;
+}
+
+.btn-glow-light {
+  border: 1px solid #ebebeb;
+  width: 80px;
+}
+
+/* .btn:not(.not) {
+  width: 100px;
+} */
+/* .modal-container:not(.alert) {
+  width: 806px;
+} */
+
+.arrowSize {
+  font-size: larger;
+}
+
+form {
+  font-size: 14px !important;
+}
+
+.dateBox {
+  width: 80px !important;
+}
+
+.checkList {
+  background-color: #fbfafa;
+  padding: 15px !important;
+  margin-left: 21px !important;
+  min-width: 96%;
+}
+
+.engDate {
+  width: 40px !important;
+}
+
+.page-width {
+  width: 75vh;
+}
+
+.tooltext {
+  right: -139px;
+  bottom: 13px;
+}
+
+.toolstxt {
+  bottom: 13px;
+}
+
+/*======================================================*/
+/*for media screen*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /* .auth-wrapper-update {
+    min-height: 30vh !important;
+  } */
+
+  /* .card {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    min-height: 40vh;
+    min-width: 20vh;
+    max-width: 75vh;
+  } */
+
+  .txtBox {
+    width: 240px;
+    border-bottom: 1px solid #808080;
+  }
+
+  .dateBox {
+    width: 250px;
+    border-bottom: 1px solid #808080;
+  }
+
+  .engDate {
+    width: 40px !important;
+  }
+}
+
+/*for  Intnernate explorer*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .auth-wrapper-update {
+    min-height: 30vh !important;
+    margin-top: 100px;
+  }
+
+  .card {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    min-height: 40vh;
+    min-width: 75vh;
+    max-width: 110vh;
+  }
+
+  .btn-primary {
+    width: 85px;
+  }
+
+  .pcoded-main-container {
+    padding-top: 1px !important;
+  }
+}
+
+
+/*for media screen IE*/
+@media \0screen\,screen\9 {
+  .auth-wrapper-update {
+    min-height: 35vh !important;
+  }
+
+  .card {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    min-height: 30vh;
+    min-width: 75vh;
+    max-width: 120vh;
+  }
+
+  .txtBox {
+    width: 260px;
+    border-bottom: 1px solid #808080;
+  }
+
+  .engDate {
+    width: 40px !important;
+  }
+}
+
+.colPading {
+  padding: 10px !important;
+}
+
+.colPading_right {
+  padding: 0px 10px 0 0 !important;
+}
+
+.selectedQuestion {
+  margin-left: 25px !important;
+  font-size: 17px !important;
+}
+
+.editRouteLink {
+  text-decoration: underline;
+  background-color: transparent;
+  color: #059ee3;
+}
+
+/*.editRouteLink:hover{
+  text-decoration: underline;
+  background-color: transparent;
+  color: black;
+}*/
+
+
+.error {
+  color: #dc3545 !important;
+  margin-left: 6px !important;
+}
+
+.redText {
+  color: #dc3545 !important;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+}
+
+.control-width {
+  width: 100%;
+}
+
+.select-dorpdown-height {
+  height: 27px !important;
+  padding-left: 0px !important;
+}
+
+.checkbox-align {
+  vertical-align: bottom !important;
+  padding: 2px;
+}
+
+.checkbox-label {
+  vertical-align: text-top !important;
+}
+
+/* .auth-wrapper .card .card-body {
+  padding: 15px 15px 15px 5px;
+} */
+
+.steps-indicator {
+  width: 343px !important;
+  margin: 0 auto;
+}
+
+.right-next-button {
+  margin-right: -6px !important;
+}
+
+.engagement_title {
+  max-width: 100%;
+}
+
+.saveasdraft_btn {
+  width: 123px;
+}
+
+/* .auth-wrapper .auth-content {
+  padding: 32px;
+} */
+
+.view-generated-quest, .view-case-study {
+  width: 240px;
+  height: 22px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #059ee3;
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+.ques-lable-generate, .case-study-cont {
+  background-color: #fbfafa;
+  padding: 15px !important;
+}
+
+.checkList-cont {
+  background-color: #fbfafa;
+  padding: 15px !important;
+  min-width: 100%;
+}
+
+.input-group-cont {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  font-size: 14px;
+}
+
+.element .add_fields {
+  border-radius: 4px;
+}
+
+.add_fields:disabled {
+  opacity: 0.65;
+}
+
+
+.engagementarea-container {
+  background-color: #fbfafa;
+  margin-left: 19px !important;
+  width: 96%;
+}
+
+#SoftwareTypeID, #EngagementScopeID, #othersService, #softwarevendor, #BusinessApplicationSoftware, #ITSoftware {
+  background-color: #fbfafa;
+}
+
+.icons {
+  top: 4px;
+  right: 13px;
+}
+
+.cattooltext {
+  right: -139px;
+  bottom: 80px;
+}
+
+.tooltextprivacy {
+  right: -146px;
+  bottom: 26px;
+}
+
+.engagefacttext {
+  right: -205px;
+  bottom: 28px;
+}
+
+.egageicons {
+  bottom: 7px;
+  right: -53px;
+}
+
+.sample_qu {
+  right: -142px;
+  bottom: 112px;
+}
+
+.Qu_icons {
+  bottom: 92px;
+  right: 11px;
+}
+
+.top-icon {
+  right: 13px;
+  top: 0;
+}
+
+.top-text {
+  right: -139px;
+  bottom: 144px;
+}
+
+.tooltextprivacy {
+  right: -152px;
+  bottom: 25px;
+}
+
+.top_dropprivacy {
+  top: 6px !important;
+  right: 0px;
+}
+
+.longtop_drop {
+  bottom: 46px;
+  right: 7px;
+}
+
+.long_tooltext {
+  right: -145px;
+  bottom: 68px;
+}
+
+.modal-header:not(.not) {
+  background-color: #059ee3;
+  text-align: center;
+}
+
+/*Tab css starting*/
+.menu-tab-ul .menu-tab {
+  float: left;
+  margin-bottom: -1px;
+  position: relative;
+}
+
+  .menu-tab-ul .menu-tab > a {
+    margin-right: 3px;
+    line-height: 1.42857143;
+    border: 1px solid #ddd; /*transparent*/
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    padding: 10px 15px;
+    float: left;
+    text-decoration: none;
+    margin-left: -1px;
+  }
+
+.menu-tab-ul > li a.active, .menu-tab-ul > li a.active:focus, .menu-tab-ul > li a.active:hover {
+  color: #555;
+  cursor: default;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+.menu-tab-ul > li > a:focus, .menu-tab-ul > li > a:hover, .modal-content-tab .menu-tab-ul .menu-tab > a.active {
+  text-decoration: none;
+  background-color: #eee;
+  border-color: #eee #eee #ddd;
+  color: #059EE3;
+}
+
+/* .input-group .form-control {
+  width: 100% !important;
+} */
+
+.info-content-container.selected .individual-icon .ind_white, .info-content-container.selected .business-icon .buss_white {
+  fill: #fff;
+}
+
+.info-content-container.selected {
+  background-color: #059EE3;
+}
+
+.question-text {
+  width: 100%;
+  float: left;
+  background-color: #e5e5e5;
+  height: auto;
+  padding: 10px !important;
+  font-size: 15px;
+  line-height: 1.82;
+  margin-bottom: 3px;
+  letter-spacing: 0 !important;
+  margin-top: 5px;
+}
+
+.remove-icon {
+  height: 30px;
+  line-height: 18px;
+}
+
+.feather-color-type {
+  color: #059ee3;
+}
+
+.custom-lbl-height {
+  line-height: 22px;
+}
+
+.vjs-play-control.vjs-control.vjs-button.vjs-paused, .vjs-play-control.vjs-control.vjs-button.vjs-playing {
+  display:none;
+}
+
+
+.video-js {
+  background-color: #575757;
+}
+.space-around{
+  /* display: flex; */
+  justify-content: space-around;
+}
+.center{
+  text-align: center;
+}
+
+.video_clip1-dimensions {
+  width: 100%;
+}
+
+.card .card-header[data-toggle="collapse"] {
+  padding: 0.75rem 1.75rem 0.75rem 1.25rem;
+}
+
+.card .card-header[data-toggle="collapse"]::after {
+  padding-right: 1.0rem;
+  line-height: 45px;
+}
+
+.document-file input[type=file] {
+  display: none;
+}
+
+.review_team {
+  display: flex;
+}
+
+.add_team_btn {
+  background: #059ee3;
+  margin: 4px;
+
+}
+
+.question-list {
+  background-color: #e5e5e5;
+  font-size: 15px;
+}
+
+.question-list, .question-text {
+  height: auto;
+  font-weight: 300;
+  line-height: 1.82;
+}
+
+.question-list .record_icons{
+  height: 44px;
+}

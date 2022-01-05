@@ -1,0 +1,14 @@
+<!--Send Message model-->
+
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group">
+          <label class="font-weight-bold">Send message</label>
+          <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+        </div>
+
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+        <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+      </div>

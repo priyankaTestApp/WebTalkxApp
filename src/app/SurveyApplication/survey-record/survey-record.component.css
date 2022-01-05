@@ -1,0 +1,35 @@
+.question-text {
+    width: 100%;
+    background-color: #059ee3;
+    color: #fff;
+    font-size: 17px;
+}
+
+.question-text {
+    padding: 10px!important;
+}
+
+/* .admin-question-wizard.admin-custom-wizard .btn {
+    font-size: 13px !important;
+} */
+
+.vjs-play-control.vjs-control.vjs-button.vjs-paused, .vjs-play-control.vjs-control.vjs-button.vjs-playing {
+    display:none;
+}
+
+.video-js {
+    background-color: #575757;
+}
+.space-around{
+    display: flex;
+    justify-content: space-around;
+}
+.center{
+    text-align: center;
+}
+.heading{
+    background: #848282;
+    color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+}

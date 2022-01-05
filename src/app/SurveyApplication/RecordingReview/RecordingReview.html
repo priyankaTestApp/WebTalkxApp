@@ -1,0 +1,601 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Recording Replay</li>
+  </ol>
+</nav>
+
+<!--Recording container-->
+<div class="shadow-none bg-light rounded -padding-top-zero pcoded-content">
+  <div class="auth-content ">
+
+    <div class="recording-details">
+      <div class="col-md-12 p-0">
+        <div class="col-md-12 p-0 row relative">
+          <div class="col-md-12 Reference-request-na page-header-text common-font-blue mb-2">
+            {{recording_title ? recording_title : 'Recording Replay'}}
+          </div>
+          <div class="Requested-b col-md-12 mb-3 page-header-inlin common-font font-14 ">
+
+            <table class="w-100">
+              <tbody>
+                <tr class="d-inline mr-4">
+                  <td>Asked By:</td>
+                  <td class="a" id="{{vendorID}}" (click)="getUserInfo($event, vendorID, vendorname)">
+                    <strong title="Send message to {{vendorname}}">&nbsp;<a href="JavaScript:Void(0);">{{vendorname}}</a></strong>
+                    <span class="ml-3" *ngIf="venLinkedIn">
+                      <a href="{{venLinkedIn}}" target="_blank">
+                        <img class="icon-picture" title="{{venLinkedIn}}" src="../../../assets/img/linkedin-blue.png"/>
+                      </a>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr class="d-inline mr-4">
+                  <td>Recorded By:</td>
+                  <td class="a" id="{{refGiverid}}" (click)="getUserInfo($event, refGiverid, givername)">
+                    <strong title="Send message to {{givername}}">&nbsp;<a href="JavaScript:Void(0);">{{givername}}</a></strong>
+                    <span class="ml-3" *ngIf="givLinkedIn">
+                      <a href="{{givLinkedIn}}" target="_blank">
+                        <img class="icon-picture" title="{{givLinkedIn}}" src="../../../assets/img/linkedin-blue.png"/>
+                      </a>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="d-inline">
+                  <!-- *ngIf="candidateDoc"
+                  *ngIf="JobDescription"-->
+                  <td><button type="button" *ngIf="WelcomePageRequired" class="btn border btn-primary btn-sm font-14" id="WelcomePageRequired" #intromessage (click)="reviewRecording($event, 101, 'request')">Introduction Message</button></td>
+                  <td><button type="button" *ngIf="candidateDoc" class="btn border btn-primary btn-sm font-14" id="candidateDoc" #candidateDoc (click)="openDescriptionFile($event.target, candidateDoc)">Candidate Documents</button></td>
+                  <td><button type="button" *ngIf="JobDescription" class="btn border btn-primary btn-sm font-14" id="jobdescription" #jobdescription (click)="openDescriptionFile($event.target, JobDescription)">Job Description</button></td>
+                </tr>
+                <tr class="d-inline">
+                  <td>
+                    <div class="rateitbtn float-right ml-2">
+                      <button type="button" id="valuationBtn" class="btn a ml-1 m-0 p-0" data-toggle="modal" data-target="#myModal" (click)="EnableRatingTab()">
+                        <i class="fa fa-star fa_custom font-18"></i>
+                      </button>
+                      <span *ngIf="defaultrate" class="feather-colo common-font-blue ml-2 font-13">Your Score - {{defaultrate}}.0</span>
+                      <div class="ratingtagline ratingTaglineContainer feather-color font-11"><strong class="common-font-blue feather-color font-size-14">Your</strong> opinion matters - rate-it</div>
+                    </div>
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-full-container">
+      <div class="card-body text-left row" id="playground">
+        <div class="col-md-7 p-0 float-md-none text-center recorded-video-container">
+          <div class="col-md-12 mb-3 video-tag">
+            <div class="embed-responsive embed-responsive-16by9 position-relative">
+              <!-- (ended)="onVideoEnd(review_video)" (playing)="onStartPlay(review_video)" (pause)="onVideoPause(review_video)"-->
+              <!-- <video #review_video id="review_video" (playing)="onStartPlay(review_video)" (ended)="onVideoEnd(review_video)" type="video/mp4" width="300" height="200" controls controlsList="nodownload" playsinline disablePictureInPicture [src]="domain_url+'uploads/'+RefRecordingID+'/1.mp4'"></video> -->
+              <!-- <video #review_video id="review_video" (playing)="onStartPlay(review_video)" (ended)="onVideoEnd(review_video)" type="video/mp4" width="300" height="200" controls controlsList="nodownload" playsinline disablePictureInPicture src="{{testrecord == 'Y' ? 'https://sara.webtalkx.com/' : 'https://linappcardtest.azurewebsites.net/'}}{{recrdtype+'/'+recordingName}}"></video> -->
+              <video #review_video id="review_video" (playing)="onStartPlay(review_video)" (ended)="onVideoEnd(review_video)" type="video/mp4" width="300" height="200" controls controlsList="nodownload" playsinline disablePictureInPicture src="{{domain_url+'UserVideo/'+RefRecordingID+'/record_'+RefRecordingID+'_'+assignedId+'_1.mp4'}}"></video>
+            </div>
+            <!--<div class="col-md-12 mt-3 text-left p-0 textOverflo">
+              <h4 class="textOverflow">{{recording_title}}</h4>
+            </div>-->
+          </div>
+          <!-- <div class="col-md-12 mt-3 text-cente">
+            <button type="button" id="playall-button" #playallbtn class="btn btn-primary m-l-15 font-14 float-left" (click)="videoPlayAll($event, review_video, playallbtn)" title="Play All with Question">Play with Question</button>
+            
+            <label class="switch float-right" title="Autoplay">
+              <input type="checkbox" (change)="onAutoplay($event)">
+              <span class="slider round"></span>
+            </label>
+          </div> -->
+          <!-- <div class="text-center">
+            <div class="rateitbtn float-right">
+              <button type="button" id="valuationBtn" class="btn a no-padding no-margin" data-toggle="modal" data-target="#myModal" (click)="EnableRatingTab()">
+                <i class="fa fa-star fa_custom font-24"></i>
+              </button>
+              <span *ngIf="defaultrate" class="feather-colo font-size- common-font-blue ml-3 font-size-14">Your Score - {{defaultrate}}.0</span>
+              <div class="ratingtagline ratingTaglineContainer feather-color font-size-14"><strong class="common-font-blue feather-color font-size-14">Your</strong> opinion matters - rate-it</div>
+            </div>
+          </div> -->
+          
+        </div>
+
+        <!--video section end-->
+        <!--question section start-->
+        <div class="col-md-5 float-md-none admin-question-wizard admin-custom-wizard">
+          <!--Tab menu-->
+          <ul class="nav nav-tabs menu-tab-ul">
+
+            <li class="menu-tab" (click)="enableTab(questionnairetab, tabcontent)"><a #questionnairetab class= "active common-font font-weight-bold font-14" data-toggle="tab" href="#questionnairetab">Questionnaire</a></li>
+            <li class="menu-tab" (click)="enableTab(mynotestab, tabcontent)"><a #mynotestab class="common-font font-weight-bold font-14" data-toggle="tab" href="#mynotestab">My Notes</a></li>
+            <li class="menu-tab" (click)="enableTab(searchtab, tabcontent)"><a #searchtab class="common-font font-weight-bold font-14" data-toggle="tab" href="#searchtab">Search</a></li>
+          </ul>
+          <!--Tab menu content-->
+          <div class="tab-content" #tabcontent>
+            <!--Second menu-->
+            <div id="questionnairetab" class="tab-pane in active">
+              <!-- <div class="text-center">
+                
+              </div> -->
+              <div class="colPading admin-question-wizard" *ngIf="questionList?.length > 0">
+                <div *ngFor="let questions of questionList ;  let i = index" id="Q{{i+1}}">
+                  <!--*ngIf="((questions.RecordingStatus == 'Skipped' || questions.RecordingStatus == 'Not recorded') && role == 3) ? false : true"-->
+                  <div class="question-text question_div text-justify cursor-pointer question_{{i+1}}" [attr.queid]="questions.RecordingQuestionID" #qlistall (click)="selectQuestionAndScript(questions.RecordingQuestionID, questions.RefRecordingID, qlistall, i+1, q_status, questions.RecordingStatus, 'question')">
+                    {{questions.RecordQuestion ? 'Select to view the answer' : questions.QuestionText}}
+                  </div>
+                  <!-- *ngIf="((questions.RecordingStatus == 'Skipped' || questions.RecordingStatus == 'Not recorded') && role == 3) ? false : true"-->
+                  <div class="reader-cont float-left">
+                    <button class="btn btn-sm btn-primary my-2 readbtn hidden mr-2" [attr.status]="questions.RecordingStatus" [disabled]="(questions.RecordingStatus == 'Skipped' || questions.RecordingStatus == 'Not recorded') ? true : false" #readbtn (click)="onQuestionReading(qlistall, i+1, questions.QuestionText, readbtn, questions.RecordingStatus,questions.RecordingQuestionID)">
+                      Read
+                    </button>
+                    <button *ngIf="questions.RecordQuestion" class="btn btn-sm btn-primary my-2 playbtn" #playbtn (click)="replayInterviewNow($event, i+1)">
+                      View Question
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Second menu-->
+            <div id="mynotestab" class="tab-pane fade">
+              <div class="colPading notes-section text-center">
+                <div id="notes_button">
+                  <button type="button" id="addnotesBtn" class="btn a btn-primary" (click)="enableFocus()" data-toggle="modal" data-target="#addnotesModal">
+                    <i class="fa fa-plus-circle"></i>
+                    <span class="common-font white-text">&nbsp;&nbsp;Add Notes</span>
+                  </button>
+                </div>
+                <!--checking notes object length-->
+                <div *ngIf="noteslist?.length > 0" id="control_notes" class="overflow-auto clearfix">
+                  <div *ngFor="let notes of noteslist; let i = index" id="notes_{{i+1}}">
+                    <div class="question-text text-justify a notes" #nlistall>
+                      <div class="time_title col-md-12 row p-0 m-0">
+                        <span id="markTitle" class="col-md-12 p-0 mb-3">{{notes.NoteText}}</span>
+                      </div>
+                      <div class="time_title col-md-12 clearfix row p-0 m-0">
+                        <span id="markText" class="col-md-6 p-0 font-italic font-12">Created on {{notes.InsertDate | date:'MM/dd/yyyy' }}</span>
+                        <span id="markDelete" class="col-md-6 text-right relative p-0">
+                          <button type="button" id="editbookmarkBtn" class="btn a btn-circle border-blue btn-sm mr-1" (click)="NotesEdit(notes)" data-toggle="modal" data-target="#addnotesModal"><i class="fas fa-pen blue-text"></i></button>
+                          <button type="button" id="removebookmarkBtn" class="btn a btn-dange btn-circle border-red btn-sm" (click)="deleteConfirm(notes)" data-toggle="modal" data-target="#myModalbookmark"><i class="far fa-trash-alt red-text"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span *ngIf="noteslist?.length == 0" class="float-left ml-1 common-font font-14">Notes not available.</span>
+              </div>
+
+            </div>
+
+            <!-- searchTab -->
+            <div id="searchtab" class="tab-pane fade">
+              <div class="colPading admin-question-search">
+                <div class="-full-width ">
+                  <input type="search" id="keywords" class="search-question mb-2" placeholder="search" #searchval (click)="clearSearch()" (keyup)="keywordSearch($event, 'search')" aria-controls="DataTables_Table_0">
+                </div>
+              </div>
+              <div class="colPading admin-question-wizard searchscroll overflow-auto">
+                <span class="float-left ml-1 no-data common-font font-14">No content available.</span>
+
+                <div class="colPading admin-question-wizard" *ngIf="search_questionList">
+                  <div class="question-text question_search text-justify a search_qu -hidden" #qlist (click)="selectQuestionAndScript(questions.RecordingQuestionID, questions.RefRecordingID, qlist, i+1, q_status, questions.RecordingStatus, 'search')" *ngFor="let questions of search_questionList;  let i = index" id="{{questions.RecordingQuestionID}}">
+                    Q{{i+1}}: {{questions.QuestionText}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--first menu-->
+          </div>
+        </div>
+        <!--question section end-->
+         <div class="col-md-12 mt-2 transcript-container" id="TranscriptContainer">
+          
+          <label class=" common-font common-secondry-color font-20">Transcript : </label>
+          <!--<button type="button" id="script_refresh" class="btn a float-right no-padding no-margin" (click)="getAllQuestionsScript(q_req_id)"><i class="fa font-size-22">&#xf021;</i></button> -->
+          <p class="transcript -full-width text-left common-font common-secondry-color">No script available.</p>
+        </div>
+
+        <div class="modal fade" id="CommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Comment</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <div class="form-group mr-2">
+                  <label for="message-text" class="mr-4 my-2 form-lable-text  form-group control-width">Comment</label>
+                  <textarea maxlength="500" rows="5" class="txtArea col-md-12 my-1 mt-2 ml-1 common-font font-size-14 padding-5" required name="CommentText" #CommentText="ngModel" [(ngModel)]="model.CommentText" id="comment_message_text"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <!--Added below code to disabled the submit button until user not selecting the reviwer-->
+                <button type="button" (click)="AddComment()" [disabled]="(CommentText.invalid)" class="btn btn-primary mr-4" data-dismiss="modal">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!--Send Message model-->
+<div class="modal fade sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+  <div class="modal-dialog formsg" role="document">
+    <div class="modal-content modal-container">
+      <div class="modal-header not">
+        <div class="left-header">
+          <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group">
+          <label class="font-weight-bold">Send message</label>
+          <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+        </div>
+        
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+        <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!--Send Message model-->
+        <div class="modal fade modal-slide right messagenotification" id="messagenotification" tabindex="-1" role="dialog" aria-labelledby="messagenotificationLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-container alert">
+              <div class="modal-header edit-header in">
+                <div class="left-header">
+                  <h6 class="common-font-blue">Alert</h6>
+                </div>
+                <div class="right-header">
+                  <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+              </div>
+              <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+                <div class="form-group mr-2">
+                  <p class="mr- my no-margin form-group control-width">You are logged in user. <br /><br />Sending a message to itself is not allowed.</p>
+                </div>
+              </div><!--modal body closed-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--In progress modal start-->
+        <div class="modal" id="inprogressModal" tabindex="-1" role="dialog" aria-labelledby="inprogressModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="alert modal-content modal-container">
+              <div class="modal-header in edit-header">
+                <div class="page-header-text common-font-blue font-size-20" id="exampleModalLabel">Alert</div>
+                <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <p class="msg" *ngIf="IsSkipped">Recording is not available for this question. Question was skipped during the recording.</p>
+                <p class="msg" *ngIf="!IsSkipped">Please wait, recorded video is not available yet.</p>
+
+              </div>
+              <div class="modal-footer in">
+                <!--<button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">No</button>-->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--In progress modal end-->
+
+        <div class="modal" id="addnotesModal" tabindex="-1" (click)="notesEditCancel($event)" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Add notes</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <textarea id="notes_review" maxlength="500" rows="5" (keyup)="checkTextLength(false)" class="txtArea col-md-12 common-font font-size-14" required name="NoteText" #NoteText="ngModel" [(ngModel)]="model.NoteText"></textarea>
+                  <div id="notes_character_check" class="invalid-error"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel_notes" data-dismiss="modal" (click)="notesEditCancel($event)">Cancel</button>
+                <!--Added below code to disabled the submit button until user not entering the text-->
+                <button type="button" (click)="AddMyNotes(model.NoteText)" [disabled]="(NoteText.invalid)" class="btn btn-primary" data-dismiss="modal">{{notesbtn}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal" id="myModalbookmark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body all-around-padding">
+                <p>Are you sure to delete this note?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <!--Added below code to disabled the submit button until user not entering the text-->
+                <button type="button" (click)="NotesRemove()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal For Valuation Rating -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" #myModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:700px">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Valuation Rating's</h5>
+      </div>
+      <div class="modal-body">
+        <div class="tabbable" #tabs>
+          <ul class="nav nav-tabs menu-tab-ul">
+            <li class="menu-tab" (click)="switchTab(1)"><a #defaultValuationTab class="active common-font font-weight-bold font-size-14" data-toggle="tab" href="#defaultValuationTab">Standard Valuation</a></li> 
+            <li class="menu-tab" (click)="switchTab(2)"><a #customValuationTab class="common-font font-weight-bold font-size-14" data-toggle="tab" href="#customValuationTab">Custom Valuation</a></li>
+          </ul>
+          <div class="tab-content" #tabcontent>
+            <div class="tab-pane  relative in active relative" id="defaultValuationTab">
+              <div class="errorCustom mb-3" *ngIf="paraText">Standard valuation has disabled as you have rated in custom valuation.</div>
+              
+              <!-- <div class="disabled_over standard" id="standard" *ngIf="paraText || defaultrate"></div> -->
+              <div class="disabled_over standard" id="standard" *ngIf="paraText"></div>
+
+              <div class="col-md-12 clearfix mt-4">
+                <div class="col-md-4 float-left no-padding relative">
+                  <label for="ratingClicked">Valuation Score </label>
+                  <input type="text" class="ml- text-right padding-5 form-control" autocomplete="off" name="ratingClicked" pattern="^[0-5]{1}(\.\d{1,1})?$" id="ratingClicked" step="1" [(ngModel)]="model.ratingClicked" #ratingClicked="ngModel" (keyup)="RatingSet($event)" placeholder="Range 1 to 5">
+                  <div *ngIf="ratingClicked.errors && ratingClicked.errors.pattern" class="errors absolute rating-err ">
+                    Rating is invalid.
+                  </div>
+                </div>
+
+                <!--for star rating-->
+                <!-- <div class="col-md-6 float-left no-padding relative">
+                  <ng-template #t let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                      <span class="half" [style.width.%]="fill">&#9733;</span> &#9733;
+                    </span>
+                  </ng-template>
+
+                  <ngb-rating [max]="5" [(rate)]="rating" [starTemplate]="t" [readonly]="false" (click)='RatingClick($event, rating)'></ngb-rating>
+                  
+                </div> -->
+                <!--for star rating-->
+                <div class="col-md-6 float-left no-padding relative">
+                  <ng-template #t let-fill="fill" let-index="index">
+                    <span class="star" [class.full]="fill === 100" (click)="RatingClick($event,index+1)">
+                      <span class="half" [style.width.%]="fill">&#9733;</span> &#9733;
+                    </span>
+                  </ng-template>
+
+                  <ngb-rating [max]="5" [(rate)]="rating" [starTemplate]="t" [readonly]="false"></ngb-rating>
+                  
+                </div>
+
+                <!--<div class="col-md-5 float-left starcnt no-padding">
+                <div *ngFor="let item of items">
+                  <span style="border:none;">
+                    <app-rating [rating]='item.rating' [itemId]='item.id' (ratingClick)='RatingClick($event)'></app-rating>
+                  </span>
+                </div>
+              </div>-->
+              </div>
+
+                <div class="col-md-12 form-grou clearfix mt-5">
+                  <textarea placeholder="Write your Valuation comment here!" rows="5" class=" form-control pb-cmnt-textarea " name="valuationText" id="valuationText" step="1" [(ngModel)]="model.valuationText" #valuationText="ngModel"></textarea>
+                </div>
+
+            </div>  
+
+            <!--customValuationTab start-->
+            <div class="tab-pane fade in active " id="customValuationTab">
+              <!--stan_rate is the variable which store the standard rating star value. if exists then disable custom rating-->
+              <div class="errorCustom mb-3" *ngIf="stan_rate">Custom valuation has disabled as you have rated in standard valuation.</div>
+              <div class="disabled_over custom" id="custom" *ngIf="stan_rate"></div>
+
+              <div>
+                <div class="form-row my-1">
+                  <div class="form-group col-md-3">
+                    <div class="rate-header font-weight-bold ml-1" id="rate-header">Custom Criteria</div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div class="rate-header font-weight-bold ml-1" id="rate-header">Weight %</div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <div class="rate-header font-weight-bold ml-1" id="rate-header">Score</div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <div class="rate-header font-weight-bold ml-1" id="rate-header">Weighted Score</div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <input type="text" class="form-control" name="field_1" id="field_1" placeholder="Custom Criteria">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="0" max="100" pattern="[0-100]{3}" [(ngModel)]='num1' name="field_2" id="num1" (input)="TotalPercent(num1)" placeholder="Weight %">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="1" max="5" pattern="[0-5]{1}" [(ngModel)]='num5' name="field_3" id="num5" (input)="TotalRating($event)" placeholder="Score: 1-5">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" disabled value="{{multi | number:'1.1'}}">
+                  </div>
+
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <input type="text" class="form-control" id="field_4" placeholder="Custom Criteria">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="0" max="100" pattern="[0-9]{3}" [(ngModel)]='num2' name="field_5" id="num2" (input)="TotalPercent(num2)" placeholder="Weight %">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="1" max="5" pattern="[0-5]{1}" [(ngModel)]='num6' name="field_6" id="num6" (input)="TotalRating($event)" placeholder="Score: 1-5">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" disabled value="{{multi1 | number:'1.1'}}">
+                  </div>
+
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <input type="text" class="form-control" id="field_7" placeholder="Custom Criteria">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="0" max="100" pattern="[0-9]{3}" [(ngModel)]='num3' name="field_8" id="num3" (input)="TotalPercent(num3)" placeholder="Weight %">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" min="1" max="5" pattern="[0-5]{1}" [(ngModel)]='num7' name="field_9" id="num7" (input)="TotalRating($event)" placeholder="Score: 1-5">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" disabled value="{{multi2 | number:'1.1'}}">
+                  </div>
+
+                </div>
+
+                <div class="form-row add_field">
+                  <div class="form-group col-md-3" id="field_10">
+                    <input type="text" class="form-control" id="field_10" placeholder="Custom Criteria">
+                  </div>
+
+                  <div class="form-group col-md-3" id="field_11">
+                    <input type="number" class="form-control weightval" min="0" max="100" pattern="[0-9]{3}" [(ngModel)]='num4' name="field_11" id="num4" (input)="TotalPercent(num4)" placeholder="Weight %">
+                  </div>
+
+                  <div class="form-group col-md-3" id="field_12">
+                    <input type="number" class="form-control" min="1" max="5" pattern="[0-5]{1}" [(ngModel)]='num8' name="field_12" id="num8" (input)="TotalRating($event)" placeholder="Score: 1-5">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" disabled value="{{multi3 | number:'1.1'}}">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-3" id="field_13">
+                    <input type="text" class="form-control" id="field_13" placeholder="Custom Criteria">
+                  </div>
+
+                  <div class="form-group col-md-3" id="field_14">
+                    <input type="number" class="form-control weightval" min="0" max="100" pattern="[0-9]{3}" [(ngModel)]='num9' value="{{num9}}" name="field_11" id="num9" (input)="TotalPercent(num9)" placeholder="Weight %">
+                  </div>
+
+                  <div class="form-group col-md-3" id="field_15">
+                    <input type="number" class="form-control" min="1" max="5" pattern="[0-5]{1}" [(ngModel)]='num10' name="field_12" id="num10" (input)="TotalRating($event)" placeholder="Score: 1-5">
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <input type="number" class="form-control" disabled value="{{multi4 | number:'1.1'}}">
+                  </div>
+                </div>
+
+
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <!--<h5 style="position: relative;margin-left: 40px;">Total</h5>-->
+                    <label class="ml-2 font-weight-bold">Total</label>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <div id="para" class="indent-13">{{total}}%</div>
+                    <div *ngIf="total > 100" class="invalid-error">Total weight % should be 100%.</div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <div class="indent-13">{{sum}}</div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <div class="paragraph indent-13" name="paraText" id="paraText">{{multiSum | number:'1.1'}}</div>
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <!-- <app-static-rating-star class="absolute custom-staticstar" [rating]='paraText' [itemId]='1'></app-static-rating-star> -->
+                  <ng-template #t let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                      <span class="half" [style.width.%]="fill">&#9733;</span> &#9733;
+                    </span>
+                  </ng-template>
+
+                  <ngb-rating [max]="5" [(rate)]="paraText" [starTemplate]="t" [readonly]="true"></ngb-rating>
+                </div>
+
+                <!--CommentBox Conatainer-->
+                <!--CommentBox Conatainer-->
+                <div class="col-md-12 form-grou clearfix mt-2">
+                  <textarea placeholder="Write your Valuation comment here!" rows="5" class="form-control pb-cmnt-textarea " name="customvaluationText" id="customvaluationText" step="1" [(ngModel)]="model.customvaluationText" #customvaluationText="ngModel"></textarea>
+                </div>
+
+              </div>
+            </div>
+            <!--CustomValuation End-->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!--{{ratingClicked.invalid}}-{{valuationText.invalid}}--->
+        <button type="button" class="btn btn-secondary float-left" (click)="clearRatedValue()">Clear</button>
+        <button class="btn btn-primary btn-submit float-right" (click)="addComments(model)" [disabled] ="!(paraText || model.ratingClicked)" data-dismiss="modal" type="button">Rate It</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+        
+<!--recording player popup-->
+<div class="modal fade" id="recordingPlayerModel" (click)="stopVideoPlayer(recording_player)" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header not">
+        <div class="" id="exampleModalLabel">Recording Video</div>
+        <button type="button" class="close" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding text-center">
+        
+        <video src="{{video_url}}" controls autoplay #recording_player class="recording_player" width="300"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="stopVideoPlayer(recording_player)" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,484 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-0">
+      <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Survey Recordings</li>
+    </ol>
+  </nav>
+  
+  <div class="pcoded-wrapper requester-catalog common-table-content">
+    <!-- <div class="row"> -->
+      <div class="col-sm-12 p-0">
+        <div class="card requester">
+          <div class="card-header bg-blue">
+            <div class="common-font">Survey Recordings</div>
+          </div>
+  
+          <!--Card body started-->
+          <div class="card-body">
+            
+            <mat-tab-group animationDuration="0.5ms" class="">
+              <mat-tab label="Response Explorer" #ResponseExplorer id="ResponseExplorer_menutab">
+                <ng-template matTabContent>
+                  <div id="ResponseExplorer" class="tab-pane fad in active mt-3">
+                    
+                    <!--List View start-->
+                    <div class="row col-sm-12 col-md-12 p-0 m-0 selectlist">
+                      <div class="catalog-container row col-sm-12 col-md-12 table-responsiv p-0 m-0 font-14" *ngIf="recordingList?.length > 0">
+                        
+                        <!-- <div class="container">
+                          <div class="card-deck">
+                            <div class="card" *ngFor="let recordings of recordingList; let i= index;" (click)="ReviewRecording($event, recordings.RefRecordingID, recordings)" id="{{recordings.RefRecordingID}}" title="Click here to replay reference recording.">
+                              <video class="card-img-top video_tag" src="https://linappcardtest.azurewebsites.net/upload/{{recordings}}" alt="Card image cap"></video>
+                              <div class="card-body text-center">
+                                <h6 class="card-title">{{recordings}}</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="directory_container container p-0" *ngIf="recordingList?.length > 0">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let recordings of recordingList; let i = index" (click)="ReviewRecording($event, recordings.RefRecordingID, recordings)" id="{{recordings.RefRecordingID}}">
+                              <div class="our-team">
+                                <div class="picture">
+                                  <video class="card-img-top video_tag img-fluid" src="https://sara.webtalkx.com/upload/{{recordings}}" alt="Card image cap"></video>
+                                </div>
+                                <div class="team-content">
+                                  <div class="mt-3 common-font-blue p-2">{{recordings}}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="" *ngIf="recordingList?.length == 0">
+                        <h6 class="data-msg">No response available.</h6>
+                      </div>
+                    </div>
+                    <!--List End-->
+                  </div>
+
+                </ng-template>
+
+              </mat-tab>
+
+              <!--tab for sample questions-->
+              <mat-tab label="Theme & Sentiment Explorer" #ThemeSentimentExplorer>
+                <ng-template matTabContent>
+
+                  <div id="ThemeSentimentExplorer" class="tab-pane fad in active ml-4">
+                    <div class="my-3">
+                      <h6 class="data-msg ">No themes available.</h6>
+                    </div>
+                  </div>
+                </ng-template>
+              </mat-tab>
+
+              <!--tab for template questions-->
+              <mat-tab label="Unique Ideas Bubble">
+                <ng-template matTabContent>
+                  <div id="UniqueIdeasBubble" class="tab-pane fad in active ml-4">
+                    <div class="my-3">
+                      <h6 class="data-msg ">No unique idea available.</h6>
+                    </div>
+                  </div>
+                  </ng-template>
+              </mat-tab>
+
+              <!--tab for all questions-->
+              <mat-tab label="Info Charts" #InfoCharts id="InfoCharts_menutab">
+                <ng-template matTabContent>
+                  <div id="InfoCharts" class="tab-pane fad in active  ml-4">
+                    <div class="my-3">
+                      <h6 class="data-msg ">No info charts available.</h6>
+                    </div>
+                  </div>
+                 </ng-template>
+              </mat-tab>
+
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+  
+  <!--Confirmation modal to remove the messages-->
+  <!--<div class="modal fade" id="recordingDeleteModel" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body all-around-padding">
+          <p>Are you sure to delete the recording?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" (click)="archiveRecording()" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  
+  <!--catalogShareModel-->
+  <!--catalogShareModel model-->
+  <!--<div class="modal fade modal-slide right catalogShareModel" id="catalogShareModel" tabindex="-1" role="dialog" aria-labelledby="catalogShareModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-container alert no-padding">
+        <div class="modal-header edit-header">
+          <div class="left-header">
+            <h6 class="common-font-blue">Invite Reference reviewer</h6>
+          </div>
+          <div class="right-header">
+            <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+        <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+          <div class="form-group mr-2">
+            <label class="mr- my no-margin form-group control-width">Send invitation</label>
+            <input class="InviteURL padding-5 common-fon -full-width mb-2 mt-2" name="InviteURL" #InviteURL="ngModel" [(ngModel)]="model.InviteURL" id="InviteURL" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+          <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" (click)="sendInvitation(model.InviteURL)" [disabled]="(InviteURL.invalid)">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <!--Modal to share the recording to the reviewer-->
+  <div class="modal catalogShareModel" id="catalogShareModel" tabindex="-1" role="dialog" aria-labelledby="catalogShareModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="Send-replay white-text" id="exampleModalLabel">Send recording</div>
+          <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body all-around-padding common-table-content">
+  
+          <div class="send-recordingfield">
+            <!--Select Reviewer field start-->
+            <div class="form-group mr-2">
+              <label for="recipient-name" class=" mr-4 my-2 form-lable-text  form-group control-width required-form-field">To</label>
+              <!--<select class="mx-1 my-1 select-popup form-textbox-border form-group control-width select-dropdown-height"
+            name="ReviewerID" #ReviewerID="ngModel" [(ngModel)]="model.ReviewerID" id="ReviewerID" required>
+      <option [ngValue]="null">Share with</option>
+      <option *ngFor="let reviewer of reviewerlist" id="{{reviewer.UserID}}" value="{{reviewer.UserID}}">{{reviewer.FirstName}} {{reviewer.LastName}} ({{reviewer.EmailID}})</option>
+    </select>-->
+  
+              <!-- <ng-autocomplete class="autocomplete-cont test" required
+                               #ReviewerID="ngModel"
+                               name="ReviewerID"
+                               [(ngModel)]="model.ReviewerID"
+                               [data]="reviewerlist"
+                               [searchKeyword]="keyword"
+                               (selected)='selectEvent($event)'
+                               placeHolder="Share with"
+                               (inputChanged)='onChangeSearch($event)'
+                               (inputFocused)='onFocused($event)'
+                               [itemTemplate]="itemTemplate"
+                               [notFoundTemplate]="notFoundTemplate"
+                               (inputCleared)="clearEventStatic()">
+              </ng-autocomplete>
+  
+              <ng-template #itemTemplate let-item>
+                <span [innerHTML]="item.FirstName +' '+item.LastName +' ('+item.EmailID +')'"></span>
+              </ng-template>
+  
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template> -->
+  
+              <!--Add reviewer button-->
+              <!-- <button type="button" (click)="createNewReviewer(NewReviewerForm)" data-dismiss="modal" class="btn-sm btn btn-primary mt-2 m-0" title="Click here to add the new reviewer." data-toggle="modal" data-target="#reviewerModal"><span aria-hidden="true">+</span></button>
+  
+              <div *ngIf="(ReviewerID.touched || ReviewerID.dirty) && ReviewerID.errors" class="invalid-feedback industry_list ml-2">
+                <div *ngIf="ReviewerID.errors?.required">Share with is required.</div>
+              </div> -->
+            </div>
+            <!--Select Reviewer field end-->
+            <!--Text field start-->
+            <div class="form-group mr-2 md-form">
+              <label for="title-text" class="mr-4 my-2 form-lable-text form-group control-width">Title</label>
+              <input type="text" id="title-text" class="my-2 mx-1 form-textbox-border form-group control-width ng-pristine ng-invalid ng-touched" name="ReviewTitle" #ReviewTitle="ngModel" [(ngModel)]="model.ReviewTitle" placeholder="Please type a Title.">
+            </div>
+            <!--Text field end-->
+            <!--Message field start-->
+            <div class="form-group mr-2">
+              <label for="message-text" class="mr-4 my-2 form-lable-text form-group control-width">Message</label>
+              <textarea maxlength="500" class="txtArea col-md-12 my-1 mt-2 ml-1 font-size-14" id="message-text" name="ReviewMessage" #ReviewMessage="ngModel" [(ngModel)]="model.ReviewMessage" placeholder="Please type a message."></textarea>
+            </div>
+            <!--Message field end-->
+  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!--<div *ngIf="ReplayCount == 0" class="errorVid float-right">
+            You cannot share the reference recording as you don't have the replay counts.
+          </div>-->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <!-- <button type="button" (click)="sendRecordingInvitationToReviewer(model)" [disabled]="(ReviewerID.invalid)" class="btn btn-primary mr-4">Send</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal to share the recording to the reviewer end-->
+
+  
+  <div class="modal fade modal-slide right" id="catalogdetailsmodel" tabindex="-1" role="dialog" aria-labelledby="catalogdetailsmodelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-container resize-model">
+  
+        <div class="modal-header edit-header">
+          <!--<div class="page-header-text ml-3" id="exampleModalLabel">selected User Modal</div>-->
+          <div class="left-header">
+            <h6 class="common-font-blue">Recording details</h6>
+          </div>
+  
+          <div class="right-header">
+            <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+  
+        <div class="modal-body modal-content-tab no-padding padding-to overflow-auto {{iscatalog_data ? 'no-padding' : null}}">
+  
+          <!--catalog Details data start-->
+          <div class="catalog-details my-3">
+            <!--Tab menu-->
+  
+            <ul class="nav nav-tabs menu-tab-ul">
+              <li class="menu-tab" (click)="enableTab(detailstab)">
+                <a class="active common-font font-weight-bold font-size-14" data-toggle="tab" href="#detailstab">Details</a>
+              </li>
+              <li class="menu-tab" (click)="enableTab(sharinghistory)">
+                <a class="common-font font-weight-bold font-size-14" data-toggle="tab" href="#sharinghistory">Sharing history</a>
+              </li>
+            </ul>
+  
+            <!--Tab menu content-->
+            <div class="tab-content">
+              <div id="detailstab" class="tab-pane fade in active" #detailstab>
+                <div class="catalog-details my-">
+                  <div class="company-data">
+  
+                    <div class="my-2" *ngIf="RequesterFirstName">
+                      <label class="control-width font-weight-bold head">Asked by</label>
+                      <span class=" font-size-14 a user-info " id="{{RequesterID}}" attr.username="name_{{RequesterID}}" (click)="getUserInfo($event, RequesterID, RequesterFirstName)" title="Send message to {{RequesterFirstName+' '+RequesterLastName}}"><a href="JavaScript:Void(0);"><strong>{{RequesterFirstName}} {{RequesterLastName}}</strong></a></span>
+  
+                      <span class="ml-3">
+                        <a href="{{RequesterLinkedIn}}" target="_blank">
+                          <img *ngIf="RequesterLinkedIn" class="icon-picture" src="../../../assets/images/Retegrity-images/linkedin-blue.png" />
+                        </a>
+                      </span>
+                    </div>
+  
+                    <div class="my-2" *ngIf="askedbyemail">
+                      <label class="control-width font-weight-bold head">Asked by user email</label>
+                      <a href="mailto:{{askedbyemail}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{askedbyemail}}</a>
+                      <i title="Click to select the email." (click)="copyQuestionAcc(asked,sampleInpt)" class="fa fa-clipboard mr-3 mt-2 ml-3" aria-hidden="true"></i>
+                      <textarea class="sample_txt -no-border" readonly #sampleInpt>{{askedbyemail}}</textarea>
+                    </div>
+  
+                    <div class="my-2">
+                      <label class="control-width font-weight-bold head">Recorded by</label>
+                      <span class=" font-size-14 a user-info " id="{{GiverID}}" attr.username="name_{{GiverID}}" (click)="getUserInfo($event, GiverID, GiverFirstName+' '+GiverSecondName)" title="Send message to {{GiverFirstName}}"><a href="JavaScript:Void(0);"><strong>{{GiverFirstName}} {{GiverSecondName}}</strong></a></span>
+                      <span class="ml-3">
+                        <a href="{{GiverLinkedIn}}" target="_blank">
+                          <img *ngIf="GiverLinkedIn" class="icon-picture" src="../../../assets/images/Retegrity-images/linkedin-blue.png" />
+                        </a>
+                      </span>
+                    </div>
+  
+                    <div class="my-2" *ngIf="GiverEmailID">
+                      <label class="control-width font-weight-bold head">Recorded by user email</label>
+                      <a href="mailto:{{GiverEmailID}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{GiverEmailID}}</a>
+                      <i title="Click to select the email." (click)="copyQuestionAcc(asked,sampleInpt)" class="fa fa-clipboard mr-3 mt-2 ml-3" aria-hidden="true"></i>
+                      <textarea class="sample_txt -no-border" readonly #sampleInpt>{{GiverEmailID}}</textarea>
+                    </div>
+  
+                    <div class="my-2" *ngIf="RequestTitle">
+                      <label class="control-width font-weight-bold head">Recording request title</label>
+                      <span class="-no-border break common-font control-width form-group" type="text" readonly>{{RequestTitle}}</span>
+                    </div>
+  
+                    <div class="my-2" *ngIf="RecordingTitle">
+                      <label class="control-width font-weight-bold head">Recording description</label>
+                      <!--<input type="text" class="-no-border common-font form-group control-width" readonly value="{{RecordingTitle}}" />-->
+                      <span class="-no-border break common-font control-width form-group" type="text" readonly>{{RecordingTitle}}</span>
+                    </div>
+  
+                    <div class="my-2" *ngIf="Instructions">
+                      <label class="control-width font-weight-bold head">Requester message</label>
+                      <!--  <input type="text" class="-no-border common-font form-group control-width" readonly value="{{Instructions}}" />-->
+                      <span class="-no-border break common-font control-width form-group" type="text" readonly>{{Instructions}}</span>
+  
+                    </div>
+  
+                    <div class="my-2" *ngIf="ReplayConsent">
+                      <label class="control-width font-weight-bold head">Replay consent</label>
+                      <input type="text" class="-no-border common-font form-group control-width" readonly value="{{ReplayConsent}}" />
+                    </div>
+  
+                    <div class="my-2" *ngIf="requestdate">
+                      <label class="control-width font-weight-bold head">Request date</label>
+                      <input type="text" class="-no-border common-font form-group control-width" readonly value="{{requestdate | date:'MM/dd/yyyy' }}" />
+                    </div>
+  
+                    <div class="my-2" *ngIf="requestfinishdate">
+                      <label class="control-width font-weight-bold head">Recording date</label>
+                      <input type="text" class="-no-border common-font form-group control-width" readonly value="{{requestfinishdate | date:'MM/dd/yyyy' }}" />
+                    </div>
+  
+                    <div class="my-2" *ngIf="RecordingStatus">
+                      <label class="control-width font-weight-bold head">Status</label>
+                      <input type="text" class="-no-border common-font form-group control-width" readonly value="{{RecordingStatus}}" />
+                    </div>
+  
+                    <div class="question_list_cont clearfix col-md-12 p-0" *ngIf="questionList?.length > 0">
+                      <div class="my-2">
+                        <!-- <h4 class="question-list control-width common-font-blue font-weight-bold">Saved Questions</h4>-->
+                        <h4 class="question-list control-widt common-font-blue font-weight-bold font-size-18">Questions</h4>
+  
+                      </div>
+                      <div class="question-list text-justify a mb-1" #qlistall *ngFor="let questions of questionList; let i = index" id="{{questions.RecordingQuestionID}}">
+                        <div class="question-text text-justify qnumber{{i+1}}">
+                          Question {{i + 1}}  : {{questions.QuestionText}}
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+                </div><!--first menu-->
+              </div>
+              <!--tab closed-->
+              <!--sharing history section start-->
+              <div id="sharinghistory" class="tab-pane fade" #sharinghistory>
+  
+                <div>
+                  <!--Accordion wrapper-->
+                  <div class="accordion md-accordion" *ngIf="recordingHistory?.length > 0" id="accordionEx1" role="tablist" aria-multiselectable="true">
+  
+                    <!-- Accordion card -->
+                    <div class="card mb-2" *ngFor="let history of recordingHistory;  let i = index" id="{{i}}">
+  
+                      <!-- Card header -->
+                      <div class="card-header padding-ten" role="tab" id="headingTwo">
+                        <a class="collapsed card_accordian" #am data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo_{{i}}"
+                           aria-expanded="false" aria-controls="collapseTwo" (click)="openCloseAccordianMenu(rotateicon)">
+                          <div class="mb-0">
+                            <!--<div class="his_cmp_name common-font-blue textOverflow float-left" title="{{history.AssignedTitle}}">{{history.AssignedTitle}}</div> <span class="common-font font-size-14 mr-3">shared on {{history.SharedDate | date:'MM/dd/yyyy'}}</span> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon></i>-->
+                            <div class="his_cmp_name textOverflow float-left common-font">Shared to <span class="ml- hoverable-link-text a user-info userprofile-name name_{{history.VendorUserID}}" id="{{history.VendorUserID}}" attr.username="name_{{history.VendorUserID}}" (click)="getUserInfo($event, history.VendorUserID, history.VendorFullName)" title="Send message to {{history.VendorFullName}}"><a href="JavaScript:Void(0);" class="common-font-blue"><strong>{{history.VendorFullName}} </strong></a></span></div> <span class="common-font font-size-14 mr-3">on {{history.SharedDate | date:'MM/dd/yyyy'}}</span> <i class="fas fa-angle-down rotate-icon float-right font-size-20 mt-1" #rotateicon></i>
+                          </div>
+                        </a>
+                      </div>
+  
+                      <!-- Card body -->
+                      <div id="collapseTwo_{{i}}" #abc class="collapse" role="tabpanel" aria-labelledby="headingTwo"
+                           data-parent="#accordionEx1">
+                        <!-- *ngFor="let cmpalldata of history.Data"-->
+                        <div class="card-body">
+  
+                          <div data-control-name="comment_actor" id="user_profile-details" class="user_profile-details font-size-14">
+                            <div class="" *ngIf="history.AssignedTitle">
+                              <span class=" ">
+                                <span class="rating-text font-weight-bold">Title : </span>
+                                <span class="ml-2 hoverable-link-text common-font-blue" id="share_title">{{history.AssignedTitle}}</span>
+                              </span>
+                            </div>
+                            <div class="mt-2">
+                              <span class=" ">
+                                <span class="rating-text font-weight-bold">Shared By : </span>
+                                <span class="ml-2 hoverable-link-text a user-info userprofile-name name_{{history.ReviewerID}}" id="{{history.ReviewerID}}" attr.username="name_{{history.ReviewerID}}" (click)="getUserInfo($event, history.ReviewerID, history.ReviewerFullName)" title="Send message to {{history.ReviewerFullName}}"><a href="JavaScript:Void(0);" class="common-font-blue"><strong>{{history.ReviewerFullName}}</strong></a></span>
+                                <!--<span class="ml-1 font-size-12" *ngIf="history.ReviewerTitle">({{history.ReviewerTitle}})</span>-->
+                                <!--<span class="ml-1 rating-text font-weight-bold font-size-12"> on {{history.SharedDate | date:'MM/dd/yyyy' }}</span>--><!--hh:mm aa-->
+                              </span>
+                            </div>
+                            <div class="mt-2">
+                              <span class=" ">
+                                <span class="rating-text float-lef font-weight-bold">Shared To : </span>
+                                <!-- (click)="getUserInfo($event, history.VendorUserID, history.VendorFullName)"-->
+                                <span class="ml-2 hoverable-link-text a" id="{{history.VendorUserID}}" attr.username="name_{{history.VendorUserID}}" title="Send email to {{history.VendorEmailID}}"><a href="mailto:{{history.VendorEmailID}}" class="common-font-blue"><strong>{{history.VendorEmailID}}</strong></a></span>
+                              </span>
+                            </div>
+                            <div class="mt-2" *ngIf="history.SentMessage">
+                              <span class=" ">
+                                <span class="rating-text float-lef font-weight-bold">Message : </span>
+                                <span class="ml-1 rating-text common-font font-size-">{{history.SentMessage}}</span>
+                              </span>
+                            </div>
+  
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Accordion card -->
+                  </div>
+                  <!-- Accordion wrapper -->
+                </div>
+  
+                <p *ngIf="recordingHistory?.length == 0" class="common-font font-size-14">No sharing history available.</p>
+              </div>
+              <!--sharing history section start-->
+            </div><!--tab closed-->
+  
+          </div>
+  
+        </div><!--modal body closed-->
+      </div>
+    </div>
+  </div>
+  
+  
+  <!--Send Message model-->
+  <div class="modal fade modal-slide right sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+    <div class="modal-dialog formsg" role="document">
+      <div class="modal-content modal-container">
+        <div class="modal-header edit-header">
+          <div class="left-header">
+            <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+          </div>
+          <div class="right-header">
+            <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+        <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+          <div class="form-group mr-2">
+            <label class="mr- my no-margin form-group control-width">Send message</label>
+            <textarea maxlength="500" class="usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+          </div>
+        </div><!--modal body closed-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+          <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+          <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!--Send Message model-->
+  <div class="modal messagenotification" id="messagenotification" tabindex="-1" role="dialog" aria-labelledby="messagenotificationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-container alert">
+        <div class="modal-header edit-header in not">
+          <div class="left-header">
+            <h6 class="common-font-blue">Alert</h6>
+          </div>
+          <div class="right-header">
+            <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+        <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+          <div class="form-group mr-2">
+            <p class="mr- my no-margin form-group control-width">You are logged in user. <br /><br />Sending a message to itself is not allowed.</p>
+          </div>
+        </div><!--modal body closed-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

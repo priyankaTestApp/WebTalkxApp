@@ -1,0 +1,140 @@
+
+.instruction, .req_title {
+  /*white-space: pre-line;*/
+  width: 220px;
+}
+
+.head {
+  /* font-size: 18px; */
+  font-weight: bold;
+}
+
+.break {
+  /*// word-wrap: break-word;*/
+  word-break: break-word;
+  user-select: text;
+}
+
+.question-text {
+  width: 100%;
+  float: left;
+  background-color: #e5e5e5;
+  height: auto;
+  padding: 10px !important;
+  font-size: 15px;
+  line-height: 1.82;
+  margin-bottom: 3px;
+  letter-spacing: 0 !important;
+  margin-top: 5px;
+}
+
+.fa-clipboard {
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.table thead th {
+  text-transform: none;
+  /*font-size: 16px;*/
+  vertical-align: middle !important;
+}
+
+.table td {
+  vertical-align: middle !important;
+  /*text-indent: 26px;*/
+  /*text-indent: 0 !important;*/
+}
+
+.checkbox {
+  top: 5px !important;
+  /*left: 3px !important;*/
+  text-indent: 0 !important;
+}
+
+.table thead th:not(.head_all) {
+  padding-left: 10px;
+}
+
+.common-table-content .detail-icons-container {
+  top: 16px;
+  z-index: 10;
+}
+
+.btn-rounded {
+  border-radius: 20px !important;
+}
+
+.table-striped thead .checkbox {
+  /*top: 1px !important;*/
+  left: -8px;
+}
+
+.pcoded-main-container[_ngcontent-c0] {
+  padding-top: 70px !important;
+}
+
+/* .data-msg {
+  margin-left: 15px !important;
+} */
+
+/*.table.table-dark thead th, .table[class*="table-"] thead th {
+  background: #0e0e0e08 !important;
+}*/
+
+/*.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0,0,0,.0) !important;
+}*/
+
+.review-link {
+  cursor: pointer;
+  color: #059ee3 !important;
+}
+
+
+.modal-slide.right .modal-dialog:not(.formsg) {
+  position: fixed;
+  margin: auto;
+  width: 500px;
+  -webkit-transform: translate3d(0%, 0, 0);
+  -ms-transform: translate3d(0%, 0, 0);
+  -o-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
+  bottom: 5px;
+}
+
+.modal-slide.right .modal-content {
+  overflow-y: auto;
+  width: 500px;
+  height: 700px;
+  box-shadow: 0 0 3px 2px #cccccc;
+}
+
+.modal-slide.right.fade .modal-dialog {
+  right: -500px;
+  -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+  transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal-slide.right.fade.show .modal-dialog {
+  right: 2px;
+}
+
+.sample_txt {
+  color: white;
+  font-size: 0;
+  opacity: 0;
+}
+
+.card .card-header[data-toggle="collapse"]::after {
+  line-height: 45px;
+}
+
+.badge {
+  /* min-width: 10px; */
+  padding: 3px 7px;
+  color: #fff;
+  background-color: #f44336;
+  border-radius: 10px;
+}

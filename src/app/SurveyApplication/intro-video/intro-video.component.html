@@ -1,0 +1,27 @@
+
+<div class="space-around">
+    <div class="center">
+        <h5 class="heading">Introduction Message</h5>
+        <video controlsList="nodownload" disablePictureInPicture height="300" width="320" controls src="https://platform.webtalkx.com/api/uploads/325/1.mp4" class="video-js vjs-default-skin video_clip1-dimensions" ></video>
+    </div>
+</div>
+
+<!--Form tag start-->
+<form name="form" class="" #surveyStartForm="ngForm" (ngSubmit)="surveyStartForm.form.valid && onSubmit(surveyStartForm)" novalidate>
+    <div class="col-md-12 no-padding">
+        <div class="input-group my-4 ">
+            <div class="custom-control custom-checkbox ">
+            <input type="checkbox" required class="custom-control-input" [ngClass]="{'is-invalid':IAgree.invalid && (surveyStartForm.submitted || IAgree.touched)}"
+                    id="IAgree" [(ngModel)]="model.IAgree" #IAgree="ngModel" name="IAgree">
+            <label class="custom-control-label control-label-height" for="IAgree" name="IAgree">I agree to receive other communicatios from Webtalkx.</label>
+            </div>
+        </div>
+    </div>
+
+    <!--form submission control-->
+    <div class="col-md-12 Control-form-button my-4">
+        <div class="">
+            <button type="submit" class="btn btn-primary round-btn-border w-100" [disabled]="!model.IAgree">Start the survey</button>
+        </div>
+    </div>
+</form>

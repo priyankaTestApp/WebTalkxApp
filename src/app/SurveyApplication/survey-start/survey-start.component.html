@@ -1,0 +1,33 @@
+<!-- <p class="mb-2">Hi,</p>
+<p class="mb-2">We have created a short survey and your response would be very helpful. We're trying to understanding of the goals, challenges this year.</p>
+<p class="mb-2">Please take few minutes to complete this survey and tell us what you love, love to hate or what you'd like to see added.</p>
+<p class="mb-4">We hope to use this information to create solutions that address exactly what you need!</p> -->
+
+<div class=" text-justify">
+    <p class="mb-2"><strong>Thank you for the purchase of our product!</strong></p>
+    <p class="mb-2">We are thrilled you are here, and you accepted our invitation to participate in a short 3 question customer survey.</p>
+    <p class="mb-2">We are always striving to improve how we engage with you as our valued customer and now we made it super easy. Tell us what you really think and feel with our new video survey. Let your voice be heard and have fun with it – it will only take a few minutes.</p>
+    <p class="mb-2">And please don’t forget to rate your survey experience after you are done. We would love to know if you enjoyed this new form of engaging with us.</p>
+    <p class="mb-2">Thank you in advance and see you soon!</p>
+    <p class="mb-4"><strong>Your Customer Experience Team</strong></p>
+</div>
+
+<!--Form tag start-->
+<form name="form" class="" #surveyStartForm="ngForm" (ngSubmit)="surveyStartForm.form.valid && onSubmit(surveyStartForm)" novalidate>
+    <div class="col-md-12 no-padding">
+        <div class="input-group my-2 ">
+            <div class="custom-control custom-checkbox ">
+            <input type="checkbox" required class="custom-control-input" [ngClass]="{'is-invalid':IAgree.invalid && (surveyStartForm.submitted || IAgree.touched)}"
+                    id="IAgree" [(ngModel)]="model.IAgree" #IAgree="ngModel" name="IAgree">
+            <label class="custom-control-label control-label-height" for="IAgree" name="IAgree">I agree to receive other communicatios from Webtalkx.</label>
+            </div>
+        </div>
+    </div>
+
+    <!--form submission control-->
+    <div class="col-md-12 Control-form-button my-4">
+        <div class="">
+            <button type="submit" class="btn btn-primary round-btn-border w-100" [disabled]="!model.IAgree">Start the survey</button>
+        </div>
+    </div>
+</form>

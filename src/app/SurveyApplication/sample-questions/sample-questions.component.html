@@ -1,0 +1,45 @@
+<!--Recording guide model-->
+
+<div class=" overflow-auto">
+  <div class="video-text-container">
+    <span class="text-justify">Feel free to browse through some sample questions. Simply copy and paste to your new request.</span><br><br>
+    <div class="accordion md-accordion font-14" id="accordionEx1" role="tablist" aria-multiselectable="true">
+      <div class="card mb-2 according-card-section" *ngFor="let temp of sampleQuestionsData; let i = index">
+
+        <!-- Card header -->
+        <div class="card-header" role="tab"  id="headingTwo_{{i+1}}">
+          <a  href="#collapseTwo1_{{i+1}}" class="collapsed" data-toggle="collapse" 
+            (click)="getSampleQuestionText(temp)" aria-expanded="false" aria-controls="#collapseTwo1_{{i+1}}">
+            <div class="mb-0">
+              <div class="his_cmp_name common-font-blue textOverflow float-left text-left dro_width">{{temp.QauestionNames}}</div> <i class="fas fa-angle-down rotate-icon float-right font-20 mt-1" #rotateicon1></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card body -->
+        <div id="collapseTwo1_{{i+1}}" class="collapse" role="tabpanel" aria-labelledby="headingTwo_{{i+1}}" data-parent="#accordionEx1">
+          <div class="card-body p-0">
+            <!--check bookmark object length is existing or not-->
+            <div class="colPading bookmark-section clearfix">
+              <ul class="card-content-body-text common-font-small overflow-hidden text-justify font-14 pl-2" style="height:auto;list-style-type:none;">
+                <li class="ListSetting cursor-pointer" *ngFor="let data of sampleQuestionText; let i = index" (click)="copyQuestionAcc(data.SampleQuestions, sampleInpt, item)" id="{{i}}">
+                  <i #item title="Click to select the question." class="fas fa-copy mr-3 mt-1" aria-hidden="true"></i>
+                  <textarea class="sample_txt border-0" readonly #sampleInpt>{{data.SampleQuestions}} </textarea>
+                </li>
+
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Accordion wrapper -->
+    </div>
+
+  </div>
+  </div>
+
+
+

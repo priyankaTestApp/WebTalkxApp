@@ -1,0 +1,168 @@
+<!--<p>
+  i2-bedit-profile works!
+</p>-->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+  </ol>
+</nav>
+
+<div class="auth-wrapper mt-5">
+  <div class="card shadow-lg border-0 p-0 m-auto">
+    <!--<div class="card-header -no-border no-padding ml-4">
+      <h3 class="text-cente font-weight-light my-4 p-2">Edit Profile</h3>
+    </div>-->
+    <div class="card-body">
+      <form name="form" #updateProfileForm="ngForm" (ngSubmit)="updateProfileForm.form.valid && updateProfile(updateProfileForm)">
+
+        <div class="input-group">
+
+          <div class="col-md-12 text-center user-profile relative">
+            <img id="file-image" class="profile-image" [src]="updateUserModel.ProfileImageName ? updateUserModel.ProfileImageName : imageUrl" alt="Profile-Image" />
+            <input id="file-upload" name="fileUpload" type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+            <label for="file-upload" id="file-drag" class="common-font font-14">
+              <span id="file-upload-btn" class="common-font-blue">Update profile picture</span>
+            </label>
+            <!--  <span *ngIf="IsAdmin" class="float-right common-font-blue absolute user_as_admin font-size-22">(Admin)</span>-->
+          </div>
+          <!--   <div class="col-md-12 mb-4 page-header-text">Edit profile</div>-->
+        </div>
+
+        <div class="input-group my-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold required-form-field">First Name</label>
+              <input class="form-control form-control-user" id="FirstName" name="FirstName" #FirstName="ngModel"
+                      [ngClass]="{'is-invalid':updateUserModel.submitted && FirstName.invalid}" [(ngModel)]="updateUserModel.FirstName" placeholder="Please enter first name." pattern='^[a-zA-Z]*$' required type="text" />
+              <div *ngIf="FirstName.invalid && (updateProfileForm.submitted || FirstName.touched)" class="invalid-error">
+                <div *ngIf="FirstName.errors.required">First name is required.</div>
+                <div *ngIf="FirstName.errors.pattern">White spaces and special characters are not allowed.</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!--<div class="form-group">
+            <label class="font-weight-bold required-form-field">Survey Title</label>
+            <input type="text" class="form-control form-control-user" id="SurveyTitle"
+                    [(ngModel)]="model.SurveyTitle" #SurveyTitle="ngModel" name="SurveyTitle" placeholder="Survey Title" [ngClass]="{'is-invalid':SurveyTitle.invalid && (rDetails.submitted || SurveyTitle.touched)}" required>
+
+            <div *ngIf="SurveyTitle.invalid && (rDetails.submitted || SurveyTitle.touched)" class="invalid-feedback">
+              <div *ngIf="SurveyTitle.errors.required">Survey title is required.</div>
+            </div>
+
+          </div>-->
+
+
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold required-form-field" for="LastName">Last Name</label>
+              <input required class="form-control form-control-user" id="LastName" type="text" name="LastName" #LastName="ngModel" [(ngModel)]="updateUserModel.LastName" placeholder="Please enter last name." pattern='^[a-zA-Z]*$' />
+              <div *ngIf="LastName.invalid && (updateProfileForm.submitted || LastName.touched)" class="invalid-error">
+                <div *ngIf="LastName.errors.required">Last name is required.</div>
+                <div *ngIf="LastName.errors.pattern">White spaces and special characters are not allowed.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="input-group">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold required-form-field" for="EmailID">Email</label>
+              <input required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z0-9.-_]{2,}[.]{1}[a-zA-Z]{2,}"
+                      class="form-control form-control-user" id="EmailID" type="email" name="EmailID" #EmailID="ngModel" [(ngModel)]="updateUserModel.EmailID" placeholder="Enter email address." />
+              <div *ngIf="EmailID.invalid && (updateProfileForm.submitted || EmailID.touched)" class="invalid-error">
+                <div *ngIf="EmailID.errors && EmailID.errors.required" >
+                  Email is required.
+                </div>
+              </div>
+
+              <div *ngIf="EmailID.errors && EmailID.errors.pattern" class="invalid-error">
+                Email is invalid.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold required-form-field">Phone Number</label>
+              <input type="text" class="form-control form-control-user" autocomplete="off"
+                      [(ngModel)]="updateUserModel.PhoneNumber" #PhoneNumber="ngModel" pattern="^[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{10}$" minlength="10" maxlength="12" placeholder="Ex 415-555-2671/3456732345"
+                      name="PhoneNumber" id="PhoneNumber" required/>
+              <div *ngIf="PhoneNumber.invalid && (updateProfileForm.submitted || PhoneNumber.touched)" class="invalid-error">
+                <div *ngIf="PhoneNumber.errors && PhoneNumber.errors.required">
+                  Phone number is required.
+                </div>
+              </div>
+              <div *ngIf="PhoneNumber.errors && PhoneNumber.errors.pattern" class="invalid-error">
+                Phone number is invalid.
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold" for="LinkedIn">LinkedIn</label>
+              <input class="form-control form-control-user" id="LinkedIn" name="LinkedIn" #LinkedIn="ngModel" [(ngModel)]="updateUserModel.LinkedIn" placeholder="LinkedIn profile URL." type="text" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold" for="GoogleID">Google</label>
+              <input class="form-control form-control-user" id="GoogleID" type="text" name="GoogleID" #GoogleID="ngModel" [(ngModel)]="updateUserModel.GoogleID" placeholder="Google profile URL." />
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold" for="FacebookID">Facebook</label>
+              <input class="form-control form-control-user" id="FacebookID" name="FacebookID" #FacebookID="ngModel" [(ngModel)]="updateUserModel.FacebookID" placeholder="Facebook profile URL." type="text" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold" for="TwitterID">Twitter</label>
+              <input class="form-control form-control-user" id="TwitterID" name="TwitterID" #TwitterID="ngModel" [(ngModel)]="updateUserModel.TwitterID" placeholder="Twitter profile URL." type="text" />
+            </div>
+          </div>
+
+        </div>
+
+
+        <!--<div class="input-group colPading my-2">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="mr-4 my- form-lable-text  form-group controlWidth require-form-field" for="Tinder">Tinder</label>
+              <input class="mx-1 my-2 form-textbox-border form-group control-width" id="TinderID" name="TinderID" #TinderID="ngModel" [(ngModel)]="updateUserModel.TinderID" placeholder="Tinder profile URL." type="text" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="mr-4 my- form-lable-text  form-group controlWidth require-form-field" for="TelegramID">Telegram </label>
+              <input class="mx-1 my-2 form-textbox-border form-group control-width" id="TelegramID" name="TelegramID" #TelegramID="ngModel" [(ngModel)]="updateUserModel.TelegramID" placeholder="Telegram profile URL." type="text" />
+            </div>
+          </div>
+        </div>-->
+
+        <div class="form-group col-md-12 text-right round-bt mt-3">
+          <button type="button" class="btn btn-secondary cancelBtn mr-2 btn-user" [routerLink]="['/I2BApplication/Dashboard']">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-user">Update</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

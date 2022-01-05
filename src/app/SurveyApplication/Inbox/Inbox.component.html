@@ -1,0 +1,278 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+  </ol>
+</nav>
+
+<div class="pcoded-wrapper common-table-content inbox">
+  <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <div class="row">
+            <!-- Row Selection And Deletion (Single Row) table start -->
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="page-header-text">
+                    Inbox
+                  </div>
+                </div>
+                <div class="card-body relative p-0">
+                  <!--<button type="button" id="row-delete-btn" class="btn btn-danger m-b-20">Delete Rows</button>-->
+                  <div class="detail-icons-container col-sm-12 col-md-6 -hidden absolute {{isdatalength ? null :'invisible'}}">
+                    <div class="dataTables_length" id="add-row-table_length">
+                      <div class="form-group d-inline mr-4">
+                        <div class="checkbox checkbox-primary checkbox-fill d-inline all">
+                          <!--Added below change event and showselectAll attribute-->
+                          <input type="checkbox" disabledname="checkbox-i" id="checkbox-i" [(ngModel)]="masterSelected" (change)="checkUncheckAll()" value="m1">
+                          <label for="checkbox-i" class="cr"></label>
+                        </div>
+                      </div>
+                      <button type="button" disabled data-toggle="modal" data-target="#MsgDeleteModel" id="row-delete-btn" class="ml-3 btn btn-icon btn-rounded btn-outline-secondary"><i class="fa fa-archive"></i></button>
+                    </div><br />
+                  </div>
+
+                  <!--Menu tab-->
+                  <ul class="nav nav-tabs menu-tab-ul">
+                    <li class="menu-tab" (click)="enableTab(messagetab, tabcontent)"><a #messagetab class="active common-font font-weight-bold font-15" id="message_menutab" data-toggle="tab" href="#messagetab">Message</a></li>
+                    <li class="menu-tab" (click)="enableTab(notificationtab, tabcontent)"><a #notificationtab class="common-font font-weight-bold font-15" id="notification_menutab" data-toggle="tab" href="#notificationtab">Notification</a></li>
+                  </ul>
+
+                  <!--Tab menu content-->
+                  <div class="tab-content p-0 selectlist {{isuserlength ? 'padding-top-10' : null}}" #tabcontent>
+                    <div id="messagetab" class="tab-pane fad in active">
+                      <div class="" *ngIf="(usersList?.length == 0 || !usersList?.length)">
+                        <h6 class="data-msg">No message/content available.</h6>
+                      </div>
+                      <div class="message-container row col-sm-12 col-md-12 table-responsive m-0 p-0 overflow-hidden" *ngIf="usersList?.length > 0">
+                        <div class="inbox-container">
+                          <div class="messaging">
+                            <div class="inbox_msg">
+                              <div class="inbox_people">
+                                <div class="headind_srch">
+                                  <div class="recent_heading">
+                                    <h4>Recent</h4>
+                                  </div>
+                                  <!-- <div class="srch_bar">
+                                    <div class="stylish-input-group">
+                                      <input type="text" class="search-bar" placeholder="Search">
+                                      <span class="input-group-addon">
+                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                      </span>
+                                    </div>
+                                  </div> -->
+                                  <div class="srch_bar">
+                                    <div class="stylish-input-group">
+                                      <input type="text" class="search-bar" id="searchUser" [(ngModel)]="searchTerm" placeholder="Search">
+                                      <span class="input-group-addon">
+                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!--Left user's list start-->
+                                <div class="inbox_chat" id="msg" *ngIf="usersList?.length > 0">
+
+                                  <!-- <div *ngFor="let user of usersList" id="{{user.UserID}}"  class="" > -->
+                                  <div *ngFor="let user of usersList | filter : searchTerm" id="{{user.UserID}}" class="">
+
+                                    <!--Left users list's rows start-->
+                                    <div class="chat_list a inbox_unread_{{user.UserID}} {{user.UnReadMessageCount > 0  ? 'inbox_unread' : null}}" #userelement *ngIf="LoginUserID != user.UserID" (click)="selectUser($event,userelement, user.UserID)" id="{{user.UserID}}">
+                                      <div class="chat_people">
+
+                                        <div class="chat_img"> <img class="img-radius profile-picture border" src="{{user.ProfileImageName ? domainUrl + 'ProfilePicture/' + user.ProfileImageName : u_img }}" alt="{{user.FirstName}}"> </div>
+
+                                        <div class="chat_ib">
+
+                                          <div class="common-font-blue" title="{{user.FirstName | titlecase}} {{user.LastName | titlecase}}">{{user.FirstName | titlecase}} {{user.LastName | titlecase}}<span class="chat_date"><!--{{message.SendDateTime | date: 'MM/dd, HH:mm'}}--></span></div>
+
+                                          <!--<div class="user_title common-font-small"><span class="title" title="{{user.UserTitle}}">{{user.UserTitle}}</span> at <span class="company" title="{{user.UserCompany}}">{{user.UserCompany}}</span></div>-->
+                                        </div>
+
+
+                                        <div class="">
+
+                                          <span *ngIf="(user.UnReadMessageCount > 0)" class="badge badge-primary badge-counter font-14 icon-message icon-message_{{user.UserID}}" id="{{user.UserID}}">{{user.UnReadMessageCount}}</span>
+
+                                          <!--<span class="badge badge-danger badge-counter font-14 icon-message  -hidden icon-message icon-message_{{user.UserID}}"  id="{{user.UserID}}">0</span>-->
+
+                                        </div>
+                                        <!--LinkedIn icon-->
+                                        <div class="linkedin-cont float-left mt-2" *ngIf="user.LinkedInURL" (click)="openLinkedInProfile(user.LinkedInURL, $event)">
+                                          <img class="icon-picture margin-right-zero" src="../../../assets/img/linkedin-blue.png" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!--Left users list's rows end-->
+                                </div>
+                                <!--Left user's list end-->
+
+                              </div>
+
+                              <!--Right message container start-->
+                              <div class="mesgs">
+                                <div class="msg_history">
+                                  <!--If no message available-->
+                                  <div class="" *ngIf="(messageList?.length == 0 || msg_length == 0)">
+                                    <h6 class="data-msg mt-4 font-14">No message/content available.</h6>
+                                  </div>
+                                  <div class="all_msg_data" *ngIf="(messageList?.length > 0 && msg_length != 0)">
+                                    <div class="send_n_receiver" *ngFor="let message of messageList">
+                                      <!--user's receiver message start -->
+                                      <div class="incoming_msg mb-3" *ngIf="message.MessageType == 'Reply' ">
+                                        <div class="incoming_msg_img mr-2"> <img class="img-radius msgprofile-picture border" src="{{message.ProfilePictureURL ? domainUrl + 'image/'+ message.ProfilePictureURL : '../assets/img/u_image6.png'}}" alt="{{message.SenderName}}"> </div>
+                                        <div class="received_msg">
+                                          <div class="common-font-light-blue font-13 font-weight-bold mb-2">{{message.SenderName | titlecase}}</div>
+                                          <div class="received_withd_msg">
+                                            <p innerHtml="{{message.MessageText}}">
+                                              <!--{{message.MessageText}}-->
+                                            </p>
+                                            <span class="time_date">{{message.SendDateTime | date: 'HH:mm a'}} | {{message.SendDateTime | date: 'MMM d yyyy'}}</span>
+                                          </div>
+                                        </div>
+
+
+                                      </div>
+                                      <!--user's receiver message end -->
+                                      <!--user's sender message start -->
+                                      <div class="outgoing_msg" *ngIf="message.MessageType == 'Send' ">
+                                        <div class="incoming_msg_img float-right ml-2"> <img class="img-radius msgprofile-picture border" src="{{message.ProfilePictureURL ? domainUrl + 'image/'+ message.ProfilePictureURL : '../assets/img/u_image6.png'}}" alt="{{message.SenderName}}"> </div>
+                                        <div class="sent_msg">
+                                          <div class="common-font-light-blue font-13 font-weight-bold mb-2 mr-1 text-right">{{message.SenderName| titlecase}}</div>
+                                          <p innerHtml="{{message.MessageText}}">
+                                            <!--{{message.MessageText}}-->
+                                          </p>
+
+                                          <span class="time_date">{{message.SendDateTime | date: 'HH:mm a'}} | {{message.SendDateTime | date: 'MMM d yyyy'}}</span>
+                                        </div>
+                                      </div>
+                                      <!--user's receiver message end -->
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                                <!--Type text and send button conatiner-->
+                                <div class="type_msg {{msg_length == 0 ? 'mt-2' : null}} ">
+                                  <div class="input_msg_write">
+                                    <!--<input type="text" class="write_msg ml-3" required #textSend="ngModel" [(ngModel)]="model.textSend" (keyup)="sendText($event)" id="textSend" placeholder="Type a message" />-->
+                                    <div class="notranslate _5rpu write_msg mx-3 mt-2 font-14" #textSend (keyup)="sendText($event)" id="textSend" placeholder="Write a message..." contenteditable="true" role="combobox"></div>
+                                    <button id="msg_send_btn" class="msg_send_btn mr-2" type="button" (click)="sendMessage(textSend, textSend.innerText)">
+                                      <!--<i class="fa fa-paper-plane" aria-hidden="true"></i>-->
+                                      Send
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Right message container end-->
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!--first menu-->
+                    <!--Second menu-->
+                    <!--{{notificationList?.length == 0 ? '' : 'padding-top-10'}}-->
+                    <div id="notificationtab" class="tab-pane fad padding-top-10">
+                      <div class="" *ngIf="notificationList?.length == 0 || !notificationList?.length">
+                        <h6 class="data-msg">No notification available.</h6>
+                      </div>
+                      <div class="message-container row col-sm-12 col-md-12 table-responsive m-0 p-0" *ngIf="notificationList?.length > 0">
+                        <!-- <table style="border-top: 1px solid #e5e5e5 !important;" class="table table-striped table-bordered nowrap dataTable" datatable [dtOptions]="dtOptions" id="notifications" role="grid" aria-describedby="row-delete_info"> -->
+                        <table *ngIf="notificationList?.length > 0" class="table" id="dataTable" width="100%" cellspacing="0">
+                          <thead class="custom-header">
+                            <tr role="row">
+                              <th class="head_all text-center sorting_disabled">
+                                <div class="form-group d-inline">
+                                  <div class="checkbox checkbox-primary checkbox-fill d-inline">
+                                    <input type="checkbox" name="checkbox-i" id="checkbox-i" [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)" value="m1" dataSource='' [checked]="isChecked" showSelectAll=true>
+                                    <label for="checkbox-i" class="cr"></label>
+                                  </div>
+                                </div>
+                              </th>
+                              <!--<th tabindex="0" aria-controls="add-row-table" aria-label="Column 0: activate to sort column ascending" rowspan="1" colspan="1"></th>-->
+                              <th>Name</th>
+                              <th>Subject/Headline</th>
+                              <th>Date & Time</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="notificationList?.length > 0">
+                            <tr *ngFor="let notification of notificationList" #trnotification id="{{notification.NotificationID}}" class="row-list-detail collapsible a  {{notification.isSelected ? 'select-row' : null}} {{notification.ReadFlag ? null : 'unreadmsg'}}" (click)="readNotification($event, trnotification, notification.NotificationID, notification.NotificationMessage)">
+                              <td class="-padding-top-zero text-center">
+                                <div class="form-group d-inline">
+                                  <div class="checkbox checkbox-primary checkbox-fill d-inline">
+                                    <input type="checkbox" [(ngModel)]="notification.isSelected" (change)="isAllSelected();" name="checkbox-p-in-2" id="{{notification.NotificationID}}" class="checkbox-p-in-2">
+                                    <label for="{{notification.NotificationID}}" class="cr"></label>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="a" data-toggle="modal" data-target="#showNotificationModel">{{notification.SenderName | titlecase}}</td>
+                              <td class="a" data-toggle="modal" data-target="#showNotificationModel" width="200">{{notification.NotificationSubject}}</td>
+                              <td class="a" data-toggle="modal" data-target="#showNotificationModel">{{notification.SendDate | date: 'MM/dd/yyyy, hh:mm aa'}}</td>
+                            </tr>
+                          </tbody>
+
+                        </table>
+                      </div>
+                    </div>
+                    <!--Second menu-->
+                  </div>
+                  <!--Tab content end-->
+                </div>
+              </div>
+            </div>
+            <!-- Row Selection And Deletion (Single Row) table end -->
+            <!-- Form Inputs table start -->
+          </div>
+          <!-- [ Main Content ] end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Confirmation modal to remove the messages-->
+<div class="modal fade" id="MsgDeleteModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding">
+        <p>Are you sure to delete selected notification?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not entering the text-->
+        <button type="button" (click)="_archiveNotification()" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirmation modal to remove the messages-->
+<div class="modal fade" id="showNotificationModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content  extraWidth">
+      <div class="modal-header">
+        <div class="Send-replay page-header-text" id="exampleModalLabel">Notification details</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding notificationBody">
+        <p id="notificationMessage" class="text-justify"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

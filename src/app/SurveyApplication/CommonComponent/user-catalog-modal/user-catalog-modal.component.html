@@ -1,0 +1,200 @@
+<!--company details model-->
+
+
+
+  <div>
+    <!-- {{userData|json}} -->
+    <div class="modal-content modal-container resize-model">
+
+      <div class="modal-header edit-header in">
+        <!--<div class="page-header-text ml-3" id="exampleModalLabel">selected User Modal</div>-->
+        <div class="left-header">
+          <h5 class="common-font-blue">Request details</h5>
+        </div>
+
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+
+        <!--catalog Details data start-->
+        <div class="catalog-details my-">
+
+          <!--<div class="tab-content">-->
+          <div id="detailstab" class="tab-pane active">
+
+            <div class="company-data">
+              <!-- {{catalog_record | json}}-- -->
+              <!-- {{catalog_record.AuthorEmailID}}-- -->
+              <div class="text-center">
+                <button type="button" *ngIf="data.JobDescription || userData.JobDescription" class="btn border btn-primary font-14" id="jobdescription" #jobdescription (click)="openDescriptionFile($event.target, (data.JobDescription || userData.JobDescription))">Job Description</button>
+                <button type="button" *ngIf="data.Documents || userData.JobDescription" class="btn border btn-primary font-14" id="Documents" #documents (click)="openDescriptionFile($event.target, (data.Documents || userData.JobDescription))">Documents</button>
+                <button type="button" *ngIf="data.CustomWelcomePage || userData.JobDescription" class="btn border btn-primary font-14" id="customwelcomepage" #CustomWelcomepage (click)="openDescriptionFile($event.target, (data.CustomWelcomePage || userData.JobDescription))">Custom Welcome Page</button>
+                <button type="button" *ngIf="data.UploadLogo || userData.JobDescription" class="btn border btn-primary font-14" id="uploadlogo" #UploadLogo (click)="openDescriptionFile($event.target, (data.UploadLogo || userData.JobDescription))">Upload Logo</button>
+              </div>
+
+              <div class="my-2" *ngIf="data.AuthorName">
+                <label class="font-weight-bold">Asked by</label>
+                <div class=" font-14 a user-info " id="{{data.AuthorID}}" attr.username="name_{{data.AuthorID}}" (click)="getUserInfo($event, data.AuthorID, data.AuthorName)" title="Send message to {{data.AuthorName}}"><a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{data.AuthorName}}</strong></a></div>
+                <div class="clearfix">
+                  <a href="{{data.AuthorLinkedInID}}" target="_blank" *ngIf="data.AuthorLinkedInID">
+                    <img *ngIf="data.AuthorLinkedInID" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                  </a>
+                </div>
+              </div>
+
+              <div class="my-2" *ngIf="data.AuthorEmailID">
+                <label class="font-weight-bold">Asked by user email</label>
+                <div class="">
+                  <a href="mailto:{{data.AuthorEmailID}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{data.AuthorEmailID}}</a>
+                </div>
+              </div>
+
+
+              <div class="my-2" *ngIf="(data.FirstName || userData.FirstName || data.LastName || userData.LastName) != undefined">
+                <label class="font-weight-bold">Requested to</label>
+                <div class=" font-14 a user-info " id="{{data.UserID || userData.ParticipantID}}" attr.username="name_{{data.UserID || userData.ParticipantID}}" (click)="getUserInfo($event, data.UserID || userData.ParticipantID, (data.FirstName || userData.FirstName) + ' ' + (data.LastName || userData.LastName))"
+                     title="Send message to {{ (data.FirstName || userData.FirstName) + ' ' + (data.LastName || userData.LastName)}}">
+                  <a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{(data.FirstName || userData.FirstName) + ' ' + (data.LastName || userData.LastName)}}</strong></a>
+                </div>
+                <div class="clearfix">
+                  <a href="{{data.LinkedIn || userData.LinkedIn}}" target="_blank" *ngIf="data.LinkedIn || userData.LinkedIn">
+                    <img *ngIf="data.LinkedIn || userData.LinkedIn" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                  </a>
+                </div>
+              </div>
+
+
+
+              <div class="my-2" *ngIf="data.EmailID || userData.EmailID">
+                <label class="font-weight-bold">Requested to user email</label>
+                <div class="">
+                  <a href="mailto:{{data.EmailID || userData.EmailID}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{data.EmailID || userData.EmailID}}</a>
+                </div>
+              </div>
+
+              <div class="my-2" *ngIf="data.PhoneNumber  || userData.PhoneNumber">
+                <label class="font-weight-bold">Phone Number</label>
+                <div class="">
+                  <a href="tel:{{data.PhoneNumber}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{data.PhoneNumber || userData.PhoneNumber}}</a>
+                </div>
+              </div>
+              <div class="my-2" *ngIf="data.ProjectName || data.MeetingName">
+                <label class="font-weight-bold">{{data.ProjectName ? 'Project Name' : (data.MeetingName ? 'Meeting Name' : null)}}</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.ProjectName || data.MeetingName}}</div>
+              </div>
+              <div class="my-2" *ngIf="data.WebTalkxRecordingType">
+                <label class="font-weight-bold">Webtalkx Type</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.WebTalkxRecordingType}}</div>
+              </div>
+              <div class="my-2" *ngIf="data.ParticipantType">
+                <label class="font-weight-bold">Participant Type</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.ParticipantType}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.Manager">
+                <label class="font-weight-bold">Manager</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.Manager}}</div>
+              </div>
+              <div class="my-2" *ngIf="data.Organisation">
+                <label class="font-weight-bold">Organization</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.Organisation}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.ReviewTeamMemberEmailID">
+                <label class="font-weight-bold">Reviewer Team</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.ReviewTeamMemberEmailID}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.WelcomeMessage">
+                <label class="font-weight-bold">Welcome Message</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.WelcomeMessage}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.Description">
+                <label class="font-weight-bold">Description</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.Description}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.InsertDate">
+                <label class="font-weight-bold">Request Date</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.InsertDate | date:'MM/dd/yyyy' }}</div>
+              </div>
+
+              <div class="my-2" *ngIf="(data.StartDate && data.WebTalkxRecordingType != 'Single Recording')">
+                <label class="font-weight-bold">Start Date</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.StartDate | date:'MM/dd/yyyy' }}</div>
+              </div>
+
+              <div class="my-2" *ngIf="(data.EndDate && data.WebTalkxRecordingType != 'Single Recording')">
+                <label class="font-weight-bold">End Date</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.EndDate | date:'MM/dd/yyyy' }}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.FinalStatus">
+                <label class="font-weight-bold">Status</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.FinalStatus}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.KeepSurveyAnonymous">
+                <label class="font-weight-bold">Survey Anonymous</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.KeepSurveyAnonymous ? 'True': 'False'}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.RPAEnable">
+                <label class="font-weight-bold">RPA Enable</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.RPAEnable ? 'True' : 'False'}}</div>
+              </div>
+
+              <div class="my-2" *ngIf="data.SkipEnable">
+                <label class="font-weight-bold">Skip Enable</label>
+                <div class="-no-border break control-width form-group" type="text" readonly>{{data.SkipEnable ? 'True' : 'False'}}</div>
+              </div>
+
+              <div class="card-header bg-blue p-2" *ngIf="data.IntroVideo">
+                <h6 class="common-font m-0">Introduction Message</h6>
+              </div>
+
+              <div class="question-list text-justify a my-1" *ngIf="data.IntroVideo" id="101">
+                <div class="record_icons p-2">
+                  <div class="record_btn_cont mr-2 cursor-pointer" (click)="replayInterviewNow($event, 101, 'request')">
+                    <button type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_101" title="Click to watch" id="" attr.qcount="101">
+                      <i class="fa fa-play-circle blue-text font-28" id="" attr.qcount="101"></i>
+                    </button>
+                    <span class="">Click to watch</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="question_list_cont clearfix col-md-12 p-0" *ngIf="questionList?.length > 0">
+                <div class="p-2 bg-blue">
+                  <h6 class="question-list font-weight-bold m-0">Saved Questions</h6>
+                </div>
+                <div class="question-list text-justify a mb-1" #qlistall *ngFor="let questions of questionList; let i = index" id="{{questions.RecordingQuestionID}}">
+                  <div class="question-text text-justify qnumber{{i+1}} {{questions.RecordQuestion ? 'cursor-pointer' : null}}" (click)="replayInterviewNow($event, i+1, 'request')">
+                    <span class="">Q{{i+1}}. </span>
+                    <button *ngIf="questions.RecordQuestion" type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_{{i+1}}" title="Click to watch" id="{{i+1}}" attr.qcount="{{i+1}}">
+                      <i class="fa fa-play-circle blue-text font-28" id="{{i+1}}" attr.qcount="{{i+1}}"></i>
+                    </button>
+                    <span class="">{{questions.RecordQuestion ? 'Click to watch' : questions.QuestionText}}</span>
+                  </div>
+                </div>
+              </div> <!-- end container -->
+
+            </div>
+          </div><!--first menu-->
+          <!--</div>--><!--Comments section closed-->
+          <!--sharing history section start-->
+        </div><!--tab closed-->
+
+      </div>
+    </div>
+    </div>
+  
+
+   
+
+
+

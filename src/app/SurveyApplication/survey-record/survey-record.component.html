@@ -1,0 +1,83 @@
+
+<div class="shadow-none bg-light rounded -padding-top-zero">
+    <div class="auth-content">
+  
+      <div class="car card-full-container">
+        <div class="card-bod text-left">
+          <!--Question part started-->
+          <div class="admin-question-wizard admin-custom-wizard">
+  
+            <div class="-full-width all-question relative">
+              
+              <aw-wizard class="mb-" *ngIf="questionList?.length > 0">
+                <aw-wizard-step class="aw-wizard-step aw-wizard-ques relative" *ngFor="let recordings of questionList;  let i = index" id="Q{{i+1}}" [stepId]="i" stepTitle="Q{{i+1}}">
+                  <p><strong>Question {{i+1}} of {{question_length}}</strong></p>
+                  <div class="wizard-control-container" style="width: 100%;margin: 0 auto;">
+                    <div class="question-cont-top ">
+                       
+                      <div class="question-text mb-3 font-weight-bold mx-" id="{{i+1}}">
+                        Question {{i + 1}}: {{recordings.QuestionText}}
+                      </div>
+                      <!-- <div id="video-btn" class="video-btn text-center col-md-12" *ngIf="i == 0">
+                          <div class="space-around">
+                            <div class="center">
+                                <video id="video_{{idx}}" class="video-js vjs-default-skin" playsinline></video>
+                            </div>
+                          </div>
+                      </div> -->  
+                    </div>
+                  </div>
+                </aw-wizard-step>  
+              </aw-wizard>
+
+              <div id="video-btn" class="video-btn text-center col-md-12">
+                <div class="space-around">
+                  <div class="center">
+                      <video id="video_{{idx}}" class="video-js vjs-default-skin" playsinline></video>
+                  </div>
+                </div>
+              </div>
+              
+              <aw-wizard class="mb-2" *ngIf="questionList?.length > 0">
+                <aw-wizard-step class="aw-wizard-step aw-wizard-btn relative" *ngFor="let recordings of questionList;  let i = index" id="Q{{i+1}}" [stepId]="i" stepTitle="Q{{i+1}}">
+                  <div class="wizard-control-container" style="width: 100%;margin: 0 auto;">
+                    <div id="video-btn" class="video-btn text-center col-md-12 float-lef mt-3 mb-4">
+                      <div class="w-100">
+                          <button type="button" title="Start Recording" text="Click here to start the recording of the selected question - or click skip question." id="btn-start-recording" class="btn btn-success hands relative start_{{i+1}} m-0 round-btn-border" (click)="onStart($event, i+1)" attr.nextid="{{i+2}}" attr.qcount="{{i+1}}" attr.rRequest="{{recordings.RefRequestID}}">Start Recording</button>
+                          <!-- <button type="button" id="btn-pause-recording" style="display: none;" class="btn btn-primary relative m-0 ml-2 round-btn-border" (click)="onPauseRecording()">Pause Recording</button>   -->
+                          <button type="button" id="btn-finish-recording" *ngIf="question_length == i+1" class="btn btn-secondary relative m-0 ml-2 round-btn-border -hidden" (click)="onFinishRecording()">Finish Recording</button>  
+                      </div>
+                      <div class="w-100 mt-3">
+                          <button type="button" id="btn-cancel-answer" class="btn btn-danger relative m-0 round-btn-border -hidden" attr.nextid="{{i+2}}" attr.qcount="{{i+1}}" (click)="onCancelRecording(i+1)">Cancel Answer</button>
+                          <button type="button" class="btn btn-primary btn-answer-question ml-2 -hidden round-btn-border answer_{{recordings.RecordingQuestionID}}"  (click)="skipQuestion($event, i+2, i+1);" id="{{recordings.RecordingQuestionID}}" attr.nextid="{{i+2}}" attr.qcount="{{i+1}}" attr.rRequest="{{recordings.RefRecordingID}}">Save Answer</button>
+                      </div>
+                      <!-- <button type="button" class="btn btn-primary btn-skip-question ml-2 m-0 round-btn-border skip_{{recordings.RecordingQuestionID}}" [disabled]="((recordings.RecordingStatus == 'Answered' || recordings.RecordingStatus == 'Skipped') ? true : false)" title="Skip" (click)="skipQuestion($event, i+2);" id="{{recordings.RecordingQuestionID}}" attr.nextid="{{i+2}}" attr.qcount="{{i+1}}" attr.rRequest="{{recordings.RefRecordingID}}">Skip Question</button> -->
+                    </div>
+                  </div>
+                </aw-wizard-step>
+              </aw-wizard>
+            </div>
+  
+          </div>
+          <!-- <div id="video-btn" class="video-btn text-center col-md-12">
+            <div class="space-around">
+              <div class="center">
+                  <video id="video_{{idx}}" class="video-js vjs-default-skin" playsinline></video>
+              </div>
+            </div>
+          </div> -->
+
+        </div><!--auth-content closed-->
+      </div><!--Shado container closed-->
+    </div>
+  </div>
+ 
+ 
+
+  
+  
+  
+  
+  
+  
+  

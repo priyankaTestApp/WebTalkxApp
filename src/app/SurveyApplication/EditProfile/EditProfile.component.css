@@ -1,0 +1,33 @@
+
+.card .card-body .profile-image {
+  margin-left: 0;
+  margin-top: -74px;
+}
+.user-profile .profile-image {
+  width: 91px;
+  height: 91px;
+  border: 2px solid #fff;
+  border-radius: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center top;
+  object-position: center top;
+}
+.user-profile input[type=file] {
+  display: none;
+}
+
+.user-profile #file-drag {
+  clear: both;
+  width: 100%;
+  padding: 3px;
+  text-align: center;
+  -webkit-transition: .2s;
+  transition: all .2s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #4a90e2;
+  cursor: pointer;
+}

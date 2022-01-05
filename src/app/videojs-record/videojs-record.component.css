@@ -1,0 +1,16 @@
+.video-js {
+    background-color: #575757;
+}
+.space-around{
+    display: flex;
+    justify-content: space-around;
+}
+.center{
+    text-align: center;
+}
+.heading{
+    background: #848282;
+    color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+}

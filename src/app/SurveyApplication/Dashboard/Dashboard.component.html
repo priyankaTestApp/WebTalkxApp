@@ -1,0 +1,130 @@
+
+<div class="pcoded-wrapper">
+  <div class="pcoded-content ">
+    <div class="main-body dashboard-page">
+      <!--<button class="btn btn-primary mb-4" title="Please click on this button to have a tour of R360." (click)="startTour()"><i class="fa fa-info-circle mr-2"></i>Start Tour</button>-->
+      <div class="row responsive-hotspot-wrap" id="hotspotImg">
+        <!--charity pack count-->
+        <div class="col-sm-12 row p-0 m-0">
+          <div class="col-sm-12">
+            <div class="card info-content-container not" joyrideStep="fifthStep" title="Dashboard" text="Number of times you have asked for recording requests.">
+              <div class="card-body p-">
+                <div class="top-bar row">
+                  <div class="block-1 col-md-3 col-sm-3 col-xs-3" joyrideStep="firstSte" title="Asks" text="Number of times you have asked for recording requests.">
+                    <div class="i-block">
+                      <!-- <i class="fas fal fa-video feather icon-video feather-color"></i> -->
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23 7L16 12L23 17V7Z" stroke="#014173" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14 5H3C1.89543 5 1 5.89543 1 7V17C1 18.1046 1.89543 19 3 19H14C15.1046 19 16 18.1046 16 17V7C16 5.89543 15.1046 5 14 5Z" stroke="#014173" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                    <p class="pcoded-mtext m-0 common-font-small font-16 content-info">Asks</p>
+                    <p class="card-content-body-text info-count m-0">{{AsksCount}}</p>
+                  </div>
+                  <div class="block-1 col-md-3 col-sm-3 col-xs-3" joyrideStep="secondSte" title="Recordings" text="Number of times you have recorded the requests.">
+                    <div class="i-block">
+                      <!-- <i class="fas fal fa-video feather icon-video feather-color"></i> -->
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23 7L16 12L23 17V7Z" stroke="#014173" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14 5H3C1.89543 5 1 5.89543 1 7V17C1 18.1046 1.89543 19 3 19H14C15.1046 19 16 18.1046 16 17V7C16 5.89543 15.1046 5 14 5Z" stroke="#014173" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                    <p class="pcoded-mtext m-0 common-font-small font-16 content-info">Recordings</p>
+                    <p class="card-content-body-text info-count m-0">{{RecordingsCount}}</p>
+                  </div>
+                  <div class="block-1 col-md-3 col-sm-3 col-xs-3" joyrideStep="thirdSte" title="Sharing" text="Number of times you have shared recording to reviewers.">
+                    <span class="i-block">
+                      <!-- <i class="fas fal fa-video feather icon-video feather-color"></i> -->
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.2565 10.962C21.7305 11.582 21.7305 12.419 21.2565 13.038C19.7635 14.987 16.1815 19 11.9995 19C7.81752 19 4.23552 14.987 2.74252 13.038C2.51191 12.7411 2.38672 12.3759 2.38672 12C2.38672 11.6241 2.51191 11.2589 2.74252 10.962C4.23552 9.013 7.81752 5 11.9995 5C16.1815 5 19.7635 9.013 21.2565 10.962V10.962Z" stroke="#014073" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#014073" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                    <p class="pcoded-mtext m-0 common-font-small font-16 content-info">Sharing</p>
+                    <p class="card-content-body-text info-count m-0">{{SharingCount}}</p>
+                  </div>
+
+                  <div class="block-1 last-block border-right-0 border-bottom-0 col-md-3 col-sm-3 col-xs-3" joyrideStep="fourthSte" title="My Network" text="Number of members in your network.">
+                    <span class="i-block">
+                      <!-- <i class="fas fal fa-video feather icon-video feather-color"></i> -->
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.49993 7.99983C3.50013 7.05174 3.7454 6.11981 4.21195 5.29446C4.67849 4.46911 5.35047 3.77838 6.16267 3.2893C6.97486 2.80021 7.89969 2.52938 8.84741 2.50309C9.79514 2.4768 10.7336 2.69594 11.5716 3.13925C12.4097 3.58256 13.1189 4.23497 13.6305 5.03319C14.1421 5.8314 14.4386 6.74831 14.4914 7.69492C14.5442 8.64154 14.3513 9.58572 13.9316 10.4358C13.5119 11.286 12.8795 12.0131 12.0959 12.5468C13.7834 13.1658 15.2471 14.2755 16.2986 15.7333C17.35 17.1911 17.9412 18.9302 17.9959 20.7268C17.9989 20.8253 17.9824 20.9234 17.9474 21.0156C17.9125 21.1077 17.8597 21.192 17.7922 21.2638C17.6557 21.4086 17.4673 21.4934 17.2684 21.4993C17.0695 21.5053 16.8764 21.432 16.7315 21.2956C16.5866 21.1591 16.5019 20.9707 16.4959 20.7718C16.4364 18.8233 15.6205 16.9745 14.2211 15.6172C12.8217 14.26 10.9489 13.5009 8.99943 13.5009C7.04997 13.5009 5.17712 14.26 3.77776 15.6172C2.37839 16.9745 1.56248 18.8233 1.50293 20.7718C1.49292 20.9677 1.40661 21.1518 1.26249 21.2848C1.11837 21.4177 0.927906 21.489 0.731901 21.4832C0.535896 21.4775 0.34994 21.3952 0.213869 21.254C0.0777983 21.1128 0.00243635 20.9239 0.00392798 20.7278C0.0584793 18.9311 0.649535 17.1917 1.70101 15.7337C2.75249 14.2758 4.21627 13.1658 5.90393 12.5468C5.16263 12.0426 4.556 11.3646 4.13697 10.572C3.71793 9.77945 3.49922 8.89636 3.49993 7.99983V7.99983ZM8.99993 3.99983C7.93906 3.99983 6.92165 4.42126 6.1715 5.1714C5.42136 5.92155 4.99993 6.93896 4.99993 7.99983C4.99993 9.0607 5.42136 10.0781 6.1715 10.8283C6.92165 11.5784 7.93906 11.9998 8.99993 11.9998C10.0608 11.9998 11.0782 11.5784 11.8284 10.8283C12.5785 10.0781 12.9999 9.0607 12.9999 7.99983C12.9999 6.93896 12.5785 5.92155 11.8284 5.1714C11.0782 4.42126 10.0608 3.99983 8.99993 3.99983Z" fill="#014073" />
+                        <path d="M17.2898 8.00014C17.1418 8.00014 16.9978 8.01014 16.8558 8.03014C16.7567 8.04789 16.655 8.04549 16.5568 8.02308C16.4586 8.00068 16.3659 7.95872 16.2843 7.89972C16.2027 7.84072 16.1338 7.76588 16.0817 7.67968C16.0296 7.59347 15.9954 7.49765 15.9812 7.39794C15.9669 7.29824 15.9729 7.19668 15.9988 7.09934C16.0246 7.002 16.0698 6.91086 16.1317 6.83136C16.1935 6.75187 16.2707 6.68564 16.3587 6.63664C16.4467 6.58763 16.5437 6.55685 16.6438 6.54614C17.6384 6.40234 18.6526 6.59333 19.5267 7.08906C20.4008 7.58479 21.0853 8.3571 21.4724 9.28446C21.8595 10.2118 21.9273 11.2416 21.6651 12.2117C21.4028 13.1818 20.8255 14.0371 20.0238 14.6431C21.2022 15.1708 22.2027 16.0281 22.9047 17.1118C23.6067 18.1954 23.98 19.459 23.9798 20.7501C23.9798 20.949 23.9008 21.1398 23.7602 21.2805C23.6195 21.4211 23.4287 21.5001 23.2298 21.5001C23.0309 21.5001 22.8401 21.4211 22.6995 21.2805C22.5588 21.1398 22.4798 20.949 22.4798 20.7501C22.4797 19.6343 22.1202 18.5481 21.4545 17.6526C20.7888 16.7571 19.8523 16.0998 18.7838 15.7781L18.2498 15.6181V13.9421L18.6598 13.7331C19.2676 13.4253 19.7539 12.9216 20.0401 12.3034C20.3264 11.6852 20.396 10.9885 20.2377 10.3259C20.0793 9.66327 19.7023 9.07335 19.1674 8.65136C18.6326 8.22938 17.9711 7.99995 17.2898 8.00014Z" fill="#014073" />
+                      </svg>
+                    </span>
+                    <p class="pcoded-mtext m-0 common-font-small font-16 content-info">My Network</p>
+                    <p class="card-content-body-text info-count m-0">{{MyNetworkCount}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<app-test2 (dashboardDetails)="getDashboardData($event)"></app-test2>-->
+        <!--charity pack count end-->
+        <!--chart row start-->
+        <div class="col-sm-12 chart-container mt-4">
+          <div class="card card-content-container ">
+            <div class="card-content-header" style="border-bottom: 1px solid #e2e5e8 !important;">
+              <div class="common-fon common-secondry-color float-left">Recordings & Replays</div>
+            </div>
+            <div class="card-body padding-top-zero row relative">
+              <div class="line-chart-container col-md-12 relative">
+                <div class="watermark text-center font-28">Under Development</div>
+                <vendor-line-chart></vendor-line-chart>
+                <!-- <img class="line-chart" src="../../../assets/img/chart.png" alt="linechart" /> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--chart row end-->
+
+      </div><!--row end-->
+    </div><!--Main body end-->
+  </div><!--Pcoded end-->
+</div><!--Wrapper end-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title common-font-blue" id="exampleModalLongTitle">
+          Welcome to webtalkx – your ask, record and share solution
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="common-font font-16 font-weight-bold">
+          Before you get started just a few instructional remarks:
+        </p>
+
+        <p class="common-font font-14 p-3 text-justify">
+          Use  the webtalkx platform as a simple, convenient way to request information from someone, retain their video responses and share them with others.
+          <br><br>
+          Just use the navigation panel on the left to access the main features of ask, record and share.
+          <br><br>
+
+          You will receive notifications in your inbox as a confirmation of completed steps from you or anyone you invited in the process.
+          <br><br>
+
+          Additionally you will have the ability to message anyone in your webtalkx network by just clicking on the name.
+          <br><br>
+
+          The use cases are endless from offline interviewing of vendors, employees, hiring candidates, customers etc., to entire offline meetings, incl. status checks, requirements gathering, stakeholder surveys, market research and much more.
+          <br><br>
+
+          It’s simple, convenient and personal – start your ask, record and share process now.
+
+        </p>
+
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>-->
+    </div>
+  </div>
+</div>
+

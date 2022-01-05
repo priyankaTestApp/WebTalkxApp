@@ -1,0 +1,384 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb p-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/I2BApplication/Dashboard']">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Draft Requests</li>
+  </ol>
+</nav>
+
+<div class="pcoded-wrapper common-table-content">
+  <!-- <div class="row"> -->
+    <div class="col-sm-12 p-0">
+      <div class="card">
+        <!-- <div class="card-header">
+          <div class="page-header-text">
+            Saved Draft Requests
+          </div>
+        </div> -->
+        <div class="card-header bg-blue">
+          <div class="common-font">Saved Draft Requests</div>
+        </div>
+        <div class="card-body">
+          
+          <div class="input-group ">  
+            <div class="col-md-6 p-0">
+              <div class="form-group">
+                <label class="font-weight-bold">Select WebTalkx Type</label>
+                <select class="form-control form-control-user font-13" id="WebtalkxType"
+                        [(ngModel)]="model.WebtalkxType" #WebtalkxType="ngModel" name="WebtalkxType" (change)="selectWebTalkType(model.WebtalkxType)">
+                        <!--[ngClass]="{'is-invalid':WebtalkxType.invalid && WebtalkxType.touched}"-->
+                  <!-- <option [ngValue]="null" class="">Select webtalkx type</option> -->
+                  <option value='Compliance'>Compliance</option>
+                  <option value='Employee Survey'>Employee Survey</option>
+                  <option value='Hiring'>Hiring</option>
+                  <option value='Market Research'>Market Research</option>
+                  <option value='Reference'>Reference</option>
+                  <option value='Security'>Security</option>
+                  <option value='Vendor Management'>Vendor Management</option>
+                  <option value='Offline Meeting'>Offline Meeting</option>
+                </select>                   
+              </div>
+            </div>
+          </div>
+
+          <!--<div class="detail-icons-container col-sm-12 col-md-6 absolute">
+            <div class="dataTables_length" id="add-row-table_length">
+
+              <button type="button" [routerLink]="['/I2BApplication/RecordingRequest']" routerLinkActive="isActive" class="btn btn-icon btn-primary not btn-rounded ">
+                <i class="feather icon-plus " title="To send a new Reference request."></i>
+              </button>
+              <button type="button" id="btnAddRef" disabled class="btn btn-icon btn-rounded btn-outline-secondary"><i class="fa fa-paper-plane"></i></button>
+              <button type="button" disabled data-toggle="modal" data-target="#recordingDeleteModel" id="row-delete-btn" class="btn btn-icon  btn-rounded btn-outline-secondary" title="To delete the recording catalog."><i class="fa fa-archive"></i></button>
+            </div><br />
+          </div>-->
+
+          <div class="dt-responsive table-responsiv selectlist font-14">
+            <div class="dataTables_wrapper dt-bootstrap4" id="add-row-table_wrapper">
+              <div class="col-sm-12 p-0" *ngIf="RecordingRequestList?.length > 0">
+                <!-- <table class="table table-striped table-bordered nowrap dataTable" id="row-delete" role="grid" aria-describedby="row-delete_info" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> -->
+                  <table class="table" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="custom-header">
+                      <tr role="row">
+                        <th></th>
+                        <!-- <th>Requested To</th> -->
+                        <th>Project Name</th>
+                        <th>Requested Date</th>
+                        <!-- <th>Start Date</th>
+                        <th>End Date</th> -->
+                        <th>Status</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="row-list-detail {{request.ID}}" *ngFor="let request of RecordingRequestList">
+                        <td class="vertical-middle" id="infoIcon">
+                          <div class="i-block card-dots-button catalog-info cursor-pointer" id="information" title="Click here to get more information." (click)="getSelectedRowInfo(request, request.ID, $event)">
+                            <i class="fa fa-info-circle btn_blue font-25 blue-text" id="informationIcon"></i>
+                          </div>
+                        </td>
+  
+                        <!-- <td class="">
+                          <span class="user-info " id="{{request.GiverID}}" attr.username="name_{{request.GiverID}}" (click)="getUserInfo($event, request.GiverID, request.GiverName)" title="Send message to {{request.GiverName}}"><a href="JavaScript:Void(0);"><strong>{{request.GiverName | titlecase}}</strong></a></span>
+                        </td> -->
+  
+                        <td class="catalog-info" title="{{request.ProjectName || request.MeetingName}}">
+                          <div class="req_title textOverflow">{{request.ProjectName || request.MeetingName}}</div>
+                        </td>
+  
+                        <td><span>{{request.InsertDate | date:'MM/dd/yyyy' }}</span></td><!-- hh:mm aa-->
+                        <!-- <td><span>{{request.StartDate | date:'MM/dd/yyyy' }}</span></td>
+                        <td><span>{{request.EndDate | date:'MM/dd/yyyy' }}</span></td> -->
+                        <td>
+                          <div class="center-align">
+                            <div class="checkbox-info d-inline font-weight-bold">
+                              {{request.FinalStatus}}
+                            </div>
+                          </div>
+                        </td>
+  
+                        <td class="">
+                          <i class="fas fa-trash cursor-pointer" style="color: #e74a3b;" (click)="deleteConfirm(request.ID)" data-toggle="modal" data-target="#recordingDeleteModel"></i>
+                        </td>
+  
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+              <div class="" *ngIf="RecordingRequestList?.length == 0">
+                <h6 class="data-msg">No saved draft requests available.</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</div>
+
+<!--Confirmation modal to remove the messages-->
+<div class="modal fade" id="recordingDeleteModel" tabindex="-1" role="dialog" aria-labelledby="recordingDeleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="Send-replay" id="exampleModalLabel">Confirm delete</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body all-around-padding">
+        <p>Are you sure to delete this recording request?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" (click)="removeRecordingRequest()" class="btn btn-danger mr-4" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--company details model-->
+<div class="modal fade modal-slide right" id="catalogdetailsmodel" tabindex="-1" role="dialog" aria-labelledby="catalogdetailsmodelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-container resize-model">
+
+      <div class="modal-header edit-header in">
+        <!--<div class="page-header-text ml-3" id="exampleModalLabel">selected User Modal</div>-->
+        <div class="left-header">
+          <h5 class="common-font-blue">Request details</h5>
+        </div>
+
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+
+        <!--catalog Details data start-->
+        <div class="catalog-details my-">
+          <!--Tab menu-->
+          <!-- <ul class="nav nav-tabs menu-tab-ul">
+            <li class="menu-tab"><a class="active common-font" data-toggle="tab" href="#detailstab">Details</a></li>
+          </ul> -->
+          <!--Tab menu content-->
+          <!--<div class="tab-content">-->
+            <div id="detailstab" class="tab-pane active">
+
+              <div class="company-data">
+                <!-- {{catalog_record | json}}-- -->
+                <!-- {{catalog_record.AuthorEmailID}}-- -->
+                <div class="text-center" *ngIf="JobDescription">
+                  <button type="button" class="btn border btn-primary font-14" id="jobdescription" #jobdescription (click)="openDescriptionFile($event.target, JobDescription)">Job Description</button>
+                </div>
+                <div class="text-center" *ngIf="Documents">
+                  <button type="button" class="btn border btn-primary font-14" id="Documents" #Documents (click)="openDescriptionFile($event.target, Documents)">Documents</button>
+                </div>
+                <div class="text-center" *ngIf="customwelcomepage">
+                  <button type="button" class="btn border btn-primary font-14" id="customwelcomepage" #customwelcomepage (click)="openDescriptionFile($event.target, customwelcomepage)">Custom Welcome Page</button>
+                </div>
+                <div class="text-center" *ngIf="uploadlogo">
+                  <button type="button" class="btn border btn-primary font-14" id="uploadlogo" #uploadlogo (click)="openDescriptionFile($event.target, uploadlogo)">Upload Logo</button>
+                </div>
+                
+                <div class="my-2" *ngIf="authername">
+                  <label class="font-weight-bold">Asked by</label>
+                  <div class=" font-14 a user-info " id="{{autherID}}" attr.username="name_{{autherID}}" (click)="getUserInfo($event, autherID, authername)" title="Send message to {{authername}}"><a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{authername}}</strong></a></div>
+                  <div class="clearfix">
+                    <a href="{{autherlinkedin}}" target="_blank" *ngIf="autherlinkedin">
+                      <img *ngIf="autherlinkedin" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                    </a>
+                  </div>
+                </div>
+  
+                <div class="my-2" *ngIf="autheremail">
+                  <label class="font-weight-bold">Asked by user email</label>
+                  <div class="">
+                    <a href="mailto:{{autheremail}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{autheremail}}</a>
+                  </div>
+                </div>
+  
+                <div class="my-2">
+                  <label class="font-weight-bold">Requested to</label>
+                  <div class=" font-14 a user-info " id="{{GiverID}}" attr.username="name_{{GiverID}}" (click)="getUserInfo($event, GiverID, GiverName)" title="Send message to {{GiverName}}"><a class="mr-3 float-left" href="JavaScript:Void(0);"><strong>{{GiverName}}</strong></a></div>
+                  <div class="clearfix">
+                    <a href="{{GiverLinkedIn}}" target="_blank" *ngIf="GiverLinkedIn">
+                      <img *ngIf="GiverLinkedIn" class="icon-picture" src="../../../assets/img/linkedin-blue.png" />
+                    </a>
+                  </div>
+                </div>
+  
+                <div class="my-2" *ngIf="GiverEmailID">
+                  <label class="font-weight-bold">Requested to user email</label>
+                  <div class="">
+                    <a href="mailto:{{GiverEmailID}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{GiverEmailID}}</a>
+                  </div>
+                </div>
+                              
+                <div class="my-2" *ngIf="phonenumber">
+                  <label class="font-weight-bold">Phone Number</label>
+                  <div class="">
+                    <a href="tel:{{phonenumber}}" target="_top" class="-no-border common-font-light-blue form-group control-width">{{phonenumber}}</a>
+                  </div>
+                </div>
+                <div class="my-2" *ngIf="(projectName || meetingname)">
+                  <label class="font-weight-bold">{{(projectName ? 'Project Name' : (meetingname ? 'Meeting Name' : null))}}</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{projectName || meetingname}}</div>
+                </div>
+                <div class="my-2" *ngIf="webtalkxtype">
+                  <label class="font-weight-bold">Webtalkx Type</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{webtalkxtype}}</div>
+                </div>
+                <div class="my-2" *ngIf="participanttype">
+                  <label class="font-weight-bold">Participant Type</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{participanttype}}</div>
+                </div>
+                              
+                <div class="my-2" *ngIf="manager">
+                  <label class="font-weight-bold">Manager</label>
+                   <div class="-no-border break control-width form-group" type="text" readonly>{{manager}}</div>
+                </div>
+                <div class="my-2" *ngIf="organization">
+                  <label class="font-weight-bold">Organization</label>
+                   <div class="-no-border break control-width form-group" type="text" readonly>{{organization}}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="reviewteamemail">
+                  <label class="font-weight-bold">Reviewer Team</label>
+                   <div class="-no-border break control-width form-group" type="text" readonly>{{reviewteamemail}}</div>
+                </div>
+                              
+                <div class="my-2" *ngIf="welcomemessage">
+                  <label class="font-weight-bold">Welcome Message</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{welcomemessage}}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="description">
+                  <label class="font-weight-bold">Description</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{description}}</div>
+                </div>
+  
+                <div class="my-2" *ngIf="requestdate">
+                  <label class="font-weight-bold">Request Date</label>
+                   <div class="-no-border break control-width form-group" type="text" readonly>{{requestdate | date:'MM/dd/yyyy' }}</div>
+                </div>
+  
+                <div class="my-2" *ngIf="(startdate && webtalkxtype != 'Single Recording')">
+                  <label class="font-weight-bold">Start Date</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{startdate | date:'MM/dd/yyyy' }}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="(enddate && webtalkxtype != 'Single Recording')">
+                  <label class="font-weight-bold">End Date</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{enddate | date:'MM/dd/yyyy' }}</div>
+                </div>
+  
+                <div class="my-2" *ngIf="RecordingStatus">
+                  <label class="font-weight-bold">Status</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{RecordingStatus}}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="surveyanonymous">
+                  <label class="font-weight-bold">Survey Anonymous</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{surveyanonymous ? 'True': 'False'}}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="rpaenable">
+                  <label class="font-weight-bold">RPA Enable</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{rpaenable ? 'True' : 'False'}}</div>
+                </div>
+                
+                <div class="my-2" *ngIf="skipenable">
+                  <label class="font-weight-bold">Skip Enable</label>
+                  <div class="-no-border break control-width form-group" type="text" readonly>{{skipenable ? 'True' : 'False'}}</div>
+                </div>
+                                
+                <div class="card-header bg-blue p-2" *ngIf="introvideo">
+                  <h6 class="common-font m-0">Introduction Message</h6>
+                </div>
+  
+                <div class="question-list text-justify a my-1" *ngIf="introvideo" id="101">
+                  <div class="record_icons p-2">
+                    <div class="record_btn_cont mr-2 cursor-pointer" (click)="replayInterviewNow($event, 101, 'request')">
+                      <button type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_101" title="Click to watch" id="" attr.qcount="101">
+                        <i class="fa fa-play-circle blue-text font-28" id="" attr.qcount="101"></i>
+                      </button>
+                      <span class="">Click to watch</span>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="question_list_cont clearfix col-md-12 p-0" *ngIf="questionList?.length > 0">
+                  <div class="p-2 bg-blue">
+                    <h6 class="question-list font-weight-bold m-0">Saved Questions</h6>
+                  </div>
+                  <div class="question-list text-justify a mb-1" #qlistall *ngFor="let questions of questionList; let i = index" id="{{questions.RecordingQuestionID}}">
+                    <div class="question-text text-justify qnumber{{i+1}} {{questions.RecordQuestion ? 'cursor-pointer' : null}}" (click)="replayInterviewNow($event, i+1, 'request')">
+                      <span class="">Q{{i+1}}. </span>
+                      <button *ngIf="questions.RecordQuestion" type="button" class="btn btn-circle mr-2 cursor-pointer btn-sm btn_height replay-recording replay_{{i+1}}" title="Click to watch" id="{{i+1}}" attr.qcount="{{i+1}}">
+                        <i class="fa fa-play-circle blue-text font-28" id="{{i+1}}" attr.qcount="{{i+1}}"></i>
+                      </button>
+                      <span class="">{{questions.RecordQuestion ? 'Click to watch' : questions.QuestionText}}</span>
+                    </div>
+                  </div>
+                </div> <!-- end container -->
+  
+              </div>
+            </div><!--first menu-->
+          <!--</div>--><!--Comments section closed-->
+          <!--sharing history section start-->
+        </div><!--tab closed-->
+
+      </div>
+
+    </div><!--modal body closed-->
+  </div>
+</div>
+
+<!--Send Message model-->
+<div class="modal fade sendmsgmodel" id="sendmsgmodel" tabindex="-1" role="dialog" aria-labelledby="sendmsgmodelLabel" aria-hidden="true">
+  <div class="modal-dialog formsg" role="document">
+    <div class="modal-content modal-container">
+      <div class="modal-header not">
+        <div class="left-header">
+          <h6 class="common-font-blue">Send To : {{full_name}}</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group">
+          <label class="font-weight-bold">Send message</label>
+          <textarea maxlength="500" class="form-control form-control-user usertextmsg padding-5 common-fon -full-width mb-2 mt-2" required name="usertextmsg" #usertextmsg="ngModel" [(ngModel)]="model.usertextmsg" id="usertextmsg" rows="3"></textarea>
+        </div>
+        
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+        <!--Added below code to disabled the submit button until user not selecting tentering the text-->
+        <button type="button" data-dismiss="modal" class="btn btn-primary float-right send-text" title="Send" id="{{receiver_id}}" attr.senderid="{{sender_id}}" (click)="sendMessage(sender_id, receiver_id, model.usertextmsg)" [disabled]="(usertextmsg.invalid)">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Send Message model-->
+<div class="modal messagenotification" id="messagenotification" tabindex="-1" role="dialog" aria-labelledby="messagenotificationLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-container alert">
+      <div class="modal-header edit-header in">
+        <div class="left-header">
+          <h6 class="common-font-blue">Alert</h6>
+        </div>
+        <div class="right-header">
+          <button type="button" class="close out" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+      <div class="modal-body modal-content-tab no-paddin padding-to overflow-auto">
+        <div class="form-group mr-2">
+          <p class="mr- my no-margin form-group control-width">You are logged in user. <br /><br />Sending a message to itself is not allowed.</p>
+        </div>
+      </div><!--modal body closed-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
